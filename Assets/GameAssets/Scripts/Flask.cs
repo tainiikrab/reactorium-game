@@ -1,16 +1,24 @@
-﻿using DG.Tweening;
+﻿using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-public class DraggableObject : MonoBehaviour, IDraggable
+public class Flask : MonoBehaviour, IDraggable
 {
     [SerializeField] private float followSpeed = 10f;
     [SerializeField] private float rotateSpeed = 90f; 
     [SerializeField] private float returnSpeed = 45f;
     [SerializeField] private float maxRotationAngle = 180f;
+    [SerializeField] private Transform particleParent;
+    private List<Transform> particles;
 
     private Vector2 targetPos;
     private bool isDragging;
     private bool isRotating;
+
+    private void Awake()
+    {
+        particles = new List<Transform>(particleParent.GetComponentsInChildren<Transform>());
+    }
 
     public void OnGrab(Vector2 pos)
     {
@@ -32,27 +40,19 @@ public class DraggableObject : MonoBehaviour, IDraggable
         isDragging = false;
     }
 
-    // public void OnRotateHold()
-    // {
-    //     isRotating = true;
-    // }
-    //
-    // public void OnRotateRelease()
-    // {
-    //     isRotating = false;
-    // }
     private Tween rotateTween;
     [SerializeField] private float rotateDuration = 1f;
     [SerializeField] private float returnDuration = 1f;
     public void OnRotateHold()
     {
         if (isRotating) return;
+
+        // particleParent.parent = null;
+        
         isRotating = true;
-
-        // Kill any existing rotation tween
+        
         rotateTween?.Kill();
-
-        // Rotate to upside down
+        
         rotateTween = transform.DORotate(new Vector3(0, 0, maxRotationAngle), rotateDuration)
             .SetEase(Ease.OutSine);
     }
@@ -61,7 +61,7 @@ public class DraggableObject : MonoBehaviour, IDraggable
     {
         if (!isRotating) return;
         isRotating = false;
-        
+        // particleParent.parent = transform;
         rotateTween?.Kill();
         
         rotateTween = transform.DORotate(Vector3.zero, returnDuration)
@@ -76,18 +76,6 @@ public class DraggableObject : MonoBehaviour, IDraggable
             transform.position = newPos;
         }
 
-        // if (isRotating)
-        // {
-        //     // Rotate until upside down (180 degrees local rotation)
-        //     float step = rotateSpeed * Time.deltaTime;
-        //     transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, maxRotationAngle), step);
-        // }
-        // else
-        // {
-        //     // Return to original rotation (0 degrees)
-        //     float step = returnSpeed * Time.deltaTime;
-        //     transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.identity, step);
-        // }
     }
     
 }
