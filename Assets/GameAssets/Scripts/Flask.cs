@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
 public class Flask : MonoBehaviour, IDraggable
 {
     [SerializeField] private float followSpeed = 10f;
-    [SerializeField] private float rotateSpeed = 90f; 
+    [SerializeField] private float rotateSpeed = 90f;
     [SerializeField] private float returnSpeed = 45f;
     [SerializeField] private float maxRotationAngle = 180f;
     [SerializeField] private Transform particleParent;
@@ -20,6 +21,11 @@ public class Flask : MonoBehaviour, IDraggable
         particles = new List<Transform>(particleParent.GetComponentsInChildren<Transform>());
     }
 
+    private IEnumerator DisableParticles()
+    {
+        yield return null;
+    }
+
     public void OnGrab(Vector2 pos)
     {
         isDragging = true;
@@ -28,10 +34,7 @@ public class Flask : MonoBehaviour, IDraggable
 
     public void OnDrag(Vector2 pos)
     {
-        if (isRotating)
-        {
-            return;
-        }
+        if (isRotating) return;
         targetPos = pos;
     }
 
@@ -43,16 +46,17 @@ public class Flask : MonoBehaviour, IDraggable
     private Tween rotateTween;
     [SerializeField] private float rotateDuration = 1f;
     [SerializeField] private float returnDuration = 1f;
+
     public void OnRotateHold()
     {
         if (isRotating) return;
 
         // particleParent.parent = null;
-        
+
         isRotating = true;
-        
+
         rotateTween?.Kill();
-        
+
         rotateTween = transform.DORotate(new Vector3(0, 0, maxRotationAngle), rotateDuration)
             .SetEase(Ease.OutSine);
     }
@@ -63,19 +67,17 @@ public class Flask : MonoBehaviour, IDraggable
         isRotating = false;
         // particleParent.parent = transform;
         rotateTween?.Kill();
-        
+
         rotateTween = transform.DORotate(Vector3.zero, returnDuration)
             .SetEase(Ease.OutSine);
     }
 
-    void Update()
+    private void Update()
     {
         if (isDragging)
         {
-            Vector2 newPos = Vector2.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
+            var newPos = Vector2.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
             transform.position = newPos;
         }
-
     }
-    
 }
