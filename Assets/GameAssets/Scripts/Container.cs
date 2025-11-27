@@ -31,7 +31,9 @@ public class Container : MonoBehaviour
 
     private void UpdateAverageColor()
     {
-        if (particles.Count == 0) return;
+        if (particles.Count == 0)
+        {
+        }
 
         float r = 0f, g = 0f, b = 0f, a = 0f;
 
