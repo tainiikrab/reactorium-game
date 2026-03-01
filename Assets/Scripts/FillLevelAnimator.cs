@@ -23,6 +23,7 @@ public class FillLevelAnimator : MonoBehaviour
     private float _currentFillLevel;
 
     private SpriteRenderer _liquidRenderer;
+    public SpriteRenderer LiquidRenderer => _liquidRenderer;
 
     protected void Awake()
     {
@@ -34,7 +35,7 @@ public class FillLevelAnimator : MonoBehaviour
 
         var fillLevel = _container.CurrentFillLevel;
         var targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
-        _liquid.localPosition = new Vector3(0, targetY, 0);
+        _liquid.localPosition = new Vector3(_liquid.localPosition.x, targetY, _liquid.localPosition.z);
 
         _currentFillLevel = _container.CurrentFillLevel;
         if (_currentFillLevel <= 0f)

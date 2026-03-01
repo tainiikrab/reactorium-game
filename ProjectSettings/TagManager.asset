@@ -39,6 +39,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Back
+    uniqueID: 3840329057
+    locked: 0
+  - name: Liquid
+    uniqueID: 2087269383
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

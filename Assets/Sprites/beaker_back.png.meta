@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e5fe3a9105d97f147992233fee9712a5
+guid: ddc58ecb39b3b104fa93678d9acf0a56
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8139732297775873828
-    second: beaker_0
+      213: -9107979227565333222
+    second: beaker_back_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: beaker_0
+      name: beaker_back_0
       rect:
         serializedVersion: 2
-        x: 76
-        y: 57
-        width: 1205
-        height: 1671
+        x: 0
+        y: 0
+        width: 1059
+        height: 367
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cd08b40f99cd90f80800000000000000
-      internalID: -8139732297775873828
+      spriteID: a15e45f0625f99180800000000000000
+      internalID: -9107979227565333222
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      beaker_0: -8139732297775873828
+      beaker_back_0: -9107979227565333222
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
