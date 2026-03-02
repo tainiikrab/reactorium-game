@@ -12,13 +12,16 @@ public class FillLevelAnimator : MonoBehaviour
     [Header("Animation Settings")] [SerializeField]
     protected float _fillDuration = 0.4f;
 
-    [Tooltip("How far beyond the target in normalized units (0–1) the overshoot goes")] [Range(0f, 0.5f)]
-    public float _overshootAmount = 0.15f;
+    [Range(0f, 0.5f)] public float _overshootAmount = 0.15f;
 
     [SerializeField] protected float _tiltAngle = 6f;
     [SerializeField] protected float _tiltDuration = 0.2f;
 
     [SerializeField] protected Ease _ease = default;
+
+    [SerializeField] private float inertiaTime = 0.2f;
+    private float _liquidAngle;
+    private float _angularVelocity;
 
     private float _currentFillLevel;
 
@@ -30,6 +33,7 @@ public class FillLevelAnimator : MonoBehaviour
         _container = GetComponentInParent<Container>();
         _container.OnFillLevelChangedEvent += AnimateFill;
 
+        _liquidAngle = _liquid.eulerAngles.z;
 
         _liquidRenderer = _liquid.GetComponent<SpriteRenderer>();
 
@@ -46,6 +50,23 @@ public class FillLevelAnimator : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if (!_liquid) return;
+
+        var currentWorldZ = _liquid.eulerAngles.z;
+        var desiredWorldZ = 0f;
+
+        _liquidAngle = Mathf.SmoothDampAngle(
+            currentWorldZ,
+            desiredWorldZ,
+            ref _angularVelocity,
+            inertiaTime,
+            Mathf.Infinity,
+            Time.deltaTime);
+
+        _liquid.rotation = Quaternion.Euler(0f, 0f, _liquidAngle);
+    }
 
     protected virtual void AnimateFill(float fillLevel)
     {

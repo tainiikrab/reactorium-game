@@ -20,6 +20,8 @@ public class Controller : MonoBehaviour, IGrabber
         inputSystem = new InputSystem_Actions();
         inputSystem.Interact.Hold.started += OnHoldStarted;
         inputSystem.Interact.Hold.canceled += OnHoldCanceled;
+
+
         inputSystem.Enable();
     }
 

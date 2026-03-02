@@ -759,6 +759,7 @@ MonoBehaviour:
   _tiltAngle: 6
   _tiltDuration: 0.2
   _ease: 0
+  inertiaTime: 0.2
 --- !u!1 &1065981916
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,13 +1591,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlaskFillLevelAnimator
   _liquid: {fileID: 1929618222}
-  _minY: -25
-  _maxY: -2
+  _minY: -6
+  _maxY: 4
   _fillDuration: 0.4
   _overshootAmount: 0.15
   _tiltAngle: 6
   _tiltDuration: 0.2
   _ease: 0
+  inertiaTime: 0.5
   _minScale: 1
   _maxScale: 3.2
 --- !u!1 &1929618221

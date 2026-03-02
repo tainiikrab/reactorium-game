@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Container : MonoBehaviour
@@ -15,6 +16,8 @@ public class Container : MonoBehaviour
     [SerializeField] private float _capacityMl = 1000;
 
     public event Action<float> OnFillLevelChangedEvent;
+
+    private List<ISubstance> _substances = new();
 
 #if UNITY_EDITOR
     [Range(0, 1)] [SerializeField] private float _editorFillValue;
