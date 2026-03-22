@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Container : MonoBehaviour
+public class Container : MonoBehaviour, IDraggable
 {
     public ContainerType ContainerType => _containerType;
     [SerializeField] private ContainerType _containerType;
@@ -14,10 +14,14 @@ public class Container : MonoBehaviour
 
     public float CapacityMl => _capacityMl;
     [SerializeField] private float _capacityMl = 1000;
+    [SerializeField] private GameObject _hoverSelection;
 
     public event Action<float> OnFillLevelChangedEvent;
+    public Transform Transform => transform;
 
     private List<ISubstance> _substances = new();
+    private Collider2D _collider;
+
 
 #if UNITY_EDITOR
     [Range(0, 1)] [SerializeField] private float _editorFillValue;
@@ -28,6 +32,21 @@ public class Container : MonoBehaviour
         SetFillLevel(_editorFillValue);
     }
 #endif
+
+    public void OnToggleHover(bool toggle)
+    {
+        _hoverSelection.SetActive(toggle);
+    }
+
+    public void OnToggleCollider(bool toggle)
+    {
+        _collider.enabled = toggle;
+    }
+
+    private void Awake()
+    {
+        _collider = GetComponent<Collider2D>();
+    }
 
     public void SetFillLevel(float fillLevel)
     {
@@ -41,6 +60,13 @@ public class Container : MonoBehaviour
     {
         return _currentFillLevel * _capacityMl;
     }
+}
+
+public interface IDraggable
+{
+    void OnToggleHover(bool toggle);
+    void OnToggleCollider(bool toggle);
+    Transform Transform { get; }
 }
 
 public enum ContainerType

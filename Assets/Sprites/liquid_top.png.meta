@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: df48b5026c4abc34c882ec25dfe90171
+guid: 03a6a7758fe3f4445ba15203b01e3c00
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1785805645341909005
-    second: Liquid_0
+      213: 4517177464823462437
+    second: liquid_top_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,8 +49,8 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.94}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -72,12 +72,12 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 3
-    compressionQuality: 0
-    crunchedCompression: 1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
     ignorePlatformSupport: 0
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Liquid_0
+      name: liquid_top_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1059
-        height: 1264
+        x: 19
+        y: 13
+        width: 309
+        height: 135
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3ff12872a3b8737e0800000000000000
-      internalID: -1785805645341909005
+      spriteID: 52ab332a8fc30be30800000000000000
+      internalID: 4517177464823462437
       vertices: []
       indices: 
       edges: []
@@ -152,7 +152,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Liquid_0: -1785805645341909005
+      liquid_top_0: 4517177464823462437
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -18,7 +18,7 @@ public class ObjectPerspectiveScaler : MonoBehaviour
     {
         if (grabber.IsDragging)
         {
-            var target = grabber.CurrentTarget;
+            var target = grabber.CurrentTarget.Transform;
             var scale = Mathf.Lerp(minScale, maxScale, (target.position.y - minY) / (maxY - minY));
             target.localScale = new Vector3(scale, scale, 1);
         }

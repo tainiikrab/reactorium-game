@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class FlaskFillLevelAnimator : FillLevelAnimator
 {
-    [SerializeField] private float _minScale;
+    [Header("Flask parameters")] [SerializeField]
+    private float _minScale;
+
     [SerializeField] private float _maxScale;
 
     protected override void AnimateFill(float fillLevel)

@@ -9,19 +9,19 @@ public class FillLevelAnimator : MonoBehaviour
     [SerializeField] protected float _minY;
     [SerializeField] protected float _maxY;
 
-    [Header("Animation Settings")] [SerializeField]
-    protected float _fillDuration = 0.4f;
+    [SerializeField] protected float _fillDuration = 0.4f;
 
-    [Range(0f, 0.5f)] public float _overshootAmount = 0.15f;
+    [SerializeField] protected Ease _ease;
 
-    [SerializeField] protected float _tiltAngle = 6f;
-    [SerializeField] protected float _tiltDuration = 0.2f;
+    [SerializeField] private float _inertiaTime = 0.2f;
+    [SerializeField] private float _defaultXScale = 1f;
+    [SerializeField] private float _maxXScale = 2f;
+    // [SerializeField] private Transform _rotationScaleTarget;
 
-    [SerializeField] protected Ease _ease = default;
-
-    [SerializeField] private float inertiaTime = 0.2f;
     private float _liquidAngle;
     private float _angularVelocity;
+    private float _scaleVelocity;
+    [SerializeField] private float _scaleSmoothTime = 0.1f;
 
     private float _currentFillLevel;
 
@@ -50,18 +50,32 @@ public class FillLevelAnimator : MonoBehaviour
         }
     }
 
+    private Vector3 _prevPos;
+    private Vector3 _velocity;
+
+    [SerializeField] private float _tiltStrength = 2f;
+    [SerializeField] private float _maxTilt = 25f;
+
     private void LateUpdate()
     {
         if (!_liquid) return;
 
+        _velocity = (transform.position - _prevPos) / Time.deltaTime;
+        _prevPos = transform.position;
+
+        var localVelocity = transform.InverseTransformDirection(_velocity);
+
+        var inertiaTilt = -localVelocity.x * _tiltStrength;
+        inertiaTilt = Mathf.Clamp(inertiaTilt, -_maxTilt, _maxTilt);
+
         var currentWorldZ = _liquid.eulerAngles.z;
-        var desiredWorldZ = 0f;
+        var desiredWorldZ = inertiaTilt;
 
         _liquidAngle = Mathf.SmoothDampAngle(
             currentWorldZ,
             desiredWorldZ,
             ref _angularVelocity,
-            inertiaTime,
+            _inertiaTime,
             Mathf.Infinity,
             Time.deltaTime);
 

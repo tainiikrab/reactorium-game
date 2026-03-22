@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class LiquidSortingLayerHandler : MonoBehaviour
 {
@@ -26,8 +27,16 @@ public class LiquidSortingLayerHandler : MonoBehaviour
         spriteMask.backSortingOrder = _nextSortingLayerID - 1;
 
         var liquid = fillLevelAnimator.LiquidRenderer;
-        liquid.sortingLayerName = _liquidSortingLayerName;
-        liquid.sortingOrder = _nextSortingLayerID;
+        if (liquid.TryGetComponent<SortingGroup>(out var sortingGroup))
+        {
+            sortingGroup.sortingLayerName = _liquidSortingLayerName;
+            sortingGroup.sortingOrder = _nextSortingLayerID;
+        }
+        else
+        {
+            liquid.sortingLayerName = _liquidSortingLayerName;
+            liquid.sortingOrder = _nextSortingLayerID;
+        }
 
         _nextSortingLayerID++;
     }
