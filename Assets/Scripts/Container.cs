@@ -15,6 +15,10 @@ public class Container : MonoBehaviour, IDraggable
     public float CapacityMl => _capacityMl;
     [SerializeField] private float _capacityMl = 1000;
     [SerializeField] private GameObject _hoverSelection;
+    [field: SerializeField] public Transform InteractPoint { get; private set; }
+    public IDraggable InteractionTargetReceiver { get; set; }
+    public IDraggable InteractionTargetSender { get; set; }
+    public bool IsInteracting { get; set; }
 
     public event Action<float> OnFillLevelChangedEvent;
     public Transform Transform => transform;
@@ -33,12 +37,12 @@ public class Container : MonoBehaviour, IDraggable
     }
 #endif
 
-    public void OnToggleHover(bool toggle)
+    public void ToggleHover(bool toggle)
     {
         _hoverSelection.SetActive(toggle);
     }
 
-    public void OnToggleCollider(bool toggle)
+    public void ToggleCollider(bool toggle)
     {
         _collider.enabled = toggle;
     }
@@ -64,9 +68,13 @@ public class Container : MonoBehaviour, IDraggable
 
 public interface IDraggable
 {
-    void OnToggleHover(bool toggle);
-    void OnToggleCollider(bool toggle);
+    void ToggleHover(bool toggle);
+    void ToggleCollider(bool toggle);
     Transform Transform { get; }
+    bool IsInteracting { get; set; }
+    Transform InteractPoint { get; }
+    IDraggable InteractionTargetReceiver { get; set; }
+    IDraggable InteractionTargetSender { get; set; }
 }
 
 public enum ContainerType

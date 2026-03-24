@@ -1,8 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using PrimeTween;
 
 public class Controller : MonoBehaviour, IGrabber
 {
+    [SerializeField] private float snapDuration = 0.2f;
+    [SerializeField] private Ease snapEase = Ease.OutCubic;
+
+    private Tween _moveTween;
+    private Tween _rotateTween;
     [SerializeField] private LayerMask draggableLayer;
     [SerializeField] private float followSpeed = 20f;
 
@@ -27,17 +33,66 @@ public class Controller : MonoBehaviour, IGrabber
 
     private void OnHoldStarted(InputAction.CallbackContext context)
     {
-        TryBeginDrag();
+        IsDragging = TryFindTarget(out var target, out var offset);
+        if (IsDragging)
+        {
+            CurrentTarget = target;
+
+            _rotateTween.Stop();
+            _rotateTween = Tween.Rotation(CurrentTarget.Transform, Quaternion.identity, 0.15f);
+
+            _offset = offset;
+            target.ToggleCollider(false);
+            target.ToggleHover(false);
+            if (target.InteractionTargetSender != null)
+            {
+                _rotateTween.Stop();
+                _rotateTween = Tween.Rotation(target.InteractionTargetSender.Transform, Quaternion.identity, 0.15f);
+                target.InteractionTargetSender.InteractionTargetReceiver = null;
+                target.InteractionTargetReceiver = null;
+            }
+
+            else if (target.InteractionTargetReceiver != null)
+            {
+                target.InteractionTargetReceiver.InteractionTargetSender = null;
+                target.InteractionTargetSender = null;
+            }
+        }
     }
 
     private void OnHoldCanceled(InputAction.CallbackContext context)
     {
         IsDragging = false;
-        CurrentTarget?.OnToggleCollider(true);
+
+        if (_hoverTarget != null)
+        {
+            HandleInteract();
+            _hoverTarget.ToggleHover(false);
+        }
+
+        CurrentTarget?.ToggleCollider(true);
         CurrentTarget = null;
     }
 
-    private IDraggable hoverTarget;
+    private void HandleInteract()
+    {
+        var t = CurrentTarget.Transform;
+        var p = _hoverTarget.InteractPoint;
+
+        _moveTween.Stop();
+        _rotateTween.Stop();
+
+        _moveTween = Tween.Position(t, p.position, snapDuration, snapEase);
+        _rotateTween = Tween.Rotation(t, p.rotation, snapDuration, snapEase);
+
+        CurrentTarget.InteractionTargetReceiver = _hoverTarget;
+        CurrentTarget.InteractionTargetSender = null;
+
+        _hoverTarget.InteractionTargetSender = CurrentTarget;
+        _hoverTarget.InteractionTargetReceiver = null;
+    }
+
+    private IDraggable _hoverTarget;
 
     private void Update()
     {
@@ -53,26 +108,26 @@ public class Controller : MonoBehaviour, IGrabber
 
         if (TryFindTarget(out var target, out var offset))
         {
-            if (hoverTarget == null)
+            if (_hoverTarget == null)
             {
-                target.OnToggleHover(true);
-                hoverTarget = target;
+                target.ToggleHover(true);
+                _hoverTarget = target;
             }
 
-            if (hoverTarget != target)
+            if (_hoverTarget != target)
             {
-                hoverTarget.OnToggleHover(false);
-                target.OnToggleHover(true);
-                hoverTarget = target;
+                _hoverTarget.ToggleHover(false);
+                target.ToggleHover(true);
+                _hoverTarget = target;
             }
 
             return;
         }
 
-        if (hoverTarget != null)
+        if (_hoverTarget != null)
         {
-            hoverTarget.OnToggleHover(false);
-            hoverTarget = null;
+            _hoverTarget.ToggleHover(false);
+            _hoverTarget = null;
         }
     }
 
@@ -95,16 +150,6 @@ public class Controller : MonoBehaviour, IGrabber
         return false;
     }
 
-    private void TryBeginDrag()
-    {
-        IsDragging = TryFindTarget(out var target, out var offset);
-        if (IsDragging)
-        {
-            CurrentTarget = target;
-            _offset = offset;
-            target.OnToggleCollider(false);
-        }
-    }
 
     private Vector3 GetPointerWorldPosition()
     {
