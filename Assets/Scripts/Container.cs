@@ -4,38 +4,31 @@ using UnityEngine;
 
 public class Container : MonoBehaviour, IDraggable
 {
-    public ContainerType ContainerType => _containerType;
     [SerializeField] private ContainerType _containerType;
-    public float CurrentFillLevel => _currentFillLevel;
     [Range(0, 1)] [SerializeField] private float _currentFillLevel;
-
-    public float MaxFillLevel => _maxFillLevel;
     [Range(0, 1)] [SerializeField] private float _maxFillLevel = 1;
-
-    public float CapacityMl => _capacityMl;
     [SerializeField] private float _capacityMl = 1000;
     [SerializeField] private GameObject _hoverSelection;
-    [field: SerializeField] public Transform InteractPoint { get; private set; }
-    public IDraggable InteractionTargetReceiver { get; set; }
-    public IDraggable InteractionTargetSender { get; set; }
-    public bool IsInteracting { get; set; }
-
-    public event Action<float> OnFillLevelChangedEvent;
-    public Transform Transform => transform;
-
-    private List<ISubstance> _substances = new();
     private Collider2D _collider;
 
+    private List<ISubstance> _substances = new();
+    public ContainerType ContainerType => _containerType;
+    public float CurrentFillLevel => _currentFillLevel;
 
-#if UNITY_EDITOR
-    [Range(0, 1)] [SerializeField] private float _editorFillValue;
+    public float MaxFillLevel => _maxFillLevel;
 
-    [ContextMenu("Apply Editor Fill Value")]
-    private void ApplyEditorFill()
+    public float CapacityMl => _capacityMl;
+
+    private void Awake()
     {
-        SetFillLevel(_editorFillValue);
+        _collider = GetComponent<Collider2D>();
     }
-#endif
+
+    [field: SerializeField] public Transform InteractPoint { get; private set; }
+    public IDraggable Receiver { get; set; }
+    public IDraggable Sender { get; set; }
+    public bool IsInteracting { get; set; }
+    public Transform Transform => transform;
 
     public void ToggleHover(bool toggle)
     {
@@ -47,10 +40,7 @@ public class Container : MonoBehaviour, IDraggable
         _collider.enabled = toggle;
     }
 
-    private void Awake()
-    {
-        _collider = GetComponent<Collider2D>();
-    }
+    public event Action<float> OnFillLevelChangedEvent;
 
     public void SetFillLevel(float fillLevel)
     {
@@ -64,17 +54,28 @@ public class Container : MonoBehaviour, IDraggable
     {
         return _currentFillLevel * _capacityMl;
     }
+
+
+#if UNITY_EDITOR
+    [Range(0, 1)] [SerializeField] private float _editorFillValue;
+
+    [ContextMenu("Apply Editor Fill Value")]
+    private void ApplyEditorFill()
+    {
+        SetFillLevel(_editorFillValue);
+    }
+#endif
 }
 
 public interface IDraggable
 {
-    void ToggleHover(bool toggle);
-    void ToggleCollider(bool toggle);
     Transform Transform { get; }
     bool IsInteracting { get; set; }
     Transform InteractPoint { get; }
-    IDraggable InteractionTargetReceiver { get; set; }
-    IDraggable InteractionTargetSender { get; set; }
+    IDraggable Receiver { get; set; }
+    IDraggable Sender { get; set; }
+    void ToggleHover(bool toggle);
+    void ToggleCollider(bool toggle);
 }
 
 public enum ContainerType
