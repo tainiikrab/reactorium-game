@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using PrimeTween;
+﻿using PrimeTween;
+using UnityEngine;
 
 public class FillLevelAnimator : MonoBehaviour
 {
-    private Container _container;
-
     [SerializeField] protected Transform _liquid;
     [SerializeField] protected float _minY;
     [SerializeField] protected float _maxY;
@@ -16,26 +14,36 @@ public class FillLevelAnimator : MonoBehaviour
     [SerializeField] private float _inertiaTime = 0.2f;
     [SerializeField] private float _defaultXScale = 1f;
     [SerializeField] private float _maxXScale = 2f;
+    [SerializeField] private float _scaleSmoothTime = 0.1f;
+
+    [SerializeField] private float _tiltStrength = 2f;
+    [SerializeField] private float _maxTilt = 25f;
+    private float _angularVelocity;
+    private Container _container;
+
+    private float _currentFillLevel;
+    protected float _currentLiquidScale;
+
+    protected float _desiredLiquidXScale;
     // [SerializeField] private Transform _rotationScaleTarget;
 
     private float _liquidAngle;
-    private float _angularVelocity;
+
+    private Vector3 _prevPos;
     private float _scaleVelocity;
-    [SerializeField] private float _scaleSmoothTime = 0.1f;
+    private Vector3 _velocity;
+    protected bool isChangingScale = false;
+    public SpriteRenderer LiquidRenderer { get; private set; }
 
-    private float _currentFillLevel;
-
-    private SpriteRenderer _liquidRenderer;
-    public SpriteRenderer LiquidRenderer => _liquidRenderer;
-
-    protected void Awake()
+    protected virtual void Awake()
     {
         _container = GetComponentInParent<Container>();
         _container.OnFillLevelChangedEvent += AnimateFill;
 
+        _currentLiquidScale = _liquid.localScale.x;
         _liquidAngle = _liquid.eulerAngles.z;
 
-        _liquidRenderer = _liquid.GetComponent<SpriteRenderer>();
+        LiquidRenderer = _liquid.GetComponent<SpriteRenderer>();
 
         var fillLevel = _container.CurrentFillLevel;
         var targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
@@ -45,16 +53,10 @@ public class FillLevelAnimator : MonoBehaviour
         if (_currentFillLevel <= 0f)
         {
             TrySetActiveLiquid(false);
-            _liquidRenderer.color =
-                new Color(_liquidRenderer.color.r, _liquidRenderer.color.g, _liquidRenderer.color.b, 0f);
+            LiquidRenderer.color =
+                new Color(LiquidRenderer.color.r, LiquidRenderer.color.g, LiquidRenderer.color.b, 0f);
         }
     }
-
-    private Vector3 _prevPos;
-    private Vector3 _velocity;
-
-    [SerializeField] private float _tiltStrength = 2f;
-    [SerializeField] private float _maxTilt = 25f;
 
     private void LateUpdate()
     {
@@ -80,16 +82,28 @@ public class FillLevelAnimator : MonoBehaviour
             Time.deltaTime);
 
         _liquid.rotation = Quaternion.Euler(0f, 0f, _liquidAngle);
+
+        if (isChangingScale) return;
+
+        var z = transform.eulerAngles.z;
+        z = z > 180f ? z - 360f : z;
+
+        var abs = Mathf.Abs(z);
+        var t = 1f - Mathf.Abs(abs - 90f) / 90f;
+
+        var scaleModifier = Mathf.Lerp(1, 3f * (_currentFillLevel + 1), t);
+        _desiredLiquidXScale = scaleModifier;
+        _liquid.localScale = new Vector3(scaleModifier * _currentLiquidScale, _currentLiquidScale, _currentLiquidScale);
     }
 
     protected virtual void AnimateFill(float fillLevel)
     {
         Tween.StopAll(_liquid);
-        Tween.StopAll(_liquidRenderer);
+        Tween.StopAll(LiquidRenderer);
 
         TrySetActiveLiquid(true);
 
-        if (fillLevel > 0f && _currentFillLevel <= 0f) Tween.Alpha(_liquidRenderer, 1f, _fillDuration * 0.5f, _ease);
+        if (fillLevel > 0f && _currentFillLevel <= 0f) Tween.Alpha(LiquidRenderer, 1f, _fillDuration * 0.5f, _ease);
 
         _currentFillLevel = fillLevel;
         var targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
@@ -98,7 +112,7 @@ public class FillLevelAnimator : MonoBehaviour
             .OnComplete(() =>
             {
                 if (fillLevel <= 0f)
-                    Tween.Alpha(_liquidRenderer, 0f, _fillDuration, _ease)
+                    Tween.Alpha(LiquidRenderer, 0f, _fillDuration, _ease)
                         .OnComplete(() => TrySetActiveLiquid(false));
             });
     }

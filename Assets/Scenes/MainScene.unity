@@ -354,6 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1ace5a7afc40e09c2f46591a64ca45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controller
+  snapDuration: 0.2
+  snapEase: 9
   draggableLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -449,7 +451,7 @@ GameObject:
   - component: {fileID: 666033605}
   - component: {fileID: 666033604}
   m_Layer: 0
-  m_Name: shadow (1)
+  m_Name: TopShadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -523,7 +525,7 @@ Transform:
   m_GameObject: {fileID: 666033603}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.8, y: 42.1, z: 0}
+  m_LocalPosition: {x: 3.8, y: 52.8, z: 0}
   m_LocalScale: {x: 38.1, y: 15.61, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -610,7 +612,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 50
+  orthographic size: 60.41
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -941,6 +943,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1124550745}
     m_Modifications:
+    - target: {fileID: 298997544150843945, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1204675239950060917, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Name
       value: Flask
@@ -1015,11 +1021,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8112176494518137489, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.6
+      value: -21
       objectReference: {fileID: 0}
     - target: {fileID: 8112176494518137489, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24
+      value: 26.5
       objectReference: {fileID: 0}
     - target: {fileID: 8112176494518137489, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1042,7 +1048,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1575375740}
   - {fileID: 666033605}
   - {fileID: 400701203}
-  - {fileID: 1575375740}
   - {fileID: 1124550745}
