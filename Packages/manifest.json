@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.coffee.softmask-for-ugui": "https://github.com/mob-sakai/SoftMaskForUGUI.git?path=Packages/src",
     "com.kyrylokuzyk.primetween": "file:../Assets/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
     "com.unity.2d.animation": "13.0.4",
     "com.unity.2d.aseprite": "3.0.1",
