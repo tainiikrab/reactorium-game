@@ -761,6 +761,7 @@ GameObject:
   - component: {fileID: 537437837}
   - component: {fileID: 537437836}
   - component: {fileID: 537437838}
+  - component: {fileID: 537437839}
   m_Layer: 5
   m_Name: ReturnButton
   m_TagString: Untagged
@@ -870,6 +871,25 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &537437839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537437834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b74fc89c8f10b4680b8300c18e1b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIPointerPressSquash
+  scaleTarget: {fileID: 537437835}
+  pressedScale: 0.96
+  pressDuration: 0.1
+  pressEase: 6
+  releaseDuration: 0.38
+  releaseEase: 27
+  cancelPressOnExit: 0
 --- !u!1 &614553999
 GameObject:
   m_ObjectHideFlags: 0
@@ -3287,6 +3307,10 @@ PrefabInstance:
     - target: {fileID: 1909523876480818390, guid: d69b5cf13786c3e4b8c7139ba7e647ad, type: 3}
       propertyPath: m_fontSize
       value: 45.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067189101644024847, guid: d69b5cf13786c3e4b8c7139ba7e647ad, type: 3}
+      propertyPath: pressedScale
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4077588265738532218, guid: d69b5cf13786c3e4b8c7139ba7e647ad, type: 3}
       propertyPath: m_AnchorMax.x

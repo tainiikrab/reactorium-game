@@ -476,6 +476,7 @@ GameObject:
   - component: {fileID: 7236591698179680446}
   - component: {fileID: 8409655964659945218}
   - component: {fileID: 2370811143427490582}
+  - component: {fileID: 2067189101644024847}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -540,3 +541,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2067189101644024847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7245243632813679651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b74fc89c8f10b4680b8300c18e1b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIPointerPressSquash
+  scaleTarget: {fileID: 7236591698179680446}
+  pressedScaleFactors: {x: 1.04, y: 0.92, z: 1}
+  pressDuration: 0.1
+  pressEase: 6
+  releaseDuration: 0.38
+  releaseEase: 27
+  cancelPressOnExit: 0
