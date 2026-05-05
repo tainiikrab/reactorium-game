@@ -18,7 +18,17 @@ public sealed class SceneTransitionService : MonoBehaviour
     [SerializeField] private Ease fadeInEase = Ease.OutQuart;
     [SerializeField] private Color fadeColor = new(0.04f, 0.07f, 0.12f, 1f);
 
+    [Header("Overlay (pattern material)")]
+    [Tooltip("Например PatternScroller. Прозрачные области паттерна показывают Fade Color под ним. Если null — только Fade Color.")]
+    [SerializeField]
+    private Material fadePatternMaterial;
+
+    [Tooltip("Непрозрачность слоя паттерна (0 — только подложка Fade Color, 1 — паттерн без дополнительного ослабления). Умножается с альфой материала/шейдера.")]
+    [SerializeField] [Range(0f, 1f)]
+    private float patternOpacity = 1f;
+
     private CanvasGroup _canvasGroup;
+    private Material _fadeMaterialInstance;
     private bool _busy;
     private bool _built;
 
@@ -39,6 +49,9 @@ public sealed class SceneTransitionService : MonoBehaviour
     {
         if (Instance == this)
             Instance = null;
+
+        if (_fadeMaterialInstance != null)
+            Destroy(_fadeMaterialInstance);
     }
 
     /// <summary>
@@ -128,19 +141,45 @@ public sealed class SceneTransitionService : MonoBehaviour
         _canvasGroup.blocksRaycasts = false;
         _canvasGroup.interactable = false;
 
-        var imgGo = new GameObject("Fade");
-        imgGo.transform.SetParent(canvasGo.transform, false);
+        RectTransform backdropRt = CreateStretchUiChild(canvasGo.transform, "FadeBackdrop");
+        var backdropImage = backdropRt.gameObject.AddComponent<Image>();
+        backdropImage.sprite = WhiteUiSprite();
+        backdropImage.color = fadeColor;
+        backdropImage.raycastTarget = false;
 
-        var rect = imgGo.AddComponent<RectTransform>();
+        Material template = fadePatternMaterial;
+        if (template != null)
+        {
+            RectTransform patternRt = CreateStretchUiChild(canvasGo.transform, "FadePattern");
+            var patternImage = patternRt.gameObject.AddComponent<Image>();
+            _fadeMaterialInstance = new Material(template);
+            patternImage.material = _fadeMaterialInstance;
+            patternImage.sprite = null;
+            Color patternTint = Color.white;
+            patternTint.a = Mathf.Clamp01(patternOpacity);
+            patternImage.color = patternTint;
+            patternImage.raycastTarget = true;
+
+            var aspect = patternRt.gameObject.AddComponent<AspectRatioFitter>();
+            aspect.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
+            aspect.aspectRatio = 1f;
+        }
+        else
+        {
+            backdropImage.raycastTarget = true;
+        }
+    }
+
+    private static RectTransform CreateStretchUiChild(Transform parent, string name)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        var rect = go.AddComponent<RectTransform>();
         rect.anchorMin = Vector2.zero;
         rect.anchorMax = Vector2.one;
         rect.offsetMin = Vector2.zero;
         rect.offsetMax = Vector2.zero;
-
-        var image = imgGo.AddComponent<Image>();
-        image.sprite = WhiteUiSprite();
-        image.color = fadeColor;
-        image.raycastTarget = true;
+        return rect;
     }
 
     private static Sprite WhiteUiSprite()
