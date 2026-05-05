@@ -1841,6 +1841,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805500285}
   m_CullTransparentMesh: 1
+--- !u!1 &834429698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 834429700}
+  - component: {fileID: 834429699}
+  m_Layer: 0
+  m_Name: SceneTransitionService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &834429699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834429698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e311e7c2467f041ad9d8cc04b40d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionService
+  fadeOutDuration: 0.42
+  fadeInDuration: 0.48
+  fadeOutEase: 10
+  fadeInEase: 12
+  fadeColor: {r: 0.30588236, g: 0.57254905, b: 0.9490197, a: 1}
+--- !u!4 &834429700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834429698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.14366, y: -1.25606, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &837082462
 GameObject:
   m_ObjectHideFlags: 0
@@ -2078,6 +2127,22 @@ PrefabInstance:
     - target: {fileID: 1639873332781235621, guid: 19881dc3099761942949799c1393b4d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4640418197847472339, guid: 19881dc3099761942949799c1393b4d2, type: 3}
       propertyPath: m_Name
@@ -2821,6 +2886,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4640418197847472339, guid: 19881dc3099761942949799c1393b4d2, type: 3}
       propertyPath: m_Name
       value: LevelButton_3
@@ -3312,6 +3393,22 @@ PrefabInstance:
     - target: {fileID: 1639873332781235621, guid: 19881dc3099761942949799c1393b4d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4640418197847472339, guid: 19881dc3099761942949799c1393b4d2, type: 3}
       propertyPath: m_Name
@@ -4169,21 +4266,39 @@ MonoBehaviour:
   - Number: 1
     IsAvailable: 1
     isFinished: 0
+    Scene:
+      sceneAssetGuid: e47bdb84cd81bb24e8b1b2ca5485ab7f
+      sceneName: MainScene
   - Number: 2
     IsAvailable: 0
     isFinished: 0
+    Scene:
+      sceneAssetGuid: 
+      sceneName: 
   - Number: 3
     IsAvailable: 0
     isFinished: 0
+    Scene:
+      sceneAssetGuid: 
+      sceneName: 
   - Number: 4
     IsAvailable: 0
     isFinished: 0
+    Scene:
+      sceneAssetGuid: 
+      sceneName: 
   - Number: 5
     IsAvailable: 0
     isFinished: 0
+    Scene:
+      sceneAssetGuid: 
+      sceneName: 
   - Number: 6
     IsAvailable: 0
     isFinished: 0
+    Scene:
+      sceneAssetGuid: 
+      sceneName: 
 --- !u!4 &1699267501
 Transform:
   m_ObjectHideFlags: 0
@@ -4286,6 +4401,22 @@ PrefabInstance:
     - target: {fileID: 1639873332781235621, guid: 19881dc3099761942949799c1393b4d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4640418197847472339, guid: 19881dc3099761942949799c1393b4d2, type: 3}
       propertyPath: m_Name
@@ -4827,6 +4958,22 @@ PrefabInstance:
     - target: {fileID: 1639873332781235621, guid: 19881dc3099761942949799c1393b4d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319685816483255382, guid: 19881dc3099761942949799c1393b4d2, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4640418197847472339, guid: 19881dc3099761942949799c1393b4d2, type: 3}
       propertyPath: m_Name
@@ -5677,3 +5824,4 @@ SceneRoots:
   - {fileID: 435693767}
   - {fileID: 1637447590}
   - {fileID: 1699267501}
+  - {fileID: 834429700}

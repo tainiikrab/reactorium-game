@@ -20,12 +20,26 @@ public class LevelsUIController : MonoBehaviour, IDisposable
 
     private void Start()
     {
+        BindLevelButtons();
         RefreshLevelsVisuals();
+    }
+
+    private void BindLevelButtons()
+    {
+        for (int i = 0; i < _levelButtons.Length; i++)
+            _levelButtons[i].Bind(i + 1, _levelsController.LoadLevel);
+    }
+
+    private void OnDestroy()
+    {
+        if (_levelsController != null)
+            _levelsController.OnLevelUnlocked -= OnLevelUnlockedHandler;
     }
 
     public void Dispose()
     {
-        _levelsController.OnLevelUnlocked -= OnLevelUnlockedHandler;
+        if (_levelsController != null)
+            _levelsController.OnLevelUnlocked -= OnLevelUnlockedHandler;
     }
 
     private void OnLevelUnlockedHandler(int _)
