@@ -1,26 +1,60 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPerspectiveScaler : MonoBehaviour
 {
-    private IGrabber grabber;
+    private IGrabber _grabber;
+
     [SerializeField] private float minY;
     [SerializeField] private float maxY;
     [SerializeField] private float minScale;
     [SerializeField] private float maxScale;
 
+    private readonly HashSet<Transform> _extraScaleTargets = new();
+
     private void Awake()
     {
-        grabber = GetComponent<IGrabber>();
+        _grabber = GetComponent<IGrabber>();
     }
 
     private void Update()
     {
-        if (grabber.IsDragging)
+        if (_grabber.IsDragging && _grabber.CurrentTarget != null)
+            ApplyScaleForWorldY(_grabber.CurrentTarget.Transform);
+
+        if (_extraScaleTargets.Count == 0)
+            return;
+
+        _reusableExtraBuffer.Clear();
+        foreach (var t in _extraScaleTargets)
         {
-            var target = grabber.CurrentTarget.Transform;
-            var scale = Mathf.Lerp(minScale, maxScale, (target.position.y - minY) / (maxY - minY));
-            target.localScale = new Vector3(scale, scale, 1);
+            if (t != null)
+                _reusableExtraBuffer.Add(t);
         }
+
+        for (var i = 0; i < _reusableExtraBuffer.Count; i++)
+            ApplyScaleForWorldY(_reusableExtraBuffer[i]);
+    }
+
+    private readonly List<Transform> _reusableExtraBuffer = new();
+
+    public void RegisterExtraScaleTarget(Transform target)
+    {
+        if (target == null) return;
+        _extraScaleTargets.Add(target);
+    }
+
+    public void UnregisterExtraScaleTarget(Transform target)
+    {
+        if (target == null) return;
+        _extraScaleTargets.Remove(target);
+    }
+
+    public void ApplyScaleForWorldY(Transform target)
+    {
+        if (target == null) return;
+        float t = Mathf.InverseLerp(minY, maxY, target.position.y);
+        var scale = Mathf.Lerp(minScale, maxScale, t);
+        target.localScale = new Vector3(scale, scale, 1);
     }
 }

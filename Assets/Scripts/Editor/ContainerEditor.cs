@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Container))]
+[CustomEditor(typeof(ChemContainer))]
 public class ContainerEditor : Editor
 {
     private float _editorFillValue;
@@ -13,7 +13,7 @@ public class ContainerEditor : Editor
         GUILayout.Space(8);
         EditorGUILayout.LabelField("Editor Fill Control", EditorStyles.boldLabel);
 
-        var container = (Container)target;
+        var container = (ChemContainer)target;
 
         _editorFillValue = EditorGUILayout.Slider(
             "Fill (0-1)",
@@ -25,7 +25,7 @@ public class ContainerEditor : Editor
         {
             Undo.RecordObject(container, "Set Fill Level");
 
-            var clamped = Mathf.Clamp01(_editorFillValue);
+            float clamped = Mathf.Clamp01(_editorFillValue);
             container.SetFillLevel(clamped);
 
             EditorUtility.SetDirty(container);

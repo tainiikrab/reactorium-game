@@ -25,7 +25,7 @@ public class FillLevelAnimator : MonoBehaviour
     [SerializeField] private float _maxTilt = 25f;
     [SerializeField] private float _inertiaTime = 0.2f;
 
-    private Container _container;
+    private ChemContainer _chemContainer;
 
     private float _currentFillLevel;
     protected float _currentLiquidScale;
@@ -44,16 +44,16 @@ public class FillLevelAnimator : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _container = GetComponentInParent<Container>();
-        _container.OnFillLevelChangedEvent += AnimateFill;
+        _chemContainer = GetComponentInParent<ChemContainer>();
+        _chemContainer.OnFillLevelChangedEvent += AnimateFill;
 
         _currentLiquidScale = _liquid.localScale.x;
         _currentLiquidAngle = _liquid.eulerAngles.z;
 
         LiquidRenderer = _liquid.GetComponent<SpriteRenderer>();
 
-        var fillLevel = _container.CurrentFillLevel;
-        var targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
+        float fillLevel = _chemContainer.CurrentFillLevel;
+        float targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
 
         _liquid.localPosition = new Vector3(
             _liquid.localPosition.x,
@@ -95,13 +95,13 @@ public class FillLevelAnimator : MonoBehaviour
 
     private void UpdateTilt()
     {
-        var localVelocity = transform.InverseTransformDirection(_worldVelocity);
+        Vector3 localVelocity = transform.InverseTransformDirection(_worldVelocity);
 
-        var inertiaTilt = -localVelocity.x * _tiltStrength;
+        float inertiaTilt = -localVelocity.x * _tiltStrength;
         inertiaTilt = Mathf.Clamp(inertiaTilt, -_maxTilt, _maxTilt);
 
-        var currentWorldZ = _liquid.eulerAngles.z;
-        var desiredWorldZ = inertiaTilt;
+        float currentWorldZ = _liquid.eulerAngles.z;
+        float desiredWorldZ = inertiaTilt;
 
         _currentLiquidAngle = Mathf.SmoothDampAngle(
             currentWorldZ,
@@ -116,13 +116,13 @@ public class FillLevelAnimator : MonoBehaviour
 
     private void UpdateScale()
     {
-        var z = transform.eulerAngles.z;
+        float z = transform.eulerAngles.z;
         z = z > 180f ? z - 360f : z;
 
-        var abs = Mathf.Abs(z);
-        var t = 1f - Mathf.Abs(abs - 90f) / 90f;
+        float abs = Mathf.Abs(z);
+        float t = 1f - Mathf.Abs(abs - 90f) / 90f;
 
-        var scaleModifier = Mathf.Lerp(1f, 3f * (_currentFillLevel + 1f), t);
+        float scaleModifier = Mathf.Lerp(1f, 3f * (_currentFillLevel + 1f), t);
 
         _desiredLiquidXScale = scaleModifier;
 
@@ -143,7 +143,7 @@ public class FillLevelAnimator : MonoBehaviour
 
         _currentFillLevel = fillLevel;
 
-        var targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
+        float targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
 
         Tween.LocalPositionY(_liquid, targetY, _fillDuration, _ease)
             .OnComplete(() =>

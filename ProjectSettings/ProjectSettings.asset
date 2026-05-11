@@ -688,7 +688,7 @@ PlayerSettings:
     PS5: 
     QNX: 
     ReservedCFE: DOTWEEN
-    Standalone: 
+    Standalone: SENTIS_ANALYTICS_ENABLED;APP_UI_EDITOR_ONLY
     VisionOS: 
     WebGL: 
     Windows Store Apps: 

@@ -2,13 +2,20 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Container : MonoBehaviour, IDraggable
+public class ChemContainer : MonoBehaviour, IDraggable, IFallsToRestWhenFree
 {
+    [SerializeField] private SpriteRenderer _sprite;
     [SerializeField] private ContainerType _containerType;
     [Range(0, 1)] [SerializeField] private float _currentFillLevel;
     [Range(0, 1)] [SerializeField] private float _maxFillLevel = 1;
     [SerializeField] private float _capacityMl = 1000;
     [SerializeField] private GameObject _hoverSelection;
+
+    [Header("Table / drop height")] [SerializeField]
+    private bool _enableFallToRestHeight = true;
+
+    [SerializeField] private float _minFallHeight = 1.4f;
+
     private Collider2D _collider;
 
     private List<ISubstance> _substances = new();
@@ -29,6 +36,10 @@ public class Container : MonoBehaviour, IDraggable
     public IDraggable Sender { get; set; }
     public bool IsInteracting { get; set; }
     public Transform Transform => transform;
+
+    public bool EnableFallToRest => _enableFallToRestHeight;
+    public float MinFallHeight => _minFallHeight;
+    public SpriteRenderer Sprite => _sprite;
 
     public void ToggleHover(bool toggle)
     {
@@ -76,6 +87,7 @@ public interface IDraggable
     IDraggable Sender { get; set; }
     void ToggleHover(bool toggle);
     void ToggleCollider(bool toggle);
+    SpriteRenderer Sprite { get; }
 }
 
 public enum ContainerType
