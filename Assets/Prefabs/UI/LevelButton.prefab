@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 2319685816483255382}
   - component: {fileID: 3195778593115849371}
   - component: {fileID: 3724519080864171539}
+  - component: {fileID: 606893592182808667}
   m_Layer: 5
   m_Name: LevelButton
   m_TagString: Untagged
@@ -293,3 +294,19 @@ MonoBehaviour:
   releaseDuration: 0.18
   releaseEase: 6
   cancelPressOnExit: 0
+--- !u!114 &606893592182808667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4640418197847472339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b189efacf64bb4385c30059fafb872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHoverScaleTween
+  scaleTarget: {fileID: 0}
+  hoverScale: {x: 1.05, y: 1.05, z: 1}
+  tweenDuration: 0.18
+  easing: 9

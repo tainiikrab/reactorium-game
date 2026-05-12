@@ -998,6 +998,7 @@ GameObject:
   - component: {fileID: 537437836}
   - component: {fileID: 537437838}
   - component: {fileID: 537437839}
+  - component: {fileID: 537437840}
   m_Layer: 5
   m_Name: ReturnButton
   m_TagString: Untagged
@@ -1126,6 +1127,22 @@ MonoBehaviour:
   releaseDuration: 0.38
   releaseEase: 27
   cancelPressOnExit: 0
+--- !u!114 &537437840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537437834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b189efacf64bb4385c30059fafb872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHoverScaleTween
+  scaleTarget: {fileID: 0}
+  hoverScale: {x: 1.05, y: 1.05, z: 1}
+  tweenDuration: 0.18
+  easing: 9
 --- !u!1 &579383282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,6 +1285,7 @@ GameObject:
   - component: {fileID: 634713175}
   - component: {fileID: 634713174}
   - component: {fileID: 634713173}
+  - component: {fileID: 634713177}
   m_Layer: 5
   m_Name: ReturnButton
   m_TagString: Untagged
@@ -1396,6 +1414,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634713171}
   m_CullTransparentMesh: 1
+--- !u!114 &634713177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634713171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22b189efacf64bb4385c30059fafb872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonHoverScaleTween
+  scaleTarget: {fileID: 0}
+  hoverScale: {x: 1.05, y: 1.05, z: 1}
+  tweenDuration: 0.18
+  easing: 9
 --- !u!1001 &709176955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1512,10 +1546,6 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
-    - target: {fileID: 6000609133689442322, guid: 263bdee33804ab644a0d5652327a7d55, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 3ca43e33d7b5f5644a6c213bf98bd5fb, type: 3}
     - target: {fileID: 9089074105548175676, guid: 263bdee33804ab644a0d5652327a7d55, type: 3}
       propertyPath: m_Name
       value: SettingsButton
@@ -1707,8 +1737,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1149494738}
-  - {fileID: 537437835}
   - {fileID: 118767992}
+  - {fileID: 537437835}
   m_Father: {fileID: 734531254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2635,10 +2665,6 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
-    - target: {fileID: 6000609133689442322, guid: 263bdee33804ab644a0d5652327a7d55, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 3ca43e33d7b5f5644a6c213bf98bd5fb, type: 3}
     - target: {fileID: 9089074105548175676, guid: 263bdee33804ab644a0d5652327a7d55, type: 3}
       propertyPath: m_Name
       value: ExitButton
@@ -4349,7 +4375,7 @@ MonoBehaviour:
     isFinished: 0
     Scene:
       sceneAssetGuid: e47bdb84cd81bb24e8b1b2ca5485ab7f
-      sceneName: MainScene
+      sceneName: DefaultLevel
   - Number: 2
     IsAvailable: 0
     isFinished: 0

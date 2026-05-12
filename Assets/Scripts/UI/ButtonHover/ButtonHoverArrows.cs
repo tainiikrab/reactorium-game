@@ -1,18 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using TMPro;
 using PrimeTween;
 
-public class ButtonHoverVisual : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonHoverArrows : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [Header("Visual")] [SerializeField] private Image targetImage;
-    [SerializeField] private Sprite hoverSprite;
-
-    [SerializeField] private TMP_Text label;
-    [SerializeField] private Color hoverTextColor = Color.white;
-
-    [Header("Arrows")] [SerializeField] private RectTransform leftArrow;
+    [Header("Arrows")]
+    [SerializeField] private bool useArrows = true;
+    [SerializeField] private RectTransform leftArrow;
     [SerializeField] private RectTransform rightArrow;
 
     [SerializeField] private float arrowOffset = 24f;
@@ -22,12 +16,8 @@ public class ButtonHoverVisual : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private CanvasGroup _leftGroup;
     private CanvasGroup _rightGroup;
 
-    private Sprite _defaultSprite;
-    private Color _defaultTextColor;
-
     private Vector2 _leftShown;
     private Vector2 _rightShown;
-
     private Vector2 _leftHidden;
     private Vector2 _rightHidden;
 
@@ -38,14 +28,36 @@ public class ButtonHoverVisual : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Awake()
     {
-        if (targetImage != null)
-            _defaultSprite = targetImage.sprite;
+        if (useArrows)
+        {
+            SetupArrow(leftArrow, out _leftGroup, out _leftShown, out _leftHidden, Vector2.left);
+            SetupArrow(rightArrow, out _rightGroup, out _rightShown, out _rightHidden, Vector2.right);
+        }
+        else
+        {
+            if (leftArrow != null)
+                leftArrow.gameObject.SetActive(false);
+            if (rightArrow != null)
+                rightArrow.gameObject.SetActive(false);
+        }
+    }
 
-        if (label != null)
-            _defaultTextColor = label.color;
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!useArrows)
+            return;
 
-        SetupArrow(leftArrow, out _leftGroup, out _leftShown, out _leftHidden, Vector2.left);
-        SetupArrow(rightArrow, out _rightGroup, out _rightShown, out _rightHidden, Vector2.right);
+        ShowArrow(leftArrow, _leftGroup, _leftShown, ref _leftMoveTween, ref _leftAlphaTween);
+        ShowArrow(rightArrow, _rightGroup, _rightShown, ref _rightMoveTween, ref _rightAlphaTween);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!useArrows)
+            return;
+
+        HideArrow(leftArrow, _leftGroup, _leftHidden, ref _leftMoveTween, ref _leftAlphaTween);
+        HideArrow(rightArrow, _rightGroup, _rightHidden, ref _rightMoveTween, ref _rightAlphaTween);
     }
 
     private void SetupArrow(
@@ -73,30 +85,6 @@ public class ButtonHoverVisual : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         group.alpha = 0f;
         group.gameObject.SetActive(false);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (targetImage != null && hoverSprite != null)
-            targetImage.sprite = hoverSprite;
-
-        if (label != null)
-            label.color = hoverTextColor;
-
-        ShowArrow(leftArrow, _leftGroup, _leftShown, ref _leftMoveTween, ref _leftAlphaTween);
-        ShowArrow(rightArrow, _rightGroup, _rightShown, ref _rightMoveTween, ref _rightAlphaTween);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (targetImage != null)
-            targetImage.sprite = _defaultSprite;
-
-        if (label != null)
-            label.color = _defaultTextColor;
-
-        HideArrow(leftArrow, _leftGroup, _leftHidden, ref _leftMoveTween, ref _leftAlphaTween);
-        HideArrow(rightArrow, _rightGroup, _rightHidden, ref _rightMoveTween, ref _rightAlphaTween);
     }
 
     private void ShowArrow(

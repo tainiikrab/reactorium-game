@@ -99,11 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808eefcd6b657444d9a1697952aad23f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Container
+  _sprite: {fileID: 0}
   _containerType: 0
   _currentFillLevel: 0.072
   _maxFillLevel: 1
   _capacityMl: 1000
   _hoverSelection: {fileID: 1244540129501455240}
+  _enableFallToRestHeight: 1
+  _minFallHeight: 1.4
   <InteractPoint>k__BackingField: {fileID: 8112176494518137489}
   _editorFillValue: 0.102
 --- !u!1 &2967476494391431009
@@ -319,7 +322,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 10.24, y: 16.37}
+  m_Size: {x: 10, y: 16.36}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
