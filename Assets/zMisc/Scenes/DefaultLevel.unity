@@ -523,9 +523,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d05a8b4343f8e47a52152b0c996f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIPopup
-  container: {fileID: 6051509929034042919}
-  duration: 0.4
-  slide: 68
+  _container: {fileID: 6051509929034042919}
+  _canvasGroup: {fileID: 90360228}
+  _duration: 0.4
+  _slide: 68
 --- !u!225 &90360228
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -535,8 +536,8 @@ CanvasGroup:
   m_GameObject: {fileID: 90360223}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &109741893
 GameObject:
@@ -2449,6 +2450,69 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1925078850622509167, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
   m_PrefabInstance: {fileID: 138232974}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1345893381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1345893383}
+  - component: {fileID: 1345893382}
+  m_Layer: 0
+  m_Name: SceneContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1345893382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345893381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zenject::Zenject.SceneContext
+  _scriptableObjectInstallers: []
+  _monoInstallers: []
+  _installerPrefabs: []
+  _autoRun: 1
+  OnPreInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPreResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  _parentNewObjectsUnderSceneContext: 0
+  _contractNames: []
+  _parentContractNames: []
+--- !u!4 &1345893383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345893381}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1358039611
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,8 +3882,31 @@ PrefabInstance:
     - {fileID: 3671410011231742831, guid: d2d61eb328ef7fd48b54d104b2bc7ee3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7963875689262052992, guid: d2d61eb328ef7fd48b54d104b2bc7ee3, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1756801453108819689}
   m_SourcePrefab: {fileID: 100100000, guid: d2d61eb328ef7fd48b54d104b2bc7ee3, type: 3}
+--- !u!1 &1756801453108819688 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7963875689262052992, guid: d2d61eb328ef7fd48b54d104b2bc7ee3, type: 3}
+  m_PrefabInstance: {fileID: 1756801453108819687}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1756801453108819689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756801453108819688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12a957f0cea88b049bb10efeb6012983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionButton
+  scene:
+    sceneAssetGuid: 111bbafbc1c89e9409ef6fb52b32ff1f
+    sceneName: MainMenu
 --- !u!1001 &1965563017365108015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4306,3 +4393,4 @@ SceneRoots:
   - {fileID: 400701203}
   - {fileID: 1124550745}
   - {fileID: 670476737}
+  - {fileID: 1345893383}

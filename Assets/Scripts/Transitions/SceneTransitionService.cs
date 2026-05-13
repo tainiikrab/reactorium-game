@@ -5,11 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// Полноэкранный fade и асинхронная смена сцены. Живёт в DontDestroyOnLoad, чтобы пережить выгрузку меню.
+/// Полноэкранный fade и асинхронная смена сцены. Живёт на ProjectContext, чтобы пережить выгрузку любой сцены.
 /// </summary>
-public sealed class SceneTransitionService : MonoBehaviour
+public sealed class SceneTransitionService : MonoBehaviour, ISceneTransitionService
 {
-    public static SceneTransitionService Instance;
     private static Sprite _whiteUiSprite;
 
     [Header("Fade")] [SerializeField] private float fadeOutDuration = 0.42f;
@@ -34,22 +33,11 @@ public sealed class SceneTransitionService : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
         EnsureBuilt();
     }
 
     private void OnDestroy()
     {
-        if (Instance == this)
-            Instance = null;
-
         if (_fadeMaterialInstance != null)
             Destroy(_fadeMaterialInstance);
     }

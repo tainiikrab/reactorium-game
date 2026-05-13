@@ -6,11 +6,14 @@ public class LevelsController : MonoBehaviour, ILevelsController
 {
     [SerializeField] private Level[] _levels;
 
+    private ISceneTransitionService _sceneTransitions;
+
     public event Action<int> OnLevelUnlocked;
 
     [Inject]
-    private void Initialize()
+    private void Initialize(ISceneTransitionService sceneTransitions)
     {
+        _sceneTransitions = sceneTransitions;
         _levels[0].IsAvailable = true;
     }
 
@@ -41,7 +44,7 @@ public class LevelsController : MonoBehaviour, ILevelsController
             return;
         }
 
-        SceneTransitionService.Instance.LoadScene(scene.SceneName);
+        _sceneTransitions.LoadScene(scene.SceneName);
     }
 
 

@@ -9,13 +9,13 @@ public class UIPopup : MonoBehaviour
     private const float CloseScaleMult = 0.89f;
     private const float CloseSlideFactor = 0.55f;
 
-    private CanvasGroup _canvasGroup;
+    [SerializeField] private RectTransform _container;
+    [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private float _duration = 0.4f;
 
-    [SerializeField] private RectTransform container;
-
-    [SerializeField] private float duration = 0.4f;
     [Tooltip("Vertical travel in anchored pixels: drops in from above on open, continues downward on close.")]
-    [SerializeField] private float slide = 68f;
+    [SerializeField]
+    private float _slide = 68f;
 
     private Vector2 _containerShownPos;
     private Vector3 _containerShownScale;
@@ -23,22 +23,10 @@ public class UIPopup : MonoBehaviour
 
     private bool _refsCached;
 
-    private void EnsureRefs()
-    {
-        if (_refsCached)
-            return;
-
-        _refsCached = true;
-
-        _canvasGroup = GetComponent<CanvasGroup>();
-        if (container == null)
-            container = transform as RectTransform;
-    }
-
     private void SyncRestPoseFromLayout()
     {
-        _containerShownPos = container.anchoredPosition;
-        _containerShownScale = container.localScale;
+        _containerShownPos = _container.anchoredPosition;
+        _containerShownScale = _container.localScale;
     }
 
     private void OnDestroy()
@@ -49,23 +37,21 @@ public class UIPopup : MonoBehaviour
 
     public void CloseInstant()
     {
-        EnsureRefs();
         StopTransition();
 
-        if (container.gameObject.activeSelf)
+        if (_container.gameObject.activeSelf)
             SyncRestPoseFromLayout();
 
         RestoreContainerPose();
         _canvasGroup.alpha = 0f;
         _canvasGroup.blocksRaycasts = false;
         _canvasGroup.interactable = false;
-        container.gameObject.SetActive(false);
+        _container.gameObject.SetActive(false);
     }
 
     public void CloseAnimated()
     {
-        EnsureRefs();
-        if (!container.gameObject.activeSelf)
+        if (!_container.gameObject.activeSelf)
             return;
 
         StopTransition();
@@ -74,30 +60,29 @@ public class UIPopup : MonoBehaviour
         _canvasGroup.blocksRaycasts = false;
         _canvasGroup.interactable = false;
 
-        float closeDuration = duration * 0.68f;
-        Vector2 posEnd = _containerShownPos + new Vector2(0f, -slide * CloseSlideFactor);
+        float closeDuration = _duration * 0.68f;
+        Vector2 posEnd = _containerShownPos + new Vector2(0f, -_slide * CloseSlideFactor);
 
         _sequence = Sequence.Create();
         _sequence.Group(Tween.Alpha(_canvasGroup, 0f, closeDuration, Ease.InCubic));
-        _sequence.Group(Tween.Scale(container, _containerShownScale * CloseScaleMult, closeDuration, Ease.InBack));
-        _sequence.Group(Tween.UIAnchoredPosition(container, posEnd, closeDuration, Ease.InQuad));
+        _sequence.Group(Tween.Scale(_container, _containerShownScale * CloseScaleMult, closeDuration, Ease.InBack));
+        _sequence.Group(Tween.UIAnchoredPosition(_container, posEnd, closeDuration, Ease.InQuad));
         _sequence.ChainCallback(() =>
         {
             RestoreContainerPose();
             _canvasGroup.alpha = 0f;
-            container.gameObject.SetActive(false);
+            _container.gameObject.SetActive(false);
         });
     }
 
     public void Open()
     {
-        EnsureRefs();
         StopTransition();
 
-        container.gameObject.SetActive(true);
+        _container.gameObject.SetActive(true);
 
         Canvas.ForceUpdateCanvases();
-        LayoutRebuilder.ForceRebuildLayoutImmediate(container);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_container);
 
         SyncRestPoseFromLayout();
 
@@ -105,15 +90,15 @@ public class UIPopup : MonoBehaviour
         _canvasGroup.blocksRaycasts = true;
         _canvasGroup.interactable = true;
 
-        Vector2 posStart = _containerShownPos + new Vector2(0f, slide);
-        container.anchoredPosition = posStart;
-        container.localScale = _containerShownScale * OpenScaleFrom;
+        Vector2 posStart = _containerShownPos + new Vector2(0f, _slide);
+        _container.anchoredPosition = posStart;
+        _container.localScale = _containerShownScale * OpenScaleFrom;
 
         _sequence = Sequence.Create();
-        float fadeDur = duration * 0.88f;
+        float fadeDur = _duration * 0.88f;
         _sequence.Group(Tween.Alpha(_canvasGroup, 1f, fadeDur, Ease.OutQuad));
-        _sequence.Group(Tween.Scale(container, _containerShownScale, duration, Ease.OutBack));
-        _sequence.Group(Tween.UIAnchoredPosition(container, _containerShownPos, duration, Ease.OutCubic));
+        _sequence.Group(Tween.Scale(_container, _containerShownScale, _duration, Ease.OutBack));
+        _sequence.Group(Tween.UIAnchoredPosition(_container, _containerShownPos, _duration, Ease.OutCubic));
     }
 
     private void StopTransition()
@@ -124,7 +109,7 @@ public class UIPopup : MonoBehaviour
 
     private void RestoreContainerPose()
     {
-        container.anchoredPosition = _containerShownPos;
-        container.localScale = _containerShownScale;
+        _container.anchoredPosition = _containerShownPos;
+        _container.localScale = _containerShownScale;
     }
 }

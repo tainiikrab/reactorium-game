@@ -1874,57 +1874,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805500285}
   m_CullTransparentMesh: 1
---- !u!1 &834429698
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 834429700}
-  - component: {fileID: 834429699}
-  m_Layer: 0
-  m_Name: SceneTransitionService
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &834429699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834429698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9e311e7c2467f041ad9d8cc04b40d12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionService
-  fadeOutDuration: 0.42
-  fadeInDuration: 0.48
-  fadeOutEase: 10
-  fadeInEase: 12
-  fadeColor: {r: 0.38823533, g: 0.7176471, b: 0.9960785, a: 1}
-  fadePatternMaterial: {fileID: 2100000, guid: 3c45cc283a15ade46b7ebce399c6c5cf, type: 2}
-  patternOpacity: 0.481
---- !u!4 &834429700
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 834429698}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.14366, y: -1.25606, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &837082462
 GameObject:
   m_ObjectHideFlags: 0
@@ -5976,5 +5925,4 @@ SceneRoots:
   - {fileID: 435693767}
   - {fileID: 1637447590}
   - {fileID: 1699267501}
-  - {fileID: 834429700}
   - {fileID: 2107867013}
