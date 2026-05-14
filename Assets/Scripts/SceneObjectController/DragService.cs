@@ -1,5 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using ChemSimDiploma.Chemistry;
+namespace ChemSimDiploma.SceneObjectController
+{
 
 public class DragService
 {
@@ -51,4 +54,5 @@ public class DragService
         pos.y = Mathf.Clamp(pos.y, min.y, max.y);
         return pos;
     }
+}
 }

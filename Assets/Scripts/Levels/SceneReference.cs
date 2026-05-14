@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+namespace ChemSimDiploma.Levels
+{
 
 /// <summary>
 /// Ссылка на сцену для инспектора: хранится GUID ассета и кэш имени файла.
@@ -14,4 +16,5 @@ public class SceneReference
     public string SceneName => sceneName;
 
     public bool IsValid => !string.IsNullOrEmpty(sceneName);
+}
 }

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ChemSimDiploma.SceneObjectController;
+namespace ChemSimDiploma.Chemistry
+{
 
 public class ChemContainer : MonoBehaviour, IDraggable, IFallsToRestWhenFree
 {
@@ -94,4 +97,5 @@ public enum ContainerType
 {
     Flask,
     Beaker
+}
 }

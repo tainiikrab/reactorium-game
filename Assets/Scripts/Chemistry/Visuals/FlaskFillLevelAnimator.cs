@@ -1,5 +1,7 @@
-﻿using PrimeTween;
+using PrimeTween;
 using UnityEngine;
+namespace ChemSimDiploma.Chemistry.Visuals
+{
 
 public class FlaskFillLevelAnimator : FillLevelAnimator
 {
@@ -23,4 +25,5 @@ public class FlaskFillLevelAnimator : FillLevelAnimator
         Tween.Scale(_liquid, new Vector3(_desiredLiquidXScale * targetScale, targetScale, 1f), _fillDuration, _ease)
             .OnComplete(() => { isChangingScale = false; });
     }
+}
 }

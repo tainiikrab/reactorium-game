@@ -1,8 +1,10 @@
-п»їusing System;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+namespace ChemSimDiploma.UI
+{
 
 public class LevelButton : MonoBehaviour
 {
@@ -21,7 +23,7 @@ public class LevelButton : MonoBehaviour
     }
 
     /// <summary>
-    /// РЎРІСЏР·С‹РІР°РµС‚ РєРЅРѕРїРєСѓ СЃ РЅРѕРјРµСЂРѕРј СѓСЂРѕРІРЅСЏ Рё РєРѕР»Р±СЌРєРѕРј РІС‹Р±РѕСЂР°.
+    /// Связывает кнопку с номером уровня и колбэком выбора.
     /// </summary>
     public void Bind(int levelNumber, Action<int> onLevelSelected)
     {
@@ -47,4 +49,5 @@ public class LevelButton : MonoBehaviour
         _levelNumberLable.color = IsAvailable ? _activeColor : _inactiveColor;
         _button.interactable = IsAvailable;
     }
+}
 }

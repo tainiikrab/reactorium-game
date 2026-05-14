@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+namespace ChemSimDiploma.UI.ButtonHover
+{
 
 public class ButtonHoverColorTint : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -39,4 +41,5 @@ public class ButtonHoverColorTint : MonoBehaviour, IPointerEnterHandler, IPointe
         if (label != null)
             label.color = _defaultTextColor;
     }
+}
 }

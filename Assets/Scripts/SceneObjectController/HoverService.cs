@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using ChemSimDiploma.Chemistry;
+namespace ChemSimDiploma.SceneObjectController
+{
 
 public class HoverService
 {
@@ -85,4 +88,5 @@ public class HoverService
         world.z = 0;
         return world;
     }
+}
 }

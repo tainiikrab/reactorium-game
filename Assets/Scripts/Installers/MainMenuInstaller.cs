@@ -1,4 +1,7 @@
 using Zenject;
+using ChemSimDiploma.Levels;
+namespace ChemSimDiploma.Installers
+{
 
 public class MainMenuInstaller : MonoInstaller
 {
@@ -12,4 +15,5 @@ public class MainMenuInstaller : MonoInstaller
             .FromComponentInHierarchy()
             .AsSingle();
     }
+}
 }

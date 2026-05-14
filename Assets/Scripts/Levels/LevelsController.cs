@@ -1,6 +1,9 @@
-п»їusing System;
+using System;
 using UnityEngine;
 using Zenject;
+using ChemSimDiploma.Transitions;
+namespace ChemSimDiploma.Levels
+{
 
 public class LevelsController : MonoBehaviour, ILevelsController
 {
@@ -25,13 +28,13 @@ public class LevelsController : MonoBehaviour, ILevelsController
 
     public Level[] Levels => _levels;
 
-    /// <param name="levelNumber">РќРѕРјРµСЂ СѓСЂРѕРІРЅСЏ РѕС‚ 1</param>
+    /// <param name="levelNumber">Номер уровня от 1</param>
     public void LoadLevel(int levelNumber)
     {
         if (levelNumber < 1 || levelNumber > _levels.Length)
         {
-            Debug.LogError(
-                $"{nameof(LevelsController)}: РЅРѕРјРµСЂ СѓСЂРѕРІРЅСЏ РІРЅРµ РґРёР°РїР°Р·РѕРЅР° 1..{_levels.Length}: {levelNumber}");
+            UnityEngine.Debug.LogError(
+                $"{nameof(LevelsController)}: номер уровня вне диапазона 1..{_levels.Length}: {levelNumber}");
             return;
         }
 
@@ -39,8 +42,8 @@ public class LevelsController : MonoBehaviour, ILevelsController
         SceneReference scene = _levels[slotIndex].Scene;
         if (!scene.IsValid)
         {
-            Debug.LogError(
-                $"{nameof(LevelsController)}: РґР»СЏ СѓСЂРѕРІРЅСЏ {levelNumber} РЅРµ РЅР°Р·РЅР°С‡РµРЅР° СЃС†РµРЅР° РІ РјР°СЃСЃРёРІРµ {nameof(_levels)}.");
+            UnityEngine.Debug.LogError(
+                $"{nameof(LevelsController)}: для уровня {levelNumber} не назначена сцена в массиве {nameof(_levels)}.");
             return;
         }
 
@@ -55,4 +58,5 @@ public class LevelsController : MonoBehaviour, ILevelsController
         UnlockLevel(2);
     }
 #endif
+}
 }

@@ -1,47 +1,51 @@
 using System.IO;
+using ChemSimDiploma.Levels;
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(SceneReference))]
-public sealed class SceneReferenceDrawer : PropertyDrawer
+namespace ChemSimDiploma.Editor
 {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    [CustomPropertyDrawer(typeof(SceneReference))]
+    public sealed class SceneReferenceDrawer : PropertyDrawer
     {
-        EditorGUI.BeginProperty(position, label, property);
-
-        var guidProp = property.FindPropertyRelative("sceneAssetGuid");
-        var nameProp = property.FindPropertyRelative("sceneName");
-
-        var scene = SceneReferenceDrawerHelpers.LoadSceneByGuid(guidProp.stringValue);
-
-        EditorGUI.BeginChangeCheck();
-        var newScene = EditorGUI.ObjectField(position, label, scene, typeof(SceneAsset), false) as SceneAsset;
-        if (EditorGUI.EndChangeCheck())
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            if (newScene == null)
+            EditorGUI.BeginProperty(position, label, property);
+
+            SerializedProperty guidProp = property.FindPropertyRelative("sceneAssetGuid");
+            SerializedProperty nameProp = property.FindPropertyRelative("sceneName");
+
+            SceneAsset scene = SceneReferenceDrawerHelpers.LoadSceneByGuid(guidProp.stringValue);
+
+            EditorGUI.BeginChangeCheck();
+            var newScene = EditorGUI.ObjectField(position, label, scene, typeof(SceneAsset), false) as SceneAsset;
+            if (EditorGUI.EndChangeCheck())
             {
-                guidProp.stringValue = string.Empty;
-                nameProp.stringValue = string.Empty;
+                if (newScene == null)
+                {
+                    guidProp.stringValue = string.Empty;
+                    nameProp.stringValue = string.Empty;
+                }
+                else
+                {
+                    string path = AssetDatabase.GetAssetPath(newScene);
+                    guidProp.stringValue = AssetDatabase.AssetPathToGUID(path);
+                    nameProp.stringValue = Path.GetFileNameWithoutExtension(path);
+                }
             }
-            else
-            {
-                var path = AssetDatabase.GetAssetPath(newScene);
-                guidProp.stringValue = AssetDatabase.AssetPathToGUID(path);
-                nameProp.stringValue = Path.GetFileNameWithoutExtension(path);
-            }
+
+            EditorGUI.EndProperty();
         }
-
-        EditorGUI.EndProperty();
     }
-}
 
-internal static class SceneReferenceDrawerHelpers
-{
-    public static SceneAsset LoadSceneByGuid(string guid)
+    internal static class SceneReferenceDrawerHelpers
     {
-        if (string.IsNullOrEmpty(guid))
-            return null;
-        var path = AssetDatabase.GUIDToAssetPath(guid);
-        return string.IsNullOrEmpty(path) ? null : AssetDatabase.LoadAssetAtPath<SceneAsset>(path);
+        public static SceneAsset LoadSceneByGuid(string guid)
+        {
+            if (string.IsNullOrEmpty(guid))
+                return null;
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            return string.IsNullOrEmpty(path) ? null : AssetDatabase.LoadAssetAtPath<SceneAsset>(path);
+        }
     }
 }

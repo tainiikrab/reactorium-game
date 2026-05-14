@@ -1,8 +1,11 @@
-﻿using System;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using ChemSimDiploma.UI;
+namespace ChemSimDiploma.Levels
+{
 
 public class LevelsUIController : MonoBehaviour, IDisposable
 {
@@ -58,4 +61,5 @@ public class LevelsUIController : MonoBehaviour, IDisposable
 
         _levelSegments.Last().enabled = _levelsController.Levels.Last().isFinished;
     }
+}
 }

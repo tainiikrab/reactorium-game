@@ -2,6 +2,9 @@ using System;
 using UnityEngine.UI;
 using UnityEngine;
 using Zenject;
+using ChemSimDiploma.Levels;
+namespace ChemSimDiploma.Transitions
+{
 
 /// <summary>
 /// Релэй для UI-кнопок в сценах уровней: получает сервис переходов через Zenject
@@ -43,7 +46,7 @@ public sealed class SceneTransitionButton : MonoBehaviour
     {
         if (!scene.IsValid)
         {
-            Debug.LogError($"{nameof(SceneTransitionButton)}: поле {nameof(scene)} не назначено на {name}.");
+            UnityEngine.Debug.LogError($"{nameof(SceneTransitionButton)}: поле {nameof(scene)} не назначено на {name}.");
             return;
         }
 
@@ -54,7 +57,7 @@ public sealed class SceneTransitionButton : MonoBehaviour
     {
         if (_sceneTransitions == null)
         {
-            Debug.LogError(
+            UnityEngine.Debug.LogError(
                 $"{nameof(SceneTransitionButton)}: сервис не внедрён. Убедитесь, что в сцене есть SceneContext, " +
                 "а ProjectContext.prefab лежит в Resources с биндингом SceneTransitionService.");
             return;
@@ -62,4 +65,5 @@ public sealed class SceneTransitionButton : MonoBehaviour
 
         _sceneTransitions.LoadScene(sceneName);
     }
+}
 }

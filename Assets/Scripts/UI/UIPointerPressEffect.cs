@@ -2,6 +2,8 @@ using PrimeTween;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+namespace ChemSimDiploma.UI
+{
 
 /// <summary>
 /// UI-фидбек: равномерно чуть уменьшить при зажатии и вернуть скейл при отпускании.
@@ -120,4 +122,5 @@ public class UIPointerPressEffect : MonoBehaviour, IPointerDownHandler, IPointer
         releaseDuration = Mathf.Max(0.01f, releaseDuration);
     }
 #endif
+}
 }

@@ -1,5 +1,10 @@
-﻿public interface IGrabber
+using ChemSimDiploma.Chemistry;
+namespace ChemSimDiploma.SceneObjectController
+{
+
+public interface IGrabber
 {
     IDraggable CurrentTarget { get; }
     bool IsDragging { get; }
+}
 }

@@ -1,4 +1,7 @@
 using Zenject;
+using ChemSimDiploma.Transitions;
+namespace ChemSimDiploma.Installers
+{
 
 /// <summary>
 /// Биндинги, живущие в ProjectContext: общие сервисы, переживающие смену сцен.
@@ -12,4 +15,5 @@ public class ProjectInstaller : MonoInstaller
             .FromComponentInHierarchy()
             .AsSingle();
     }
+}
 }

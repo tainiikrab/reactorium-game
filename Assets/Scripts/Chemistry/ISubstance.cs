@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
+namespace ChemSimDiploma.Chemistry
+{
 
 public class H2O : ISubstance
 {
@@ -25,4 +27,5 @@ public enum AggregateState
     Solid,
     Liquid,
     Gas
+}
 }

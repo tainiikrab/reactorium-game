@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using PrimeTween;
+namespace ChemSimDiploma.UI.ButtonHover
+{
 
 public class ButtonHoverScaleTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -37,4 +39,5 @@ public class ButtonHoverScaleTween : MonoBehaviour, IPointerEnterHandler, IPoint
         _scaleTween.Stop();
         _scaleTween = Tween.Scale(scaleTarget, _normalScale, tweenDuration, easing);
     }
+}
 }

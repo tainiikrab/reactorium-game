@@ -3,6 +3,8 @@ using UnityEngine.Events;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
+namespace ChemSimDiploma.UI
+{
 
 public class UIPanelSlideTransition : MonoBehaviour
 {
@@ -240,4 +242,5 @@ public class UIPanelSlideTransition : MonoBehaviour
             ApplyIdleLayout();
         }
     }
+}
 }

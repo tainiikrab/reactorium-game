@@ -1,34 +1,38 @@
-﻿using UnityEditor;
+﻿using ChemSimDiploma.Chemistry;
+using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ChemContainer))]
-public class ContainerEditor : Editor
+namespace ChemSimDiploma.Editor
 {
-    private float _editorFillValue;
-
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(ChemContainer))]
+    public class ContainerEditor : UnityEditor.Editor
     {
-        DrawDefaultInspector();
+        private float _editorFillValue;
 
-        GUILayout.Space(8);
-        EditorGUILayout.LabelField("Editor Fill Control", EditorStyles.boldLabel);
-
-        var container = (ChemContainer)target;
-
-        _editorFillValue = EditorGUILayout.Slider(
-            "Fill (0-1)",
-            _editorFillValue,
-            0f,
-            1f);
-
-        if (GUILayout.Button("Apply Fill Level"))
+        public override void OnInspectorGUI()
         {
-            Undo.RecordObject(container, "Set Fill Level");
+            DrawDefaultInspector();
 
-            float clamped = Mathf.Clamp01(_editorFillValue);
-            container.SetFillLevel(clamped);
+            GUILayout.Space(8);
+            EditorGUILayout.LabelField("Editor Fill Control", EditorStyles.boldLabel);
 
-            EditorUtility.SetDirty(container);
+            var container = (ChemContainer)target;
+
+            _editorFillValue = EditorGUILayout.Slider(
+                "Fill (0-1)",
+                _editorFillValue,
+                0f,
+                1f);
+
+            if (GUILayout.Button("Apply Fill Level"))
+            {
+                Undo.RecordObject(container, "Set Fill Level");
+
+                float clamped = Mathf.Clamp01(_editorFillValue);
+                container.SetFillLevel(clamped);
+
+                EditorUtility.SetDirty(container);
+            }
         }
     }
 }

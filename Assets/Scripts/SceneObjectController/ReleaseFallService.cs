@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using PrimeTween;
 using UnityEngine;
+using ChemSimDiploma.Chemistry;
+namespace ChemSimDiploma.SceneObjectController
+{
 
 public class ReleaseFallService
 {
@@ -84,4 +87,5 @@ public class ReleaseFallService
         if (_scaler != null && t != null)
             _scaler.UnregisterExtraScaleTarget(t);
     }
+}
 }

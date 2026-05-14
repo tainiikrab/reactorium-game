@@ -1,6 +1,8 @@
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
+namespace ChemSimDiploma.UI
+{
 
 /// Active root, CanvasGroup alpha 0 at start; container child inactive. Open enables container and plays tweens.
 public class UIPopup : MonoBehaviour
@@ -112,4 +114,5 @@ public class UIPopup : MonoBehaviour
         _container.anchoredPosition = _containerShownPos;
         _container.localScale = _containerShownScale;
     }
+}
 }

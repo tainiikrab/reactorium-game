@@ -1,3 +1,6 @@
+namespace ChemSimDiploma.Transitions
+{
+
 /// <summary>
 /// Сервис плавного перехода между сценами. Живёт в ProjectContext, доступен через Zenject.
 /// </summary>
@@ -7,4 +10,5 @@ public interface ISceneTransitionService
     /// Запускает переход: затемнение, асинхронная загрузка, проявление новой сцены.
     /// </summary>
     void LoadScene(string sceneName);
+}
 }

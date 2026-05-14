@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using PrimeTween;
+namespace ChemSimDiploma.UI.ButtonHover
+{
 
 public class ButtonHoverArrows : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -127,4 +129,5 @@ public class ButtonHoverArrows : MonoBehaviour, IPointerEnterHandler, IPointerEx
                     group.gameObject.SetActive(false);
             });
     }
+}
 }

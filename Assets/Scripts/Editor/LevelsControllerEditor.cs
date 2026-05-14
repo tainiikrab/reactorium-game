@@ -1,58 +1,60 @@
 using System.IO;
+using ChemSimDiploma.Levels;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(LevelsController))]
-public sealed class LevelsControllerEditor : Editor
+namespace ChemSimDiploma.Editor
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(LevelsController))]
+    public sealed class LevelsControllerEditor : UnityEditor.Editor
     {
-        serializedObject.Update();
-        DrawDefaultInspector();
-
-        var levelsProp = serializedObject.FindProperty("_levels");
-        if (levelsProp == null || !levelsProp.isArray)
+        public override void OnInspectorGUI()
         {
+            serializedObject.Update();
+            DrawDefaultInspector();
+
+            SerializedProperty levelsProp = serializedObject.FindProperty("_levels");
+            if (levelsProp == null || !levelsProp.isArray)
+            {
+                serializedObject.ApplyModifiedProperties();
+                return;
+            }
+
+            for (int i = 0; i < levelsProp.arraySize; i++)
+            {
+                SerializedProperty levelProp = levelsProp.GetArrayElementAtIndex(i);
+                SerializedProperty sceneRefProp = levelProp.FindPropertyRelative(nameof(Level.Scene));
+                if (sceneRefProp == null)
+                    continue;
+
+                SerializedProperty sceneNameProp = sceneRefProp.FindPropertyRelative("sceneName");
+                string sceneName = sceneNameProp?.stringValue;
+                if (string.IsNullOrEmpty(sceneName))
+                {
+                    EditorGUILayout.HelpBox($"Уровень [{i}]: сцена не назначена.", MessageType.Warning);
+                    continue;
+                }
+
+                if (!IsSceneInEnabledBuildSettings(sceneName))
+                    EditorGUILayout.HelpBox(
+                        $"Уровень [{i}] («{sceneName}»): сцена не добавлена в Build Settings или выключена.",
+                        MessageType.Error);
+            }
+
             serializedObject.ApplyModifiedProperties();
-            return;
         }
 
-        for (var i = 0; i < levelsProp.arraySize; i++)
+        private static bool IsSceneInEnabledBuildSettings(string sceneNameWithoutExtension)
         {
-            var levelProp = levelsProp.GetArrayElementAtIndex(i);
-            var sceneRefProp = levelProp.FindPropertyRelative(nameof(Level.Scene));
-            if (sceneRefProp == null)
-                continue;
-
-            var sceneNameProp = sceneRefProp.FindPropertyRelative("sceneName");
-            var sceneName = sceneNameProp?.stringValue;
-            if (string.IsNullOrEmpty(sceneName))
+            foreach (EditorBuildSettingsScene entry in EditorBuildSettings.scenes)
             {
-                EditorGUILayout.HelpBox($"Уровень [{i}]: сцена не назначена.", MessageType.Warning);
-                continue;
+                if (!entry.enabled)
+                    continue;
+                if (Path.GetFileNameWithoutExtension(entry.path) == sceneNameWithoutExtension)
+                    return true;
             }
 
-            if (!IsSceneInEnabledBuildSettings(sceneName))
-            {
-                EditorGUILayout.HelpBox(
-                    $"Уровень [{i}] («{sceneName}»): сцена не добавлена в Build Settings или выключена.",
-                    MessageType.Error);
-            }
+            return false;
         }
-
-        serializedObject.ApplyModifiedProperties();
-    }
-
-    private static bool IsSceneInEnabledBuildSettings(string sceneNameWithoutExtension)
-    {
-        foreach (var entry in EditorBuildSettings.scenes)
-        {
-            if (!entry.enabled)
-                continue;
-            if (Path.GetFileNameWithoutExtension(entry.path) == sceneNameWithoutExtension)
-                return true;
-        }
-
-        return false;
     }
 }

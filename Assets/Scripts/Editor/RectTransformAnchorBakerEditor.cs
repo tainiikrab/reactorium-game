@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
+namespace ChemSimDiploma.Editor
+{
 
 public static class RectTransformAnchorBakerEditor
 {
@@ -30,4 +32,5 @@ public static class RectTransformAnchorBakerEditor
 
         EditorUtility.SetDirty(target);
     }
+}
 }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
+namespace ChemSimDiploma.SceneObjectController
+{
 
 public class ObjectPerspectiveScaler : MonoBehaviour
 {
@@ -57,4 +59,5 @@ public class ObjectPerspectiveScaler : MonoBehaviour
         var scale = Mathf.Lerp(minScale, maxScale, t);
         target.localScale = new Vector3(scale, scale, 1);
     }
+}
 }

@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+namespace ChemSimDiploma.Levels
+{
 
 [Serializable]
 public class Level
@@ -7,4 +9,5 @@ public class Level
     public bool IsAvailable;
     public bool isFinished;
     public SceneReference Scene;
+}
 }

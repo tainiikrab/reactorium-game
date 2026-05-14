@@ -1,5 +1,8 @@
-﻿using PrimeTween;
+using PrimeTween;
 using UnityEngine;
+using ChemSimDiploma.Chemistry;
+namespace ChemSimDiploma.SceneObjectController
+{
 
 public class InteractionService
 {
@@ -61,4 +64,5 @@ public class InteractionService
         _move.Stop();
         _rotate.Stop();
     }
+}
 }

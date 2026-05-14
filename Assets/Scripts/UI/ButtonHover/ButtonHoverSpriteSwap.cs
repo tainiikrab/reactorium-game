@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+namespace ChemSimDiploma.UI.ButtonHover
+{
 
 public class ButtonHoverSpriteSwap : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -27,4 +29,5 @@ public class ButtonHoverSpriteSwap : MonoBehaviour, IPointerEnterHandler, IPoint
         if (targetImage != null)
             targetImage.sprite = _defaultSprite;
     }
+}
 }

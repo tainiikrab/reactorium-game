@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using PrimeTween;
+using ChemSimDiploma.Chemistry;
+namespace ChemSimDiploma.SceneObjectController
+{
 
 public class SceneObjectController : MonoBehaviour, IGrabber
 {
@@ -115,4 +118,5 @@ public class SceneObjectController : MonoBehaviour, IGrabber
 
         _current = null;
     }
+}
 }

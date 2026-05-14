@@ -3,6 +3,8 @@ using PrimeTween;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+namespace ChemSimDiploma.Transitions
+{
 
 /// <summary>
 /// Полноэкранный fade и асинхронная смена сцены. Живёт на ProjectContext, чтобы пережить выгрузку любой сцены.
@@ -52,7 +54,7 @@ public sealed class SceneTransitionService : MonoBehaviour, ISceneTransitionServ
 
         if (string.IsNullOrEmpty(sceneName))
         {
-            Debug.LogError($"{nameof(SceneTransitionService)}: пустое имя сцены.");
+            UnityEngine.Debug.LogError($"{nameof(SceneTransitionService)}: пустое имя сцены.");
             return;
         }
 
@@ -71,7 +73,7 @@ public sealed class SceneTransitionService : MonoBehaviour, ISceneTransitionServ
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         if (op == null)
         {
-            Debug.LogError($"{nameof(SceneTransitionService)}: не удалось начать загрузку «{sceneName}».");
+            UnityEngine.Debug.LogError($"{nameof(SceneTransitionService)}: не удалось начать загрузку «{sceneName}».");
             ReleaseBusy();
             yield break;
         }
@@ -183,4 +185,5 @@ public sealed class SceneTransitionService : MonoBehaviour, ISceneTransitionServ
             100f);
         return _whiteUiSprite;
     }
+}
 }

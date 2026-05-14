@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+namespace ChemSimDiploma.Debug
+{
 
 public sealed class DebugTools : MonoBehaviour
 {
@@ -24,6 +26,7 @@ public sealed class DebugTools : MonoBehaviour
 
         Scene active = SceneManager.GetActiveScene();
         SceneManager.LoadScene(active.buildIndex);
-        Debug.Log($"Reloaded scene {active.name}");
+        UnityEngine.Debug.Log($"Reloaded scene {active.name}");
     }
+}
 }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+namespace ChemSimDiploma.UI
+{
 
 [RequireComponent(typeof(Slider))]
 public sealed class MixerGroupVolumeSlider : MonoBehaviour
@@ -42,4 +44,5 @@ public sealed class MixerGroupVolumeSlider : MonoBehaviour
 
         _mixer.SetFloat(_exposedVolumeParameter, db);
     }
+}
 }

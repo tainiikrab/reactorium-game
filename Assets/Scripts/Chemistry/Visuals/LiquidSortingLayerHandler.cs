@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+namespace ChemSimDiploma.Chemistry.Visuals
+{
 
 public class LiquidSortingLayerHandler : MonoBehaviour
 {
@@ -40,4 +42,5 @@ public class LiquidSortingLayerHandler : MonoBehaviour
 
         _nextSortingLayerID++;
     }
+}
 }

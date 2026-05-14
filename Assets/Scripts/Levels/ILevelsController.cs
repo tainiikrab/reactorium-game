@@ -1,4 +1,6 @@
 using System;
+namespace ChemSimDiploma.Levels
+{
 
 public interface ILevelsController
 {
@@ -11,4 +13,5 @@ public interface ILevelsController
     /// </summary>
     /// <param name="levelNumber">Номер уровня от 1.</param>
     public void LoadLevel(int levelNumber);
+}
 }

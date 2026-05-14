@@ -2,6 +2,8 @@ using PrimeTween;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+namespace ChemSimDiploma.UI
+{
 
 /// <summary>
 /// Подпрыгивание UI по клику: быстрый взлёт и мягкое приземление с отскоком через PrimeTween
@@ -49,4 +51,5 @@ public class UIImageClickJump : MonoBehaviour, IPointerClickHandler
             .Chain(Tween.UIAnchoredPosition(_rect, apex, riseDuration, riseEase))
             .Chain(Tween.UIAnchoredPosition(_rect, _baseAnchoredPosition, fallDuration, fallEase));
     }
+}
 }

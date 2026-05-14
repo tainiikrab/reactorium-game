@@ -1,5 +1,7 @@
 using PrimeTween;
 using UnityEngine;
+namespace ChemSimDiploma.SceneObjectController
+{
 
 [System.Serializable]
 public class ReleaseFallBounceSettings
@@ -16,4 +18,5 @@ public class ReleaseFallBounceSettings
 
     public Ease upEase = Ease.OutQuad;
     public Ease downEase = Ease.OutBounce;
+}
 }

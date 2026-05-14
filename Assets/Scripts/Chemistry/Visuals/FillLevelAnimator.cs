@@ -1,5 +1,7 @@
-﻿using PrimeTween;
+using PrimeTween;
 using UnityEngine;
+namespace ChemSimDiploma.Chemistry.Visuals
+{
 
 public class FillLevelAnimator : MonoBehaviour
 {
@@ -161,4 +163,5 @@ public class FillLevelAnimator : MonoBehaviour
         _liquid.gameObject.SetActive(isActive);
         return true;
     }
+}
 }
