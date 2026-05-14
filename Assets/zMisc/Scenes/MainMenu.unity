@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 71739307}
   - component: {fileID: 71739309}
   - component: {fileID: 71739308}
+  - component: {fileID: 71739310}
   m_Layer: 5
   m_Name: level_4
   m_TagString: Untagged
@@ -147,14 +148,14 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 917930859}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5023102, y: 0.49960396}
   m_AnchorMax: {x: 0.5023102, y: 0.49960396}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 810.7, y: 100}
+  m_SizeDelta: {x: 791.2715, y: 97.603485}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &71739308
 MonoBehaviour:
@@ -194,6 +195,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71739306}
   m_CullTransparentMesh: 1
+--- !u!114 &71739310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71739306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3e15d04c514333a08140f65b6407ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.UI.WideAspectCompensation
+  canvasScaler: {fileID: 734531252}
+  affectWidth: 1
+  affectHeight: 1
+  affectScale: 0
 --- !u!1 &106582306
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35}
+  m_AnchoredPosition: {x: 0, y: -34.999878}
   m_SizeDelta: {x: 0, y: -69.99993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &186305302
@@ -1648,7 +1665,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
@@ -1885,6 +1902,7 @@ GameObject:
   - component: {fileID: 837082463}
   - component: {fileID: 837082465}
   - component: {fileID: 837082464}
+  - component: {fileID: 837082466}
   m_Layer: 5
   m_Name: level_after
   m_TagString: Untagged
@@ -1909,7 +1927,7 @@ RectTransform:
   m_AnchorMin: {x: 0.8613862, y: 0.19702965}
   m_AnchorMax: {x: 0.8613862, y: 0.19702965}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 810.7, y: 44.8}
+  m_SizeDelta: {x: 791.2715, y: 43.72636}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &837082464
 MonoBehaviour:
@@ -1949,6 +1967,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837082462}
   m_CullTransparentMesh: 1
+--- !u!114 &837082466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837082462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3e15d04c514333a08140f65b6407ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.UI.WideAspectCompensation
+  canvasScaler: {fileID: 734531252}
+  affectWidth: 1
+  affectHeight: 1
+  affectScale: 0
 --- !u!1 &870724017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,6 +2202,7 @@ GameObject:
   - component: {fileID: 917930859}
   - component: {fileID: 917930861}
   - component: {fileID: 917930860}
+  - component: {fileID: 917930862}
   m_Layer: 5
   m_Name: fillers
   m_TagString: Untagged
@@ -2197,7 +2232,7 @@ RectTransform:
   m_Father: {fileID: 308358535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2239,6 +2274,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 917930858}
   m_CullTransparentMesh: 1
+--- !u!114 &917930862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917930858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
+  m_AspectMode: 4
+  m_AspectRatio: 3
 --- !u!1 &918583027
 GameObject:
   m_ObjectHideFlags: 0
@@ -2714,6 +2763,7 @@ GameObject:
   - component: {fileID: 1025632399}
   - component: {fileID: 1025632401}
   - component: {fileID: 1025632400}
+  - component: {fileID: 1025632402}
   m_Layer: 5
   m_Name: level_3
   m_TagString: Untagged
@@ -2738,7 +2788,7 @@ RectTransform:
   m_AnchorMin: {x: 0.59211224, y: 0.6525743}
   m_AnchorMax: {x: 0.59211224, y: 0.6525743}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 810.7, y: 351.7}
+  m_SizeDelta: {x: 791.2715, y: 343.27148}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1025632400
 MonoBehaviour:
@@ -2778,6 +2828,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025632398}
   m_CullTransparentMesh: 1
+--- !u!114 &1025632402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025632398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3e15d04c514333a08140f65b6407ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.UI.WideAspectCompensation
+  canvasScaler: {fileID: 734531252}
+  affectWidth: 1
+  affectHeight: 1
+  affectScale: 0
 --- !u!1001 &1058758200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3056,6 +3122,7 @@ GameObject:
   - component: {fileID: 1163700327}
   - component: {fileID: 1163700329}
   - component: {fileID: 1163700328}
+  - component: {fileID: 1163700330}
   m_Layer: 5
   m_Name: level_1
   m_TagString: Untagged
@@ -3073,14 +3140,14 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 917930859}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.13402632, y: 0.8024753}
   m_AnchorMax: {x: 0.13402632, y: 0.8024753}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 810.7, y: 100}
+  m_SizeDelta: {x: 791.2715, y: 97.603485}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163700328
 MonoBehaviour:
@@ -3120,6 +3187,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163700326}
   m_CullTransparentMesh: 1
+--- !u!114 &1163700330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163700326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3e15d04c514333a08140f65b6407ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.UI.WideAspectCompensation
+  canvasScaler: {fileID: 734531252}
+  affectWidth: 1
+  affectHeight: 1
+  affectScale: 0
 --- !u!224 &1181174426 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4143152219361436254, guid: 263bdee33804ab644a0d5652327a7d55, type: 3}
@@ -3147,6 +3230,7 @@ GameObject:
   - component: {fileID: 1181534898}
   - component: {fileID: 1181534900}
   - component: {fileID: 1181534899}
+  - component: {fileID: 1181534901}
   m_Layer: 5
   m_Name: level_2
   m_TagString: Untagged
@@ -3171,7 +3255,7 @@ RectTransform:
   m_AnchorMin: {x: 0.39042902, y: 0.8024753}
   m_AnchorMax: {x: 0.39042902, y: 0.8024753}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 810.7, y: 100}
+  m_SizeDelta: {x: 791.2715, y: 97.603485}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1181534899
 MonoBehaviour:
@@ -3211,6 +3295,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181534897}
   m_CullTransparentMesh: 1
+--- !u!114 &1181534901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181534897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3e15d04c514333a08140f65b6407ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.UI.WideAspectCompensation
+  canvasScaler: {fileID: 734531252}
+  affectWidth: 1
+  affectHeight: 1
+  affectScale: 0
 --- !u!1 &1234583092
 GameObject:
   m_ObjectHideFlags: 0
@@ -4713,6 +4813,7 @@ GameObject:
   - component: {fileID: 1831715840}
   - component: {fileID: 1831715842}
   - component: {fileID: 1831715841}
+  - component: {fileID: 1831715843}
   m_Layer: 5
   m_Name: level_6
   m_TagString: Untagged
@@ -4737,7 +4838,7 @@ RectTransform:
   m_AnchorMin: {x: 0.60330033, y: 0.19702965}
   m_AnchorMax: {x: 0.60330033, y: 0.19702965}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 810.7, y: 44.8}
+  m_SizeDelta: {x: 791.2715, y: 43.72636}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1831715841
 MonoBehaviour:
@@ -4777,6 +4878,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831715839}
   m_CullTransparentMesh: 1
+--- !u!114 &1831715843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831715839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3e15d04c514333a08140f65b6407ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.UI.WideAspectCompensation
+  canvasScaler: {fileID: 734531252}
+  affectWidth: 1
+  affectHeight: 1
+  affectScale: 0
 --- !u!1 &1849180829
 GameObject:
   m_ObjectHideFlags: 0
@@ -4788,6 +4905,7 @@ GameObject:
   - component: {fileID: 1849180830}
   - component: {fileID: 1849180832}
   - component: {fileID: 1849180831}
+  - component: {fileID: 1849180833}
   m_Layer: 5
   m_Name: level_5
   m_TagString: Untagged
@@ -4805,14 +4923,14 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 917930859}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.40462047, y: 0.34415838}
   m_AnchorMax: {x: 0.40462047, y: 0.34415838}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 810.7, y: 342.9}
+  m_SizeDelta: {x: 791.2715, y: 334.68234}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1849180831
 MonoBehaviour:
@@ -4852,6 +4970,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849180829}
   m_CullTransparentMesh: 1
+--- !u!114 &1849180833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849180829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc3e15d04c514333a08140f65b6407ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.UI.WideAspectCompensation
+  canvasScaler: {fileID: 734531252}
+  affectWidth: 1
+  affectHeight: 1
+  affectScale: 0
 --- !u!1 &1857147515
 GameObject:
   m_ObjectHideFlags: 0
