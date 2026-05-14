@@ -47,14 +47,14 @@ public class FillLevelAnimator : MonoBehaviour
     protected virtual void Awake()
     {
         _chemContainer = GetComponentInParent<ChemContainer>();
-        _chemContainer.OnFillLevelChangedEvent += AnimateFill;
+        _chemContainer.Contents.OnFillLevelChanged += AnimateFill;
 
         _currentLiquidScale = _liquid.localScale.x;
         _currentLiquidAngle = _liquid.eulerAngles.z;
 
         LiquidRenderer = _liquid.GetComponent<SpriteRenderer>();
 
-        float fillLevel = _chemContainer.CurrentFillLevel;
+        float fillLevel = _chemContainer.Contents.CurrentFillLevel;
         float targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
 
         _liquid.localPosition = new Vector3(

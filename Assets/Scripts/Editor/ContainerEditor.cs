@@ -29,7 +29,7 @@ namespace ChemSimDiploma.Editor
                 Undo.RecordObject(container, "Set Fill Level");
 
                 float clamped = Mathf.Clamp01(_editorFillValue);
-                container.SetFillLevel(clamped);
+                container.Contents.SetFillLevel(clamped);
 
                 EditorUtility.SetDirty(container);
             }

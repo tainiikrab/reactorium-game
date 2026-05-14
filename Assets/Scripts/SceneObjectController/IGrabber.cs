@@ -1,4 +1,3 @@
-using ChemSimDiploma.Chemistry;
 namespace ChemSimDiploma.SceneObjectController
 {
 

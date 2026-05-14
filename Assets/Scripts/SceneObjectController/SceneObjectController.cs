@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using PrimeTween;
-using ChemSimDiploma.Chemistry;
 namespace ChemSimDiploma.SceneObjectController
 {
 

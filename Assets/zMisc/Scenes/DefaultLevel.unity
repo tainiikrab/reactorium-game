@@ -737,6 +737,18 @@ PrefabInstance:
       value: 0.299
       objectReference: {fileID: 0}
     - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._currentFillLevel
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: <InteractPoint>k__BackingField
+      value: 
+      objectReference: {fileID: 1563280398}
+    - target: {fileID: 6405062749646920996, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _hoverSelection
+      value: 
+      objectReference: {fileID: 1286525734}
+    - target: {fileID: 6405062749646920996, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: <InteractPoint>k__BackingField
       value: 
       objectReference: {fileID: 1563280398}
@@ -2450,6 +2462,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1925078850622509167, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
   m_PrefabInstance: {fileID: 138232974}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1337706710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1244540129501455240, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+  m_PrefabInstance: {fileID: 1965563017365108015}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1345893381
 GameObject:
   m_ObjectHideFlags: 0
@@ -2772,6 +2789,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389034182}
   m_CullTransparentMesh: 1
+--- !u!4 &1425877314 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8112176494518137489, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+  m_PrefabInstance: {fileID: 1965563017365108015}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1453244086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4007,6 +4029,18 @@ PrefabInstance:
       propertyPath: _minFallHeight
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: _contents._currentFillLevel
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5985676456675864259, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: _hoverSelection
+      value: 
+      objectReference: {fileID: 1337706710}
+    - target: {fileID: 5985676456675864259, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: <InteractPoint>k__BackingField
+      value: 
+      objectReference: {fileID: 1425877314}
     - target: {fileID: 7867944802688391329, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Sprite
       value: 

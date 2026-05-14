@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7791075896169730936}
   m_Layer: 0
-  m_Name: Selection
+  m_Name: HoverSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
