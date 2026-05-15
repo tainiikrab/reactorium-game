@@ -2,7 +2,7 @@
 using ChemSimDiploma.Chemistry.Data;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewSubstance", menuName = "Chemistry", order = 1)]
+[CreateAssetMenu(fileName = "NewSubstance", menuName = "Chemistry/Substance", order = 1)]
 public class SubstanceSO : ScriptableObject
 {
     public string Name;

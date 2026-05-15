@@ -1,8 +1,8 @@
 using PrimeTween;
 using UnityEngine;
+
 namespace ChemSimDiploma.Chemistry.Visuals
 {
-
 public class FillLevelAnimator : MonoBehaviour
 {
     [Header("References")] [SerializeField]
@@ -48,11 +48,14 @@ public class FillLevelAnimator : MonoBehaviour
     {
         _chemContainer = GetComponentInParent<ChemContainer>();
         _chemContainer.Contents.OnFillLevelChanged += AnimateFill;
+        _chemContainer.Contents.OnColorChanged += ApplyLiquidColor;
 
         _currentLiquidScale = _liquid.localScale.x;
         _currentLiquidAngle = _liquid.eulerAngles.z;
 
         LiquidRenderer = _liquid.GetComponent<SpriteRenderer>();
+
+        ApplyLiquidColor(_chemContainer.Contents.CurrentColor);
 
         float fillLevel = _chemContainer.Contents.CurrentFillLevel;
         float targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
@@ -141,7 +144,12 @@ public class FillLevelAnimator : MonoBehaviour
 
         TrySetActiveLiquid(true);
 
-        if (fillLevel > 0f && _currentFillLevel <= 0f) Tween.Alpha(LiquidRenderer, 1f, _fillDuration * 0.5f, _ease);
+        if (fillLevel > 0f && _currentFillLevel <= 0f)
+        {
+            Color liquidColor = _chemContainer.Contents.CurrentColor;
+            LiquidRenderer.color = new Color(liquidColor.r, liquidColor.g, liquidColor.b, 0f);
+            Tween.Alpha(LiquidRenderer, liquidColor.a, _fillDuration * 0.5f, _ease);
+        }
 
         _currentFillLevel = fillLevel;
 
@@ -162,6 +170,56 @@ public class FillLevelAnimator : MonoBehaviour
 
         _liquid.gameObject.SetActive(isActive);
         return true;
+    }
+
+    private void ApplyLiquidColor(Color color)
+    {
+        if (!LiquidRenderer) return;
+
+        if (_chemContainer.Contents.CurrentFillLevel <= 0f)
+            return;
+
+        LiquidRenderer.color = color;
+    }
+
+    public void ApplyImmediateState()
+    {
+        if (!_liquid) return;
+
+        if (!_chemContainer)
+            _chemContainer = GetComponentInParent<ChemContainer>();
+        if (!_chemContainer) return;
+
+        if (!LiquidRenderer)
+            LiquidRenderer = _liquid.GetComponent<SpriteRenderer>();
+
+        float fillLevel = _chemContainer.Contents.CurrentFillLevel;
+        _currentFillLevel = fillLevel;
+
+        float targetY = Mathf.Lerp(_minY, _maxY, fillLevel);
+        Vector3 pos = _liquid.localPosition;
+        _liquid.localPosition = new Vector3(pos.x, targetY, pos.z);
+
+        Color color = _chemContainer.Contents.CurrentColor;
+        if (fillLevel <= 0f)
+        {
+            TrySetActiveLiquid(false);
+            if (LiquidRenderer)
+                LiquidRenderer.color = new Color(color.r, color.g, color.b, 0f);
+            return;
+        }
+
+        TrySetActiveLiquid(true);
+        if (LiquidRenderer)
+            LiquidRenderer.color = new Color(color.r, color.g, color.b, color.a);
+    }
+
+    private void OnDestroy()
+    {
+        if (!_chemContainer) return;
+
+        _chemContainer.Contents.OnFillLevelChanged -= AnimateFill;
+        _chemContainer.Contents.OnColorChanged -= ApplyLiquidColor;
     }
 }
 }
