@@ -4033,6 +4033,14 @@ PrefabInstance:
       propertyPath: _contents._currentFillLevel
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: _contents._substances.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: _contents._substances.Array.data[0].Moles
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5985676456675864259, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _hoverSelection
       value: 

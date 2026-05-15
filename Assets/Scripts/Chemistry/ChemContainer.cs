@@ -9,7 +9,6 @@ namespace ChemSimDiploma.Chemistry
 public class ChemContainer : MonoBehaviour
 {
     [SerializeField] private ContainerContents _contents = new();
-
     public ContainerContents Contents => _contents;
 }
 }

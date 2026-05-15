@@ -1,4 +1,5 @@
 ﻿using ChemSimDiploma.Chemistry;
+using ChemSimDiploma.Chemistry.Data;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewSubstance", menuName = "Chemistry", order = 1)]
@@ -11,5 +12,5 @@ public class SubstanceSO : ScriptableObject
     public float Density;
     public Color Color;
     public float pH;
-    public MatterPhase MatterPhase;
+    public MatterPhase DefaultMatterPhase;
 }

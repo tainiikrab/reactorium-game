@@ -1,18 +1,27 @@
 using System;
 using System.Collections.Generic;
+using ChemSimDiploma.Chemistry.Data;
 using UnityEngine;
+
 namespace ChemSimDiploma.Chemistry
 {
-
 [Serializable]
 public class ContainerContents
 {
     [SerializeField] private ContainerType _containerType;
     [Range(0, 1)] [SerializeField] private float _currentFillLevel;
+    [SerializeField] private Color _currentColor;
     [Range(0, 1)] [SerializeField] private float _maxFillLevel = 1;
     [SerializeField] private float _capacityMl = 1000;
+    [SerializeField] private List<RuntimeSubstance> _substances = new();
 
-    private List<ISubstance> _substances = new();
+
+    public List<RuntimeSubstance> Substances
+    {
+        get => _substances;
+        set => _substances = value;
+    }
+
 
     public ContainerType ContainerType => _containerType;
     public float CurrentFillLevel => _currentFillLevel;
@@ -29,6 +38,9 @@ public class ContainerContents
         OnFillLevelChanged?.Invoke(_currentFillLevel);
     }
 
-    public float GetVolumeMl() => _currentFillLevel * _capacityMl;
+    public float GetVolumeMl()
+    {
+        return _currentFillLevel * _capacityMl;
+    }
 }
 }

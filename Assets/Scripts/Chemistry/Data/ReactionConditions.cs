@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChemSimDiploma.Chemistry
+namespace ChemSimDiploma.Chemistry.Data
 {
 [Serializable]
 public class ReactionConditions

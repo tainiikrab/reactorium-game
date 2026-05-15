@@ -1,4 +1,4 @@
-namespace ChemSimDiploma.Chemistry
+namespace ChemSimDiploma.Chemistry.Data
 {
 
 public enum ContainerType
