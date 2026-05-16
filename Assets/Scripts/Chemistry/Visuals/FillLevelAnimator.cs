@@ -28,8 +28,21 @@ public class FillLevelAnimator : MonoBehaviour
     [SerializeField] private float _maxTilt = 25f;
     [SerializeField] private float _inertiaTime = 0.2f;
 
+    [Header("Horizontal Offset")]
+    [Tooltip("Max local X shift at 90° tilt and 0%/100% fill. Zero at upright or 50% fill.")]
+    [SerializeField] private float _maxHorizontalOffset = 2f;
+
+    [Tooltip("How strongly X offset grows above 50% fill, relative to below 50%. 0.5 = half speed.")]
+    [SerializeField] [Range(0f, 1f)] private float _highFillHorizontalOffsetScale = 0.5f;
+
+    [Tooltip("Past 90°, offset grows this many times faster per degree than from 0–90°. 2 = double rate.")]
+    [SerializeField] private float _past90RotationMultiplier = 2f;
+
+    private const float ReferenceTiltDegrees = 90f;
+
     protected ChemContainer ChemContainer { get; private set; }
 
+    private float _baseLiquidX;
     private float _currentFillLevel;
     protected float _currentLiquidScale;
     protected float _desiredLiquidXScale;
@@ -86,6 +99,7 @@ public class FillLevelAnimator : MonoBehaviour
     {
         if (!_liquid) return;
 
+        _baseLiquidX = _liquid.localPosition.x;
         _currentLiquidAngle = _liquid.eulerAngles.z;
         LiquidRenderer = _liquid.GetComponent<SpriteRenderer>();
     }
@@ -121,6 +135,8 @@ public class FillLevelAnimator : MonoBehaviour
         {
             ApplyScaleState();
         }
+
+        ApplyHorizontalOffset();
     }
 
     private void LateUpdate()
@@ -130,9 +146,10 @@ public class FillLevelAnimator : MonoBehaviour
         UpdateVelocity();
         UpdateTilt();
 
-        if (isChangingScale) return;
+        if (!isChangingScale)
+            UpdateScale();
 
-        UpdateScale();
+        ApplyHorizontalOffset();
     }
 
     private void UpdateVelocity()
@@ -172,10 +189,52 @@ public class FillLevelAnimator : MonoBehaviour
         return _liquid.localScale.x;
     }
 
+    private static float NormalizeSignedZ(Transform t)
+    {
+        float z = t.eulerAngles.z;
+        return z > 180f ? z - 360f : z;
+    }
+
+    private float ComputeFillBias()
+    {
+        if (_currentFillLevel <= 0.5f)
+            return 0.5f - _currentFillLevel;
+
+        return -(_currentFillLevel - 0.5f) * _highFillHorizontalOffsetScale;
+    }
+
+    private float ComputeRotationFactor()
+    {
+        float z = NormalizeSignedZ(transform);
+        float absZ = Mathf.Abs(z);
+        if (absZ <= 0f) return 0f;
+
+        float sign = Mathf.Sign(z);
+
+        if (absZ <= ReferenceTiltDegrees)
+            return z / ReferenceTiltDegrees;
+
+        float past90 = absZ - ReferenceTiltDegrees;
+        return sign * (1f + past90 / ReferenceTiltDegrees * _past90RotationMultiplier);
+    }
+
+    private float ComputeHorizontalOffset()
+    {
+        return _maxHorizontalOffset * ComputeFillBias() * ComputeRotationFactor();
+    }
+
+    protected void ApplyHorizontalOffset()
+    {
+        if (!_liquid) return;
+
+        Vector3 pos = _liquid.localPosition;
+        pos.x = _baseLiquidX + ComputeHorizontalOffset();
+        _liquid.localPosition = pos;
+    }
+
     protected void ApplyScaleState()
     {
-        float z = transform.eulerAngles.z;
-        z = z > 180f ? z - 360f : z;
+        float z = NormalizeSignedZ(transform);
 
         float abs = Mathf.Abs(z);
         float t = 1f - Mathf.Abs(abs - 90f) / 90f;
@@ -280,6 +339,7 @@ public class FillLevelAnimator : MonoBehaviour
             _currentLiquidScale = _liquid.localScale.y;
 
         ApplyScaleState();
+        ApplyHorizontalOffset();
     }
 
     private void OnDestroy()

@@ -195,6 +195,9 @@ MonoBehaviour:
   _tiltStrength: 2
   _maxTilt: 10
   _inertiaTime: 0.2
+  _maxHorizontalOffset: 2
+  _highFillHorizontalOffsetScale: 0.5
+  _past90RotationMultiplier: 2
 --- !u!4 &8891796911407300982 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8112176494518137489, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}

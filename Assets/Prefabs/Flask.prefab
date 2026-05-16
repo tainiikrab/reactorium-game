@@ -423,6 +423,9 @@ MonoBehaviour:
   _tiltStrength: 2
   _maxTilt: 10
   _inertiaTime: 0.1
+  _maxHorizontalOffset: 2.5
+  _highFillHorizontalOffsetScale: 0.5
+  _past90RotationMultiplier: 2
   _minScale: 1
   _maxScale: 3.2
 --- !u!1 &5591718335031919985

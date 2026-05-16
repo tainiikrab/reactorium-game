@@ -34,6 +34,7 @@ public class ContainerContents
         float mixedG = 0f;
         float mixedB = 0f;
         float mixedA = 0f;
+        _capacityMl = Mathf.Max(1, _capacityMl);
 
         foreach (RuntimeSubstance substance in _substances)
         {
