@@ -95,11 +95,85 @@ public class ContainerContents
         float total = 0f;
         foreach (RuntimeSubstance substance in _substances)
         {
-            if (substance == null) continue;
+            if (substance == null || !substance.IsLiquid) continue;
             total += substance.GetVolumeMl();
         }
 
         return total;
+    }
+
+    public float GetFreeLiquidCapacityMl()
+    {
+        float maxVolumeMl = _capacityMl * _maxFillLevel;
+        return Mathf.Max(0f, maxVolumeMl - GetLiquidVolumeMl());
+    }
+
+    public static float GetMaxPourVolumeMl(ContainerContents from, ContainerContents to)
+    {
+        if (from == null || to == null) return 0f;
+        return Mathf.Min(from.GetLiquidVolumeMl(), to.GetFreeLiquidCapacityMl());
+    }
+
+    public float PourInto(ContainerContents destination, float volumeMl)
+    {
+        if (destination == null || volumeMl <= 0f) return 0f;
+
+        float sourceVolumeMl = GetLiquidVolumeMl();
+        if (sourceVolumeMl <= 1e-6f) return 0f;
+
+        volumeMl = Mathf.Min(volumeMl, GetMaxPourVolumeMl(this, destination));
+        if (volumeMl <= 0f) return 0f;
+
+        float fraction = volumeMl / sourceVolumeMl;
+        var transfers = new List<(RuntimeSubstance source, float moles)>();
+
+        foreach (RuntimeSubstance substance in _substances)
+        {
+            if (substance == null || !substance.IsLiquid) continue;
+            if (substance.GetVolumeMl() <= 0f) continue;
+
+            float molesToTransfer = substance.Moles * fraction;
+            if (molesToTransfer <= 1e-6f) continue;
+
+            transfers.Add((substance, molesToTransfer));
+        }
+
+        foreach ((RuntimeSubstance source, float moles) in transfers)
+        {
+            source.Moles -= moles;
+            if (source.Moles < 1e-6f)
+                source.Moles = 0f;
+
+            destination.AddOrMergeSubstance(source.SubstanceSO, moles, source.Temperature);
+        }
+
+        _substances.RemoveAll(s => s == null || s.Moles <= 1e-6f);
+
+        RefreshState();
+        destination.RefreshState();
+        return volumeMl;
+    }
+
+    private void AddOrMergeSubstance(SubstanceSO substanceSo, float moles, float temperature)
+    {
+        if (substanceSo == null || moles <= 0f) return;
+
+        foreach (RuntimeSubstance existing in _substances)
+        {
+            if (existing?.SubstanceSO != substanceSo) continue;
+
+            float totalMoles = existing.Moles + moles;
+            existing.Temperature = (existing.Temperature * existing.Moles + temperature * moles) / totalMoles;
+            existing.Moles = totalMoles;
+            return;
+        }
+
+        _substances.Add(new RuntimeSubstance
+        {
+            SubstanceSO = substanceSo,
+            Moles = moles,
+            Temperature = temperature
+        });
     }
 }
 }

@@ -1,35 +1,58 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace ChemSimDiploma.Chemistry.Visuals
 {
-
 public class LiquidSortingLayerHandler : MonoBehaviour
 {
-    private List<FillLevelAnimator> _fillLevelAnimators = new();
     [SerializeField] private string _liquidSortingLayerName = "Liquid";
 
-    private int _nextSortingLayerID = 0;
+    private int _nextSortingLayerID;
 
-    private void Start()
+    private void OnEnable()
     {
-        _fillLevelAnimators = GetComponentsInChildren<FillLevelAnimator>().ToList();
-        foreach (var fillLevelAnimator in _fillLevelAnimators)
+        RefreshSortingLayers();
+    }
+
+    private void OnValidate()
+    {
+        if (isActiveAndEnabled)
+            RefreshSortingLayers();
+    }
+
+    [ContextMenu("Refresh Sorting Layers")]
+    private void RefreshSortingLayers()
+    {
+        _nextSortingLayerID = 0;
+
+        foreach (FillLevelAnimator fillLevelAnimator in GetComponentsInChildren<FillLevelAnimator>(true))
             AssignSortingLayer(fillLevelAnimator);
     }
 
     private void AssignSortingLayer(FillLevelAnimator fillLevelAnimator)
     {
         var spriteMask = fillLevelAnimator.GetComponent<SpriteMask>();
+        if (!spriteMask) return;
+
+        int sortingLayerId = SortingLayer.NameToID(_liquidSortingLayerName);
+
         spriteMask.isCustomRangeActive = true;
-        spriteMask.frontSortingLayerID = SortingLayer.NameToID(_liquidSortingLayerName);
+        spriteMask.frontSortingLayerID = sortingLayerId;
         spriteMask.frontSortingOrder = _nextSortingLayerID;
-        spriteMask.backSortingLayerID = SortingLayer.NameToID(_liquidSortingLayerName);
+        spriteMask.backSortingLayerID = sortingLayerId;
         spriteMask.backSortingOrder = _nextSortingLayerID - 1;
 
-        var liquid = fillLevelAnimator.LiquidRenderer;
-        if (liquid.TryGetComponent<SortingGroup>(out var sortingGroup))
+        SpriteRenderer liquid = fillLevelAnimator.LiquidRenderer;
+        if (!liquid)
+            liquid = fillLevelAnimator.GetComponentInChildren<SpriteRenderer>(true);
+        if (!liquid) return;
+
+        var sortingGroup = liquid.GetComponent<SortingGroup>();
+        if (sortingGroup)
         {
             sortingGroup.sortingLayerName = _liquidSortingLayerName;
             sortingGroup.sortingOrder = _nextSortingLayerID;
@@ -39,6 +62,16 @@ public class LiquidSortingLayerHandler : MonoBehaviour
             liquid.sortingLayerName = _liquidSortingLayerName;
             liquid.sortingOrder = _nextSortingLayerID;
         }
+
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            EditorUtility.SetDirty(spriteMask);
+            EditorUtility.SetDirty(liquid);
+            if (sortingGroup)
+                EditorUtility.SetDirty(sortingGroup);
+        }
+#endif
 
         _nextSortingLayerID++;
     }

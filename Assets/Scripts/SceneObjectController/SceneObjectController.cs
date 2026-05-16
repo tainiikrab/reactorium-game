@@ -23,6 +23,8 @@ public class SceneObjectController : MonoBehaviour, IGrabber
     [SerializeField] private float fallHeightEpsilon = 0.02f;
     [SerializeField] private ReleaseFallBounceSettings fallBounce = new();
 
+    [Header("Pour")] [SerializeField] private PourInteractionController _pourInteraction;
+
     [Header("Runtime")] private Camera _cam;
     private InputSystem_Actions _input;
 
@@ -44,9 +46,13 @@ public class SceneObjectController : MonoBehaviour, IGrabber
         _dragService = new DragService(followSpeed);
         _hoverService = new HoverService(draggableLayer, _cam);
         _interaction = new InteractionService(snapDuration, snapEase);
+        _interaction.Attached += OnContainersAttached;
 
         if (perspectiveScaler == null)
             perspectiveScaler = GetComponent<ObjectPerspectiveScaler>();
+
+        if (_pourInteraction == null)
+            _pourInteraction = GetComponent<PourInteractionController>();
 
         fallBounce ??= new ReleaseFallBounceSettings();
 
@@ -80,7 +86,15 @@ public class SceneObjectController : MonoBehaviour, IGrabber
 
     private void OnDestroy()
     {
+        if (_interaction != null)
+            _interaction.Attached -= OnContainersAttached;
+
         _input.Dispose();
+    }
+
+    private void OnContainersAttached(IDraggable source, IDraggable destination)
+    {
+        _pourInteraction?.OnContainersAttached(source, destination);
     }
 
     private void OnHoldStarted(InputAction.CallbackContext _)
@@ -90,6 +104,8 @@ public class SceneObjectController : MonoBehaviour, IGrabber
 
         _isDragging = true;
         _current = target;
+
+        _pourInteraction?.OnInteractionEnded();
 
         _releaseFall.OnGrabStarted(target.Transform);
         _dragService.Begin(target, offset);
@@ -108,6 +124,11 @@ public class SceneObjectController : MonoBehaviour, IGrabber
             _interaction.Attach(released, _hoverService.Current);
             _hoverService.Clear();
             attached = true;
+        }
+        else
+        {
+            if (_pourInteraction == null || !_pourInteraction.IsPourActive)
+                _pourInteraction?.OnInteractionEnded();
         }
 
         released?.ToggleCollider(true);

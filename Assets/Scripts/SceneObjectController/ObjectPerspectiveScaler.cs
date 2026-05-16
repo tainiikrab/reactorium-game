@@ -12,11 +12,24 @@ public class ObjectPerspectiveScaler : MonoBehaviour
     [SerializeField] private float minScale;
     [SerializeField] private float maxScale;
 
+    private float _lowY;
+    private float _highY;
+    private float _lowScale;
+    private float _highScale;
+    private bool _rangeValid;
+    private bool _scalesValid;
+
     private readonly HashSet<Transform> _extraScaleTargets = new();
 
     private void Awake()
     {
         _grabber = GetComponent<IGrabber>();
+        RebuildScaleCache();
+    }
+
+    private void OnValidate()
+    {
+        RebuildScaleCache();
     }
 
     private void Update()
@@ -52,12 +65,25 @@ public class ObjectPerspectiveScaler : MonoBehaviour
         _extraScaleTargets.Remove(target);
     }
 
+    private void RebuildScaleCache()
+    {
+        _lowY = Mathf.Min(minY, maxY);
+        _highY = Mathf.Max(minY, maxY);
+        _rangeValid = !Mathf.Approximately(_lowY, _highY);
+
+        bool yAscending = minY <= maxY;
+        _lowScale = yAscending ? minScale : maxScale;
+        _highScale = yAscending ? maxScale : minScale;
+        _scalesValid = _lowScale > 0f || _highScale > 0f;
+    }
+
     public void ApplyScaleForWorldY(Transform target)
     {
-        if (target == null) return;
-        float t = Mathf.InverseLerp(minY, maxY, target.position.y);
-        var scale = Mathf.Lerp(minScale, maxScale, t);
-        target.localScale = new Vector3(scale, scale, 1);
+        if (target == null || !_rangeValid || !_scalesValid) return;
+
+        float t = Mathf.InverseLerp(_lowY, _highY, target.position.y);
+        float scale = Mathf.Max(Mathf.Lerp(_lowScale, _highScale, t), 0.01f);
+        target.localScale = new Vector3(scale, scale, 1f);
     }
 }
 }

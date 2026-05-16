@@ -36,6 +36,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9213f9718bd6a1c40b4e5dcf392df38b, type: 3}
+    - target: {fileID: 2388829021904640716, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2423875770650396541, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.1151962
@@ -108,6 +112,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -20.3
       objectReference: {fileID: 0}
+    - target: {fileID: 5985676456675864259, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: <InteractPoint>k__BackingField
+      value: 
+      objectReference: {fileID: 8891796911407300982}
     - target: {fileID: 7867944802688391329, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -187,3 +195,8 @@ MonoBehaviour:
   _tiltStrength: 2
   _maxTilt: 10
   _inertiaTime: 0.2
+--- !u!4 &8891796911407300982 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8112176494518137489, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+  m_PrefabInstance: {fileID: 860820455481668583}
+  m_PrefabAsset: {fileID: 0}

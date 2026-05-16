@@ -55,7 +55,7 @@ public class HoverService
 
         if (_current == dragging) return;
 
-        if (_current.Receiver != null || _current.Sender != null)
+        if (_current.IsInteracting || _current.Receiver != null || _current.Sender != null)
         {
             Clear();
             return;

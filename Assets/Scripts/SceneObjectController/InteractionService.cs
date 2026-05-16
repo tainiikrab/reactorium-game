@@ -1,3 +1,4 @@
+using System;
 using PrimeTween;
 using UnityEngine;
 namespace ChemSimDiploma.SceneObjectController
@@ -10,6 +11,8 @@ public class InteractionService
 
     private Tween _move;
     private Tween _rotate;
+
+    public event Action<IDraggable, IDraggable> Attached;
 
     public InteractionService(float duration, Ease ease)
     {
@@ -25,13 +28,17 @@ public class InteractionService
         var p = to.InteractPoint;
 
         _move = Tween.Position(t, p.position, _duration, _ease);
-        _rotate = Tween.Rotation(t, p.rotation, _duration, _ease);
+        _rotate = Tween.Rotation(t, p.rotation, _duration, _ease)
+            .OnComplete(() => Attached?.Invoke(from, to));
 
         from.Receiver = to;
         from.Sender = null;
 
         to.Sender = from;
         to.Receiver = null;
+
+        if (_duration <= 0f)
+            Attached?.Invoke(from, to);
     }
 
     public void TryDetach(IDraggable target)
