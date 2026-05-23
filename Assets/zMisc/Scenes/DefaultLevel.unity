@@ -642,7 +642,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1140676287087292878, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.6359346
+      value: -4.970492
       objectReference: {fileID: 0}
     - target: {fileID: 1140676287087292878, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: m_LocalRotation.w
@@ -726,7 +726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3389696605210586362, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: m_Color.a
-      value: 0.65882355
+      value: 0.54509807
       objectReference: {fileID: 0}
     - target: {fileID: 3389696605210586362, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: m_Color.b
@@ -734,11 +734,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3389696605210586362, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: m_Color.g
-      value: 0.42392445
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3389696605210586362, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3389696605210586362, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: m_SortingLayer
@@ -752,33 +752,49 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 2087269383
       objectReference: {fileID: 0}
-    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
-      propertyPath: _sprite
-      value: 
-      objectReference: {fileID: 1974904560}
-    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
-      propertyPath: _minFallHeight
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
-      propertyPath: _rotationSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
-      propertyPath: _hoverSelection
-      value: 
-      objectReference: {fileID: 1286525734}
-    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
-      propertyPath: _currentFillLevel
-      value: 0.299
-      objectReference: {fileID: 0}
-    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+    - target: {fileID: 3631520286435465643, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: _contents._capacityMl
       value: 250
       objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._currentColor.a
+      value: 0.54509807
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._currentColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._currentColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._currentColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._currentFillLevel
+      value: 0.26229507
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._substances.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._substances.Array.data[0].Moles
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631520286435465643, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._substances.Array.data[0].SubstanceSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 3c4f78e57e24edc458e5d9772567ff09, type: 2}
+    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._mixturePh
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: _contents._currentColor.a
-      value: 0.65882355
+      value: 0.54509807
       objectReference: {fileID: 0}
     - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: _contents._currentColor.b
@@ -786,23 +802,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: _contents._currentColor.g
-      value: 0.42392445
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _contents._currentColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: _contents._currentFillLevel
-      value: 0.20459014
+      value: 0.06557377
       objectReference: {fileID: 0}
-    - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
-      propertyPath: <InteractPoint>k__BackingField
-      value: 
-      objectReference: {fileID: 1563280398}
     - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: _contents._substances.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: _contents._substances.Array.data[0].Moles
-      value: 1.56
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4150066854821603916, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: _contents._substances.Array.data[0].SubstanceSO
@@ -812,6 +828,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5985676456675864259, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _minFallHeight
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5985676456675864259, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: _hoverSelection
+      value: 
+      objectReference: {fileID: 1286525734}
+    - target: {fileID: 5985676456675864259, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
+      propertyPath: <InteractPoint>k__BackingField
+      value: 
+      objectReference: {fileID: 1563280398}
     - target: {fileID: 6405062749646920996, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
       propertyPath: _hoverSelection
       value: 
@@ -2046,11 +2074,6 @@ RectTransform:
   m_AnchoredPosition: {x: 10.5, y: -111.01001}
   m_SizeDelta: {x: 1859, y: 729}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!212 &968667708 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 2388829021904640716, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
-  m_PrefabInstance: {fileID: 1965563017365108015}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &985564251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2810,6 +2833,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1345893383}
   - component: {fileID: 1345893382}
+  - component: {fileID: 1345893384}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -2830,7 +2854,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zenject::Zenject.SceneContext
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 1345893384}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -2860,9 +2885,67 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1345893386}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1345893384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345893381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b8c9d0e1f24356a7b8c9d0e1f24356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.Installers.DefaultLevelInstaller
+--- !u!1 &1345893385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1345893386}
+  - component: {fileID: 1345893387}
+  m_Layer: 0
+  m_Name: LabChemistry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1345893386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345893385}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1345893383}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1345893387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345893385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8c9d0e1f24356a7b8c9d0e1f2435678, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.Chemistry.LabChemistryController
+  _registry: {fileID: 11400000, guid: 457970c33346c7243b12b488a8b33deb, type: 2}
 --- !u!1 &1358039611
 GameObject:
   m_ObjectHideFlags: 0
@@ -4146,11 +4229,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1967397525}
   m_CullTransparentMesh: 1
---- !u!212 &1974904560 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 3086352168909465899, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
-  m_PrefabInstance: {fileID: 138232974}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1974904561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5184200796057927233, guid: ff7e1cb0e7f98f94c819a553abc06932, type: 3}
@@ -4550,19 +4628,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 298997544150843945, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.19133
+      value: 2.5259497
       objectReference: {fileID: 0}
     - target: {fileID: 298997544150843945, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.19133
+      value: 2.5259497
       objectReference: {fileID: 0}
     - target: {fileID: 298997544150843945, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.19133
+      value: 2.5259497
       objectReference: {fileID: 0}
     - target: {fileID: 298997544150843945, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.1303182
+      value: -2.9361348
       objectReference: {fileID: 0}
     - target: {fileID: 298997544150843945, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_LocalRotation.x
@@ -4583,6 +4661,10 @@ PrefabInstance:
     - target: {fileID: 1204675239950060917, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Name
       value: Flask
+      objectReference: {fileID: 0}
+    - target: {fileID: 1204675239950060917, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2388829021904640716, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Sprite
@@ -4646,15 +4728,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2664055921146289949, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Color.a
-      value: 0.65882355
+      value: 0.6666667
       objectReference: {fileID: 0}
     - target: {fileID: 2664055921146289949, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Color.b
-      value: 0.005660296
+      value: 0.0039215684
       objectReference: {fileID: 0}
     - target: {fileID: 2664055921146289949, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Color.g
-      value: 0.005660296
+      value: 0.4936276
       objectReference: {fileID: 0}
     - target: {fileID: 2664055921146289949, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Color.r
@@ -4681,12 +4763,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
-      propertyPath: _sprite
-      value: 
-      objectReference: {fileID: 968667708}
-    - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
-      propertyPath: _minFallHeight
-      value: 9
+      propertyPath: _contents._mixturePh
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _contents._capacityMl
@@ -4694,15 +4772,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _contents._currentColor.a
-      value: 0.65882355
+      value: 0.6666667
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _contents._currentColor.b
-      value: 0.005660296
+      value: 0.0039215684
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _contents._currentColor.g
-      value: 0.005660296
+      value: 0.4936276
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _contents._currentColor.r
@@ -4710,7 +4788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _contents._currentFillLevel
-      value: 0.9130318
+      value: 0.30638653
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _contents._substances.Array.size
@@ -4718,7 +4796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _contents._substances.Array.data[0].Moles
-      value: 2.98
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3631520286435465643, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: _contents._substances.Array.data[0].SubstanceSO
@@ -4739,6 +4817,10 @@ PrefabInstance:
     - target: {fileID: 5591718335031919985, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5985676456675864259, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
+      propertyPath: _minFallHeight
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7867944802688391329, guid: 5dc6ddbf39b66c84e9389ddbc2e14a50, type: 3}
       propertyPath: m_Sprite

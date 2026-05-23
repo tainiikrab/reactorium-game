@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7a1e00b185a45e49142347f32eaa30b, type: 3}
-  m_Name: HCL
+  m_Name: NaCl
   m_EditorClassIdentifier: Assembly-CSharp::SubstanceSO
-  Name: "C\u043E\u043B\u044F\u043D\u0430\u044F \u043A\u0438\u0441\u043B\u043E\u0442\u0430"
-  Formula: HCL
-  Info: "37% \u0440\u0430\u0441\u0442\u0432\u043E\u0440"
-  MolarMass: 36.46
-  Density: 1.19
-  Color: {r: 1, g: 0.4936276, b: 0.0039215684, a: 0.6666667}
-  pH: 0
+  Name: "\u0425\u043B\u043E\u0440\u0438\u0434 \u043D\u0430\u0442\u0440\u0438\u044F"
+  Formula: NaCl
+  Info: "\u0420\u0430\u0441\u0442\u0432\u043E\u0440 \u0441\u043E\u043B\u0438"
+  MolarMass: 58.44
+  Density: 1.02
+  Color: {r: 1, g: 1, b: 1, a: 0.35}
+  pH: 7
   DefaultMatterPhase: 1

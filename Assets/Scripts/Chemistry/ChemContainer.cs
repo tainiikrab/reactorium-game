@@ -11,6 +11,11 @@ public class ChemContainer : MonoBehaviour
     [SerializeField] private ContainerContents _contents = new();
     public ContainerContents Contents => _contents;
 
+    private void Start()
+    {
+        _contents.RefreshState();
+    }
+
     private void OnValidate()
     {
         _contents.RefreshState();

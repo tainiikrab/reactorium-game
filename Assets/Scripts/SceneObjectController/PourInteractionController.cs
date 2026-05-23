@@ -1,7 +1,9 @@
 using ChemSimDiploma.Chemistry;
+using ChemSimDiploma.Chemistry.Signals;
 using ChemSimDiploma.UI;
 using PrimeTween;
 using UnityEngine;
+using Zenject;
 
 namespace ChemSimDiploma.SceneObjectController
 {
@@ -35,9 +37,16 @@ public class PourInteractionController : MonoBehaviour
 
     private float _currentAngle;
     private float _angleVelocity;
+    private SignalBus _signalBus;
 
     /// <summary>True between <see cref="OnContainersAttached"/> and <see cref="OnInteractionEnded"/>.</summary>
     public bool IsPourActive => _active;
+
+    [Inject]
+    public void Construct(SignalBus signalBus)
+    {
+        _signalBus = signalBus;
+    }
 
     private void Awake()
     {
@@ -156,6 +165,18 @@ public class PourInteractionController : MonoBehaviour
         float pouredMl = _sourceContainer.Contents.PourInto(
             _destinationContainer.Contents,
             deltaMl);
+
+        if (pouredMl > 0f)
+        {
+            _signalBus?.Fire(new LiquidPouredSignal
+            {
+                Source = _sourceContainer,
+                Destination = _destinationContainer,
+                VolumeMl = pouredMl
+            });
+
+            _sourceContainer.Contents.RefreshState();
+        }
 
         _pouredMl += pouredMl;
     }

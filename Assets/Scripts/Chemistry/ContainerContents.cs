@@ -13,10 +13,13 @@ public class ContainerContents
     [SerializeField] private Color _currentColor;
     [Range(0, 1)] [SerializeField] private float _maxFillLevel = 1;
     [SerializeField] private float _capacityMl = 1000;
+    [SerializeField] private float _mixturePh = 7f;
     [SerializeField] private List<RuntimeSubstance> _substances = new();
 
 
     public List<RuntimeSubstance> Substances => _substances;
+
+    public float MixturePh => _mixturePh;
 
     public ContainerType ContainerType => _containerType;
     public float CurrentFillLevel => _currentFillLevel;
@@ -70,6 +73,7 @@ public class ContainerContents
             : Color.clear;
 
         SetColor(mixedColor);
+        SetMixturePh(MixturePhCalculator.Compute(this));
 
         OnFillLevelChanged?.Invoke(_currentFillLevel);
         OnColorChanged?.Invoke(_currentColor);
@@ -84,6 +88,16 @@ public class ContainerContents
     public void SetColor(Color value)
     {
         _currentColor = value;
+    }
+
+    public void SetMixturePh(float value)
+    {
+        _mixturePh = Mathf.Clamp(value, 0f, 14f);
+    }
+
+    public void RemoveDepletedSubstances()
+    {
+        _substances.RemoveAll(s => s == null || s.Moles <= 1e-6f);
     }
 
     public float GetVolumeMl()
@@ -155,7 +169,7 @@ public class ContainerContents
         return volumeMl;
     }
 
-    private void AddOrMergeSubstance(SubstanceSO substanceSo, float moles, float temperature)
+    public void AddOrMergeSubstance(SubstanceSO substanceSo, float moles, float temperature)
     {
         if (substanceSo == null || moles <= 0f) return;
 
