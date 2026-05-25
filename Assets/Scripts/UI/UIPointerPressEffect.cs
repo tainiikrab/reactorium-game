@@ -48,8 +48,7 @@ public class UIPointerPressEffect : MonoBehaviour, IPointerDownHandler, IPointer
     private void OnDisable()
     {
         _pointerDownOnThis = false;
-        if (_scaleTransform != null)
-            Tween.StopAll(_scaleTransform);
+        StopActive();
         RestoreBaseScaleImmediate();
     }
 
@@ -100,8 +99,10 @@ public class UIPointerPressEffect : MonoBehaviour, IPointerDownHandler, IPointer
 
     private void StopActive()
     {
-        if (_scaleTransform != null)
-            Tween.StopAll(_scaleTransform);
+        if (_scaleTransform == null || !Application.isPlaying)
+            return;
+
+        Tween.StopAll(_scaleTransform);
     }
 
     private void RestoreBaseScaleImmediate()
