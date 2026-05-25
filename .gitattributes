@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+docs/Build/*.wasm filter=lfs diff=lfs merge=lfs -text
+docs/Build/*.data filter=lfs diff=lfs merge=lfs -text
