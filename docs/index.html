@@ -6,28 +6,9 @@
     <title>Unity Web Player | My project</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <style>
-      #rotate-warning {
-        position: fixed;
-        inset: 0;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        background: black;
-        color: white;
-        font-size: 24px;
-        z-index: 9999;
-        text-align: center;
-        padding: 20px;
-        font-family: Arial, sans-serif;
-      }
-    </style>
   <script src="TemplateData/profiler.js"></script>
   </head>
   <body>
-    <div id="rotate-warning">
-      Пожалуйста, поверните устройство горизонтально
-    </div>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -43,18 +24,6 @@
         <div id="unity-build-title">My project</div>
       </div>
     </div>
-    <script>
-      // Check orientation and show warning if in portrait mode
-      function checkOrientation() {
-        const portrait = window.innerHeight > window.innerWidth;
-        document.getElementById("rotate-warning").style.display = portrait ? "flex" : "none";
-        document.getElementById("unity-container").style.display = portrait ? "none" : "block";
-      }
-      
-      window.addEventListener("resize", checkOrientation);
-      window.addEventListener("orientationchange", checkOrientation);
-      checkOrientation();
-    </script>
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
@@ -84,12 +53,12 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Build.loader.js";
+      var loaderUrl = buildUrl + "/docs.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/Build.data",
-        frameworkUrl: buildUrl + "/Build.framework.js",
-        codeUrl: buildUrl + "/Build.wasm",
+        dataUrl: buildUrl + "/docs.data",
+        frameworkUrl: buildUrl + "/docs.framework.js",
+        codeUrl: buildUrl + "/docs.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "My project",
