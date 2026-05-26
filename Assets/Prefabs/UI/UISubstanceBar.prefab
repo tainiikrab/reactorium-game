@@ -206,8 +206,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: NaOH
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c09ef0a799377364487b25eaeab93d07, type: 2}
+  m_sharedMaterial: {fileID: -5836116364920535365, guid: c09ef0a799377364487b25eaeab93d07, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -471,6 +471,7 @@ MonoBehaviour:
   _name: {fileID: 4655425566346743164}
   _infoIcon: {fileID: 6368013341047112717}
   _collapsedWidth: 84
+  _rectTransform: {fileID: 5829990748308040866}
 --- !u!1 &9026475363650661247
 GameObject:
   m_ObjectHideFlags: 0

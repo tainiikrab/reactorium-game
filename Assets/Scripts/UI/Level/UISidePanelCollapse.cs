@@ -6,6 +6,7 @@ using UnityEngine.UI;
 namespace ChemSimDiploma.UI
 {
 [DisallowMultipleComponent]
+[ExecuteAlways]
 public class UISidePanelCollapse : MonoBehaviour
 {
     [SerializeField] private Button _toggleButton;
@@ -13,19 +14,29 @@ public class UISidePanelCollapse : MonoBehaviour
     [SerializeField] private GameObject _header;
     [SerializeField] private RectTransform _containerRect;
 
-    [Header("Motion")] [SerializeField] private float _duration = 0.32f;
+    [Header("Motion")]
+    [SerializeField] private float _duration = 0.32f;
     [SerializeField] private Ease _ease = Ease.OutCubic;
     [SerializeField] private float _collapsedArrowZ = 180f;
+    [SerializeField, Range(0.05f, 0.5f)] private float _titleFadePortion = 0.25f;
 
-    private UISubstanceBar[] _substanceBars;
+    private ICollapsableUI[] _collapsableBars;
     private bool _collapsed;
+    private CanvasGroup _headerGroup;
+    private LayoutElement _headerLayoutElement;
+    private bool _headerRespectedLayout = true;
     private Tween _arrowTween;
+    private Tween _headerAlphaTween;
+    private Tween _headerLayoutRestoreTween;
+
+    private float TitleFadeDuration => _duration * _titleFadePortion;
 
     public bool IsCollapsed => _collapsed;
 
     private void Awake()
     {
-        _substanceBars = GetComponentsInChildren<UISubstanceBar>(true);
+        _collapsableBars = GetComponentsInChildren<ICollapsableUI>(true);
+        CacheHeaderComponents();
 
         if (_toggleButton != null)
             _toggleButton.onClick.AddListener(Toggle);
@@ -37,8 +48,10 @@ public class UISidePanelCollapse : MonoBehaviour
             _toggleButton.onClick.RemoveListener(Toggle);
 
         StopArrowTween();
+        StopHeaderTweens();
     }
 
+    [ContextMenu("Toggle")]
     public void Toggle()
     {
         SetCollapsed(!_collapsed, true);
@@ -51,19 +64,134 @@ public class UISidePanelCollapse : MonoBehaviour
 
         _collapsed = collapsed;
 
-        if (_header != null)
-            _header.SetActive(!collapsed);
+        AnimateHeader(collapsed, animate);
 
-        for (int i = 0; i < _substanceBars.Length; i++)
+        for (int i = 0; i < _collapsableBars.Length; i++)
             if (collapsed)
-                _substanceBars[i].Collapse();
+                _collapsableBars[i].Collapse(animate);
             else
-                _substanceBars[i].Open();
+                _collapsableBars[i].Open(animate);
 
         if (_containerRect != null)
             LayoutRebuilder.ForceRebuildLayoutImmediate(_containerRect);
 
         AnimateArrow(collapsed, animate);
+    }
+
+    private void CacheHeaderComponents()
+    {
+        if (_header == null)
+            return;
+
+        _headerGroup = _header.GetComponent<CanvasGroup>();
+        if (_headerGroup == null)
+            _headerGroup = _header.AddComponent<CanvasGroup>();
+
+        _headerLayoutElement = _header.GetComponent<LayoutElement>();
+        if (_headerLayoutElement == null)
+            _headerLayoutElement = _header.AddComponent<LayoutElement>();
+
+        _headerRespectedLayout = !_headerLayoutElement.ignoreLayout;
+    }
+
+    private void AnimateHeader(bool collapsed, bool animate)
+    {
+        StopHeaderTweens();
+
+        if (_header == null)
+            return;
+
+        if (!animate || !Application.isPlaying)
+        {
+            ApplyHeaderCollapsedState(collapsed);
+            return;
+        }
+
+        if (collapsed)
+            AnimateHeaderCollapse();
+        else
+            AnimateHeaderOpen();
+    }
+
+    private void AnimateHeaderCollapse()
+    {
+        SetHeaderIgnoresLayout(true);
+        _header.SetActive(true);
+        _headerGroup.alpha = 1f;
+
+        _headerAlphaTween = Tween.Alpha(_headerGroup, 0f, TitleFadeDuration, _ease)
+            .OnComplete(DisableHeader);
+    }
+
+    private void AnimateHeaderOpen()
+    {
+        SetHeaderIgnoresLayout(true);
+        EnableHeader();
+        _headerGroup.alpha = 0f;
+
+        _headerAlphaTween = Tween.Alpha(_headerGroup, 1f, TitleFadeDuration, _ease);
+        _headerLayoutRestoreTween = Tween.Delay(_duration)
+            .OnComplete(RestoreHeaderLayout);
+    }
+
+    private void ApplyHeaderCollapsedState(bool collapsed)
+    {
+        if (collapsed)
+        {
+            SetHeaderIgnoresLayout(true);
+            DisableHeader();
+        }
+        else
+        {
+            EnableHeader();
+            if (_headerGroup != null)
+                _headerGroup.alpha = 1f;
+            RestoreHeaderLayout();
+        }
+    }
+
+    private void EnableHeader()
+    {
+        _header.SetActive(true);
+        if (_headerGroup == null)
+            return;
+
+        _headerGroup.interactable = true;
+        _headerGroup.blocksRaycasts = true;
+    }
+
+    private void DisableHeader()
+    {
+        if (_headerGroup != null)
+            _headerGroup.alpha = 0f;
+
+        _header.SetActive(false);
+    }
+
+    private void SetHeaderIgnoresLayout(bool ignore)
+    {
+        if (_headerLayoutElement == null)
+            return;
+
+        _headerLayoutElement.ignoreLayout = ignore;
+        if (_containerRect != null)
+            LayoutRebuilder.MarkLayoutForRebuild(_containerRect);
+    }
+
+    private void RestoreHeaderLayout()
+    {
+        SetHeaderIgnoresLayout(!_headerRespectedLayout);
+    }
+
+    private void StopHeaderTweens()
+    {
+        if (!Application.isPlaying)
+            return;
+
+        if (_headerAlphaTween.isAlive)
+            _headerAlphaTween.Stop();
+        if (_headerLayoutRestoreTween.isAlive)
+            _headerLayoutRestoreTween.Stop();
     }
 
     private void StopArrowTween()
