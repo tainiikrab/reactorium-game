@@ -383,6 +383,7 @@ GameObject:
   - component: {fileID: 6909060888267931614}
   - component: {fileID: 7110016049003146497}
   - component: {fileID: 6193373760229987207}
+  - component: {fileID: 7120016049003146497}
   m_Layer: 0
   m_Name: UITaskBar
   m_TagString: Untagged
@@ -411,7 +412,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 248.55, y: -28.8}
-  m_SizeDelta: {x: 497.1, y: 0}
+  m_SizeDelta: {x: 430, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8274275883502749515
 MonoBehaviour:
@@ -506,6 +507,7 @@ MonoBehaviour:
   _label: {fileID: 8692799718636315567}
   _collapsedWidth: 20
   _rectTransform: {fileID: 27266036306174447}
+  _bulletPointImage: {fileID: 5748107192312915850}
   _layoutElement: {fileID: 6193373760229987207}
   _duration: 0.32
   _ease: 9
@@ -531,6 +533,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &7120016049003146497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6056711138326945717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba9ff2387f2f4c44c95b9b64f58b0a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.Tasks.UI.TaskBarView
+  _taskIndex: 0
+  _taskBar: {fileID: 7110016049003146497}
 --- !u!1 &7088491738125032377
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +560,7 @@ GameObject:
   - component: {fileID: 5748107192312915850}
   - component: {fileID: 904475105395292808}
   m_Layer: 0
-  m_Name: Image
+  m_Name: BulletImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

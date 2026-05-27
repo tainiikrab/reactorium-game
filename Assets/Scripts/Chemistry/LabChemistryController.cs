@@ -1,6 +1,7 @@
 using System;
 using ChemSimDiploma.Chemistry.ScriptableObjects;
 using ChemSimDiploma.Chemistry.Signals;
+using ChemSimDiploma.Tasks.Signals;
 using UnityEngine;
 using Zenject;
 
@@ -28,6 +29,12 @@ public class LabChemistryController : MonoBehaviour, IInitializable, IDisposable
             return;
         }
 
+        if (_signalBus == null)
+        {
+            Debug.LogError("[LabChemistryController] SignalBus was not injected.", this);
+            return;
+        }
+
         _reactionService = new ReactionService(_registry);
         _onLiquidPoured = OnLiquidPoured;
         _signalBus.Subscribe(_onLiquidPoured);
@@ -45,7 +52,14 @@ public class LabChemistryController : MonoBehaviour, IInitializable, IDisposable
     {
         if (signal.VolumeMl <= 1e-6f || signal.Destination == null) return;
 
-        _reactionService.Process(signal.Destination.Contents);
+        ChemContainer destination = signal.Destination;
+        _reactionService.Process(destination.Contents);
+
+        _signalBus.Fire(new ContainerChemistryUpdatedSignal
+        {
+            Container = destination,
+            Contents = destination.Contents
+        });
     }
 }
 }

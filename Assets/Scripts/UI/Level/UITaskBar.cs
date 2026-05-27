@@ -11,6 +11,7 @@ public class UITaskBar : MonoBehaviour, ICollapsableUI
     [SerializeField] private RectTransform _label;
     [SerializeField] private float _collapsedWidth = 64f;
     [SerializeField] private RectTransform _rectTransform;
+    [SerializeField] private Image _bulletPointImage;
     [SerializeField] private LayoutElement _layoutElement;
 
     [Header("Motion")]
@@ -54,8 +55,29 @@ public class UITaskBar : MonoBehaviour, ICollapsableUI
 
     public void SetCompleted(bool completed)
     {
-        if (_labelText != null)
-            _labelText.color = completed ? _completedColor : _defaultColor;
+        if (!EnsureLabelText()) return;
+        _labelText.color = completed ? _completedColor : _defaultColor;
+        _bulletPointImage.color = completed ? _completedColor : _defaultColor;
+    }
+
+    public void SetLabel(string text)
+    {
+        if (!EnsureLabelText() || string.IsNullOrEmpty(text)) return;
+        _labelText.text = text;
+    }
+
+    private bool EnsureLabelText()
+    {
+        if (_labelText != null) return true;
+
+        if (_label == null)
+            return false;
+
+        _labelText = _label.GetComponent<TextMeshProUGUI>();
+        if (_labelText == null) return false;
+
+        _defaultColor = _labelText.color;
+        return true;
     }
 
     private void OnDestroy()

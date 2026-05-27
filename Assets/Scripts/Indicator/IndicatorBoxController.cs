@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using ChemSimDiploma.SceneObjectController;
+using ChemSimDiploma.Tasks.Signals;
 using PrimeTween;
 using UnityEngine;
+using Zenject;
 
 namespace ChemSimDiploma.Indicator
 {
@@ -51,6 +53,13 @@ public class IndicatorBoxController : MonoBehaviour
     private int _sticksRemaining;
     private PendingReturn? _pendingReturn;
     private Sequence _slotRevealSequence;
+    private SignalBus _signalBus;
+
+    [Inject]
+    public void Construct(SignalBus signalBus)
+    {
+        _signalBus = signalBus;
+    }
 
     public bool CanAcceptTap => (_infiniteSupply || _sticksRemaining > 0) && !_pendingReturn.HasValue;
 
@@ -177,6 +186,13 @@ public class IndicatorBoxController : MonoBehaviour
         stick.PlayEmergeFrom(emergeFrom, targetPos, stick.HasBeenDipped);
 
         _spawnedSticks.Add(stick);
+
+        _signalBus?.Fire(new IndicatorStickSpawnedSignal
+        {
+            Box = this,
+            Stick = stick
+        });
+
         return true;
     }
 
