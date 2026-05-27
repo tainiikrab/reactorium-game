@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.SceneObjectController.Draggable
   _hoverSelection: {fileID: 551100000000001}
   _enableFallToRest: 1
-  _minFallHeight: 8
+  _minFallHeight: -20
   <InteractPoint>k__BackingField: {fileID: 551100000000004}
 --- !u!114 &551100000000007
 MonoBehaviour:
