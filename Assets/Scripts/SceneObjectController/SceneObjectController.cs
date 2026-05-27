@@ -1,15 +1,21 @@
+using ChemSimDiploma.Indicator;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using PrimeTween;
+
 namespace ChemSimDiploma.SceneObjectController
 {
-
 public class SceneObjectController : MonoBehaviour, IGrabber
 {
     [Header("Config")] [SerializeField] private float snapDuration = 0.2f;
     [SerializeField] private Ease snapEase = Ease.OutCubic;
     [SerializeField] private LayerMask draggableLayer;
     [SerializeField] private float followSpeed = 20f;
+
+    [Header("Indicator box tap")]
+    [SerializeField] private float tapMaxDuration = 0.25f;
+    [SerializeField] private float tapMaxMovement = 0.18f;
+    [SerializeField] private IndicatorInteractionController _indicatorInteraction;
 
     [Header("Perspective drop")] [SerializeField]
     private ObjectPerspectiveScaler perspectiveScaler;
@@ -36,6 +42,9 @@ public class SceneObjectController : MonoBehaviour, IGrabber
     private InteractionService _interaction;
     private ReleaseFallService _releaseFall;
 
+    private float _holdStartTime;
+    private Vector3 _holdPointerStartWorld;
+
     public bool IsDragging => _isDragging;
     public IDraggable CurrentTarget => _current;
 
@@ -47,6 +56,11 @@ public class SceneObjectController : MonoBehaviour, IGrabber
         _hoverService = new HoverService(draggableLayer, _cam);
         _interaction = new InteractionService(snapDuration, snapEase);
         _interaction.Attached += OnContainersAttached;
+
+        if (_indicatorInteraction == null)
+            _indicatorInteraction = GetComponent<IndicatorInteractionController>();
+        if (_indicatorInteraction != null)
+            _interaction.Attached += _indicatorInteraction.OnContainersAttached;
 
         if (perspectiveScaler == null)
             perspectiveScaler = GetComponent<ObjectPerspectiveScaler>();
@@ -87,7 +101,11 @@ public class SceneObjectController : MonoBehaviour, IGrabber
     private void OnDestroy()
     {
         if (_interaction != null)
+        {
             _interaction.Attached -= OnContainersAttached;
+            if (_indicatorInteraction != null)
+                _interaction.Attached -= _indicatorInteraction.OnContainersAttached;
+        }
 
         _input.Dispose();
     }
@@ -97,13 +115,27 @@ public class SceneObjectController : MonoBehaviour, IGrabber
         _pourInteraction?.OnContainersAttached(source, destination);
     }
 
-    private void OnHoldStarted(InputAction.CallbackContext _)
+    private Vector3 ReadPointerWorld()
+    {
+        Vector2 screen = Pointer.current.position.ReadValue();
+        Vector3 world = _cam.ScreenToWorldPoint(screen);
+        world.z = 0f;
+        return world;
+    }
+
+    private void OnHoldStarted(InputAction.CallbackContext context)
     {
         if (!_hoverService.TryGetTarget(out IDraggable target, out Vector3 offset))
             return;
 
+        _holdStartTime = Time.time;
+        _holdPointerStartWorld = ReadPointerWorld();
+
         _isDragging = true;
         _current = target;
+
+        if (target.Transform.TryGetComponent(out IndicatorStickController stick))
+            stick.CompleteEmerge();
 
         _pourInteraction?.OnInteractionEnded();
 
@@ -112,31 +144,74 @@ public class SceneObjectController : MonoBehaviour, IGrabber
         _interaction.TryDetach(target);
     }
 
-    private void OnHoldCanceled(InputAction.CallbackContext _)
+    private void OnHoldCanceled(InputAction.CallbackContext context)
     {
         _isDragging = false;
 
         IDraggable released = _current;
-        var attached = false;
+        bool attached = false;
+        bool skipReleaseFall = false;
+        bool returnedToBox = false;
 
-        if (released != null && _hoverService.Current != null)
+        if (TryGetDraggableComponent(released, out IndicatorBoxController box))
         {
-            _interaction.Attach(released, _hoverService.Current);
+            float duration = Time.time - _holdStartTime;
+            float move = Vector3.Distance(ReadPointerWorld(), _holdPointerStartWorld);
+            if (duration <= tapMaxDuration && move <= tapMaxMovement && box.TrySpawnStick(out _))
+                skipReleaseFall = true;
+        }
+
+        if (!skipReleaseFall
+            && TryGetDraggableComponent(released, out IndicatorStickController stick)
+            && TryGetDraggableComponent(_hoverService.Current, out IndicatorBoxController returnBox)
+            && stick.CanReturnTo(returnBox)
+            && returnBox.TryReturnStick(stick))
+        {
+            _hoverService.Clear();
+            attached = true;
+            skipReleaseFall = true;
+            returnedToBox = true;
+        }
+        else if (!skipReleaseFall
+            && IsDraggableAlive(released)
+            && IsDraggableAlive(_hoverService.Current)
+            && AttachRules.CanAttach(released, _hoverService.Current))
+        {
+            float attachDuration = AttachRules.GetAttachDuration(
+                released, _hoverService.Current, snapDuration);
+            Ease attachEase = AttachRules.GetAttachEase(
+                released, _hoverService.Current, snapEase);
+            _interaction.Attach(released, _hoverService.Current, attachDuration, attachEase);
             _hoverService.Clear();
             attached = true;
         }
-        else
+        else if (!skipReleaseFall && (_pourInteraction == null || !_pourInteraction.IsPourActive))
         {
-            if (_pourInteraction == null || !_pourInteraction.IsPourActive)
-                _pourInteraction?.OnInteractionEnded();
+            _pourInteraction?.OnInteractionEnded();
         }
 
-        released?.ToggleCollider(true);
+        if (IsDraggableAlive(released) && !returnedToBox)
+            released.ToggleCollider(true);
 
-        if (!attached)
+        if (!skipReleaseFall && !attached && IsDraggableAlive(released))
             _releaseFall.TryPlayAfterFreeRelease(released);
 
+        if (!attached)
+            _hoverService.Clear();
+
         _current = null;
+    }
+
+    private static bool IsDraggableAlive(IDraggable draggable) =>
+        draggable is Component component && component != null;
+
+    private static bool TryGetDraggableComponent<T>(IDraggable draggable, out T component) where T : Component
+    {
+        component = null;
+        if (!IsDraggableAlive(draggable))
+            return false;
+
+        return ((Component)draggable).TryGetComponent(out component);
     }
 }
 }

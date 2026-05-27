@@ -22,13 +22,18 @@ public class InteractionService
 
     public void Attach(IDraggable from, IDraggable to)
     {
+        Attach(from, to, _duration, _ease);
+    }
+
+    public void Attach(IDraggable from, IDraggable to, float duration, Ease ease)
+    {
         StopTweens();
 
         var t = from.Transform;
-        var p = to.InteractPoint;
+        Transform p = AttachRules.GetAttachTransform(from, to);
 
-        _move = Tween.Position(t, p.position, _duration, _ease);
-        _rotate = Tween.Rotation(t, p.rotation, _duration, _ease)
+        _move = Tween.Position(t, p.position, duration, ease);
+        _rotate = Tween.Rotation(t, p.rotation, duration, ease)
             .OnComplete(() => Attached?.Invoke(from, to));
 
         from.Receiver = to;
@@ -37,7 +42,7 @@ public class InteractionService
         to.Sender = from;
         to.Receiver = null;
 
-        if (_duration <= 0f)
+        if (duration <= 0f)
             Attached?.Invoke(from, to);
     }
 

@@ -61,6 +61,12 @@ public class HoverService
             return;
         }
 
+        if (!AttachRules.CanAttach(dragging, _current))
+        {
+            Clear();
+            return;
+        }
+
         _current.ToggleHover(true);
     }
 

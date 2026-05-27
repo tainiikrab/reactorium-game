@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9169156003408436601}
   - component: {fileID: 3631520286435465643}
   - component: {fileID: 5985676456675864259}
+  - component: {fileID: 810000000000000001}
   m_Layer: 6
   m_Name: Flask
   m_TagString: Untagged
@@ -124,6 +125,19 @@ MonoBehaviour:
   _enableFallToRest: 1
   _minFallHeight: 8
   <InteractPoint>k__BackingField: {fileID: 8112176494518137489}
+--- !u!114 &810000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204675239950060917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23402dfdcc79154f823dbd74060e689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.Indicator.IndicatorDipPoint
+  _anchor: {fileID: 5477437679887682982}
 --- !u!1 &2967476494391431009
 GameObject:
   m_ObjectHideFlags: 0
