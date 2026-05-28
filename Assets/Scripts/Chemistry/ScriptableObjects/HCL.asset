@@ -17,6 +17,6 @@ MonoBehaviour:
   Info: "37% \u0440\u0430\u0441\u0442\u0432\u043E\u0440"
   MolarMass: 36.46
   Density: 1.19
-  Color: {r: 1, g: 0.4936276, b: 0.0039215684, a: 0.6666667}
+  Color: {r: 1, g: 0.86449003, b: 0.40566033, a: 0.6666667}
   pH: 0
   DefaultMatterPhase: 1

@@ -1,3 +1,4 @@
+using ChemSimDiploma.Chemistry;
 using ChemSimDiploma.Indicator;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,13 @@ namespace ChemSimDiploma.SceneObjectController
 {
 public class SceneObjectController : MonoBehaviour, IGrabber
 {
+    private enum InteractionPhase
+    {
+        None,
+        SubstanceHold,
+        Dragging
+    }
+
     [Header("Config")] [SerializeField] private float snapDuration = 0.2f;
     [SerializeField] private Ease snapEase = Ease.OutCubic;
     [SerializeField] private LayerMask draggableLayer;
@@ -31,11 +39,15 @@ public class SceneObjectController : MonoBehaviour, IGrabber
 
     [Header("Pour")] [SerializeField] private PourInteractionController _pourInteraction;
 
+    [Header("Substance info")]
+    [SerializeField] private SubstanceInfoInteractionController _substanceInfo;
+
     [Header("Runtime")] private Camera _cam;
     private InputSystem_Actions _input;
 
     private IDraggable _current;
-    private bool _isDragging;
+    private InteractionPhase _phase = InteractionPhase.None;
+    private Vector3 _dragOffset;
 
     private DragService _dragService;
     private HoverService _hoverService;
@@ -45,7 +57,7 @@ public class SceneObjectController : MonoBehaviour, IGrabber
     private float _holdStartTime;
     private Vector3 _holdPointerStartWorld;
 
-    public bool IsDragging => _isDragging;
+    public bool IsDragging => _phase == InteractionPhase.Dragging;
     public IDraggable CurrentTarget => _current;
 
     private void Awake()
@@ -68,6 +80,9 @@ public class SceneObjectController : MonoBehaviour, IGrabber
         if (_pourInteraction == null)
             _pourInteraction = GetComponent<PourInteractionController>();
 
+        if (_substanceInfo == null)
+            _substanceInfo = GetComponent<SubstanceInfoInteractionController>();
+
         fallBounce ??= new ReleaseFallBounceSettings();
 
         _releaseFall = new ReleaseFallService(
@@ -87,7 +102,25 @@ public class SceneObjectController : MonoBehaviour, IGrabber
 
     private void Update()
     {
-        if (!_isDragging || _current == null) return;
+        if (_phase == InteractionPhase.SubstanceHold && _current != null)
+        {
+            if (_substanceInfo == null)
+            {
+                BeginDrag(_current, _dragOffset);
+                return;
+            }
+
+            SubstanceHoldTickResult tickResult = _substanceInfo.Tick(ReadPointerScreen(), ReadPointerWorld());
+            if (tickResult == SubstanceHoldTickResult.RequestDrag)
+            {
+                BeginDrag(_current, _dragOffset);
+                _dragService.Update(_current);
+            }
+
+            return;
+        }
+
+        if (_phase != InteractionPhase.Dragging || _current == null) return;
 
         _dragService.Update(_current);
         _hoverService.Update();
@@ -118,26 +151,47 @@ public class SceneObjectController : MonoBehaviour, IGrabber
     private Vector3 ReadPointerWorld()
     {
         Vector2 screen = Pointer.current.position.ReadValue();
-        Vector3 world = _cam.ScreenToWorldPoint(screen);
+        float depth = -_cam.transform.position.z;
+        Vector3 world = _cam.ScreenToWorldPoint(new Vector3(screen.x, screen.y, depth));
         world.z = 0f;
         return world;
     }
 
+    private Vector2 ReadPointerScreen() => Pointer.current.position.ReadValue();
+
     private void OnHoldStarted(InputAction.CallbackContext context)
     {
+        _substanceInfo?.OnAnyHoldStarted();
+
         if (!_hoverService.TryGetTarget(out IDraggable target, out Vector3 offset))
             return;
 
         _holdStartTime = Time.time;
         _holdPointerStartWorld = ReadPointerWorld();
-
-        _isDragging = true;
         _current = target;
+        _dragOffset = offset;
+
+        if (TryGetChemContainer(target, out ChemContainer container)
+            && _substanceInfo != null
+            && _substanceInfo.TryBeginHold(container, ReadPointerScreen(), _holdPointerStartWorld))
+        {
+            _phase = InteractionPhase.SubstanceHold;
+            _substanceInfo.Tick(ReadPointerScreen(), _holdPointerStartWorld);
+            return;
+        }
+
+        BeginDrag(target, offset);
+    }
+
+    private void BeginDrag(IDraggable target, Vector3 offset)
+    {
+        _phase = InteractionPhase.Dragging;
 
         if (target.Transform.TryGetComponent(out IndicatorStickController stick))
             stick.CompleteEmerge();
 
         _pourInteraction?.OnInteractionEnded();
+        _substanceInfo?.HideForDrag();
 
         _releaseFall.OnGrabStarted(target.Transform);
         _dragService.Begin(target, offset);
@@ -146,7 +200,19 @@ public class SceneObjectController : MonoBehaviour, IGrabber
 
     private void OnHoldCanceled(InputAction.CallbackContext context)
     {
-        _isDragging = false;
+        if (_phase == InteractionPhase.SubstanceHold)
+        {
+            _substanceInfo?.OnHoldCanceled();
+
+            if (IsDraggableAlive(_current))
+                _current.ToggleCollider(true);
+
+            _current = null;
+            _phase = InteractionPhase.None;
+            return;
+        }
+
+        _phase = InteractionPhase.None;
 
         IDraggable released = _current;
         bool attached = false;
@@ -200,6 +266,21 @@ public class SceneObjectController : MonoBehaviour, IGrabber
             _hoverService.Clear();
 
         _current = null;
+    }
+
+    private static bool TryGetChemContainer(IDraggable draggable, out ChemContainer container)
+    {
+        container = null;
+        if (!IsDraggableAlive(draggable))
+            return false;
+
+        var component = (Component)draggable;
+        container = component.GetComponent<ChemContainer>();
+        if (container != null)
+            return true;
+
+        container = component.GetComponentInParent<ChemContainer>();
+        return container != null;
     }
 
     private static bool IsDraggableAlive(IDraggable draggable) =>

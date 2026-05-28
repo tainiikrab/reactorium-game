@@ -38,7 +38,8 @@ public class DragService
     {
         Vector2 screen = Pointer.current.position.ReadValue();
         Camera cam = Camera.main;
-        Vector3 world = cam.ScreenToWorldPoint(screen);
+        float depth = -cam.transform.position.z;
+        Vector3 world = cam.ScreenToWorldPoint(new Vector3(screen.x, screen.y, depth));
         world.z = 0;
         return world;
     }

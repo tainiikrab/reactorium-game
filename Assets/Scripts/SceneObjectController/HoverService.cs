@@ -89,7 +89,8 @@ public class HoverService
     private Vector3 GetPointerWorldPosition()
     {
         var screen = Pointer.current.position.ReadValue();
-        var world = _cam.ScreenToWorldPoint(screen);
+        float depth = -_cam.transform.position.z;
+        var world = _cam.ScreenToWorldPoint(new Vector3(screen.x, screen.y, depth));
         world.z = 0;
         return world;
     }
