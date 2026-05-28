@@ -19,7 +19,11 @@ public class UIPanelSlideTransition : MonoBehaviour
 
     [SerializeField] private PanelPair[] transitionPairs;
 
-    [Header("Motion")] 
+    [Header("Startup")]
+    [Tooltip("Экран при загрузке: −1 — главный (home), иначе индекс пары в transitionPairs.")]
+    [SerializeField] private int defaultScreenPairIndex = -1;
+
+    [Header("Motion")]
     [SerializeField] private float duration = 0.42f;
     [SerializeField] private float slideDistance = 160f;
     [SerializeField] private float incomingScaleFrom = 0.94f;
@@ -59,9 +63,7 @@ public class UIPanelSlideTransition : MonoBehaviour
 
             GameObject homeRoot = p.homeCanvasGroup.gameObject;
             GameObject overlayRoot = p.overlayCanvasGroup.gameObject;
-            bool homeOn = homeRoot.activeSelf;
-            bool overlayOn = overlayRoot.activeSelf;
-            r.ShowingOverlay = homeOn != overlayOn && overlayOn;
+            r.ShowingOverlay = false;
 
             int index = i;
             _openActions[i] = () => CrossFade(index, true);
@@ -86,7 +88,25 @@ public class UIPanelSlideTransition : MonoBehaviour
             Rect(p.overlayCanvasGroup).localScale = Vector3.one;
         }
 
+        ApplyDefaultScreen();
         ApplyIdleLayout();
+    }
+
+    private void OnValidate()
+    {
+        if (transitionPairs != null && transitionPairs.Length > 0)
+            defaultScreenPairIndex = Mathf.Clamp(defaultScreenPairIndex, -1, transitionPairs.Length - 1);
+        else
+            defaultScreenPairIndex = -1;
+    }
+
+    private void ApplyDefaultScreen()
+    {
+        for (int i = 0; i < _runtimes.Length; i++)
+            _runtimes[i].ShowingOverlay = false;
+
+        if (defaultScreenPairIndex >= 0 && defaultScreenPairIndex < transitionPairs.Length)
+            _runtimes[defaultScreenPairIndex].ShowingOverlay = true;
     }
 
     private void OnDestroy()
