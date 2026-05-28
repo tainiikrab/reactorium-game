@@ -1,5 +1,6 @@
 using ChemSimDiploma.Chemistry;
 using ChemSimDiploma.Chemistry.Signals;
+using ChemSimDiploma.Levels;
 using ChemSimDiploma.SceneObjectController;
 using ChemSimDiploma.Tasks;
 using ChemSimDiploma.Tasks.Data;
@@ -13,6 +14,7 @@ namespace ChemSimDiploma.Installers
 public class DefaultLevelInstaller : MonoInstaller
 {
     [SerializeField] private LevelTaskSetSO _levelTaskSet;
+    [SerializeField] private int _levelNumber = 1;
 
     public override void InstallBindings()
     {
@@ -43,6 +45,9 @@ public class DefaultLevelInstaller : MonoInstaller
 
         Container.Bind<LevelTaskSetSO>().FromInstance(_levelTaskSet).AsSingle();
         Container.BindInterfacesAndSelfTo<TaskManager>().AsSingle();
+        Container.BindInterfacesAndSelfTo<LevelCompletionHandler>()
+            .AsSingle()
+            .WithArguments(_levelNumber);
         Container.BindInterfacesAndSelfTo<TaskPanelInitializer>().FromComponentInHierarchy().AsSingle();
         Container.BindInterfacesAndSelfTo<LevelFinishPresenter>().FromComponentInHierarchy().AsSingle();
     }

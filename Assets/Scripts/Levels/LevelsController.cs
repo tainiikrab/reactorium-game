@@ -10,20 +10,33 @@ public class LevelsController : MonoBehaviour, ILevelsController
     [SerializeField] private Level[] _levels;
 
     private ISceneTransitionService _sceneTransitions;
+    private ILevelProgressService _progressService;
 
     public event Action<int> OnLevelUnlocked;
 
     [Inject]
-    private void Initialize(ISceneTransitionService sceneTransitions)
+    private void Initialize(ISceneTransitionService sceneTransitions, ILevelProgressService progressService)
     {
         _sceneTransitions = sceneTransitions;
-        _levels[0].IsAvailable = true;
+        _progressService = progressService;
+        ApplyProgress();
     }
 
     public void UnlockLevel(int levelNumber)
     {
-        _levels[levelNumber - 1].IsAvailable = true;
-        OnLevelUnlocked?.Invoke(levelNumber);
+        if (levelNumber < 1 || levelNumber > _levels.Length)
+        {
+            UnityEngine.Debug.LogError(
+                $"{nameof(LevelsController)}: номер уровня вне диапазона 1..{_levels.Length}: {levelNumber}");
+            return;
+        }
+
+        int previousMax = _progressService.MaxUnlockedLevel;
+        _progressService.CompleteLevel(levelNumber - 1);
+        ApplyProgress();
+
+        if (_progressService.MaxUnlockedLevel > previousMax)
+            OnLevelUnlocked?.Invoke(levelNumber);
     }
 
     public Level[] Levels => _levels;
@@ -48,6 +61,13 @@ public class LevelsController : MonoBehaviour, ILevelsController
         }
 
         _sceneTransitions.LoadScene(scene.SceneName);
+    }
+
+    private void ApplyProgress()
+    {
+        int maxUnlockedLevel = _progressService.MaxUnlockedLevel;
+        for (int i = 0; i < _levels.Length; i++)
+            _levels[i].IsAvailable = _levels[i].Number <= maxUnlockedLevel;
     }
 
 

@@ -1,4 +1,5 @@
 using Zenject;
+using ChemSimDiploma.Levels;
 using ChemSimDiploma.Transitions;
 namespace ChemSimDiploma.Installers
 {
@@ -14,6 +15,8 @@ public class ProjectInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<SceneTransitionService>()
             .FromComponentInHierarchy()
             .AsSingle();
+
+        Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle();
     }
 }
 }

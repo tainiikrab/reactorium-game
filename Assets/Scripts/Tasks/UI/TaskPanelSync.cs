@@ -118,6 +118,8 @@ public static class TaskPanelSync
         GameObject go = bar.gameObject;
 
 #if UNITY_EDITOR
+        RemoveFromEditorSelection(go);
+
         if (!Application.isPlaying)
         {
             if (recordUndo)
@@ -130,5 +132,36 @@ public static class TaskPanelSync
 #endif
         Object.Destroy(go);
     }
+
+#if UNITY_EDITOR
+    private static void RemoveFromEditorSelection(GameObject go)
+    {
+        if (go == null) return;
+
+        Object[] current = UnityEditor.Selection.objects;
+        if (current == null || current.Length == 0) return;
+
+        bool contains = false;
+        for (int i = 0; i < current.Length; i++)
+        {
+            if (current[i] == go)
+            {
+                contains = true;
+                break;
+            }
+        }
+
+        if (!contains) return;
+
+        var filtered = new System.Collections.Generic.List<Object>(current.Length);
+        for (int i = 0; i < current.Length; i++)
+        {
+            if (current[i] != null && current[i] != go)
+                filtered.Add(current[i]);
+        }
+
+        UnityEditor.Selection.objects = filtered.ToArray();
+    }
+#endif
 }
 }

@@ -21,6 +21,14 @@ public sealed class DebugTools : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+            Debug.Log("PlayerPrefs cleared");
+            return;
+        }
+
         if (!Input.GetKeyDown(KeyCode.R))
             return;
 
