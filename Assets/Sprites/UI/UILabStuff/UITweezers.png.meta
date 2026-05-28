@@ -77,7 +77,7 @@ TextureImporter:
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
-    crunchedCompression: 0
+    crunchedCompression: 1
     allowsAlphaSplitting: 0
     overridden: 0
     ignorePlatformSupport: 0
@@ -129,12 +129,12 @@ TextureImporter:
       name: UITweezers_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 48
-        width: 404
-        height: 176
+        x: 0
+        y: 39
+        width: 332
+        height: 185
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: d0edc96a7e6a9bf47914880b127d14e7
     internalID: 0
     vertices: []
     indices: 
