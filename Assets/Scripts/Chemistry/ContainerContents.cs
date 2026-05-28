@@ -117,6 +117,27 @@ public class ContainerContents
         return total;
     }
 
+    public float GetAverageLiquidTemperature(float fallbackTemperature = 25f)
+    {
+        float weightedTemperature = 0f;
+        float totalLiquidVolumeMl = 0f;
+
+        foreach (RuntimeSubstance substance in _substances)
+        {
+            if (substance == null || !substance.IsLiquid) continue;
+
+            float volumeMl = substance.GetVolumeMl();
+            if (volumeMl <= 0f) continue;
+
+            totalLiquidVolumeMl += volumeMl;
+            weightedTemperature += substance.Temperature * volumeMl;
+        }
+
+        return totalLiquidVolumeMl > 1e-6f
+            ? weightedTemperature / totalLiquidVolumeMl
+            : fallbackTemperature;
+    }
+
     public float GetFreeLiquidCapacityMl()
     {
         float maxVolumeMl = _capacityMl * _maxFillLevel;

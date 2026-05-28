@@ -1,5 +1,6 @@
 using ChemSimDiploma.Chemistry;
 using ChemSimDiploma.Indicator;
+using ChemSimDiploma.Burner;
 using PrimeTween;
 using UnityEngine;
 
@@ -21,9 +22,14 @@ public static class AttachRules
         }
 
         if (from.Transform.TryGetComponent(out ChemContainer _))
+        {
+            if (to.Transform.TryGetComponent(out BurnerController _))
+                return true;
+
             return to.Transform.TryGetComponent(out ChemContainer _)
                    && !to.Transform.TryGetComponent(out IndicatorStickController _)
                    && !to.Transform.TryGetComponent(out IndicatorBoxController _);
+        }
 
         return false;
     }

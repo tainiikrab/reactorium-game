@@ -26,6 +26,7 @@ public sealed class DebugTools : MonoBehaviour
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
             Debug.Log("PlayerPrefs cleared");
+
             return;
         }
 

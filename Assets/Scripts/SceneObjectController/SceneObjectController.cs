@@ -1,5 +1,6 @@
 using ChemSimDiploma.Chemistry;
 using ChemSimDiploma.Indicator;
+using ChemSimDiploma.Burner;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using PrimeTween;
@@ -12,6 +13,7 @@ public class SceneObjectController : MonoBehaviour, IGrabber
     {
         None,
         SubstanceHold,
+        BurnerTapHold,
         Dragging
     }
 
@@ -24,6 +26,7 @@ public class SceneObjectController : MonoBehaviour, IGrabber
     [SerializeField] private float tapMaxDuration = 0.25f;
     [SerializeField] private float tapMaxMovement = 0.18f;
     [SerializeField] private IndicatorInteractionController _indicatorInteraction;
+    [SerializeField] private HeatInteractionController _heatInteraction;
 
     [Header("Perspective drop")] [SerializeField]
     private ObjectPerspectiveScaler perspectiveScaler;
@@ -74,6 +77,11 @@ public class SceneObjectController : MonoBehaviour, IGrabber
         if (_indicatorInteraction != null)
             _interaction.Attached += _indicatorInteraction.OnContainersAttached;
 
+        if (_heatInteraction == null)
+            _heatInteraction = GetComponent<HeatInteractionController>();
+        if (_heatInteraction != null)
+            _interaction.Attached += _heatInteraction.OnContainersAttached;
+
         if (perspectiveScaler == null)
             perspectiveScaler = GetComponent<ObjectPerspectiveScaler>();
 
@@ -120,6 +128,15 @@ public class SceneObjectController : MonoBehaviour, IGrabber
             return;
         }
 
+        if (_phase == InteractionPhase.BurnerTapHold && _current != null)
+        {
+            float move = Vector3.Distance(ReadPointerWorld(), _holdPointerStartWorld);
+            if (move > tapMaxMovement)
+                BeginDrag(_current, _dragOffset);
+
+            return;
+        }
+
         if (_phase != InteractionPhase.Dragging || _current == null) return;
 
         _dragService.Update(_current);
@@ -138,6 +155,8 @@ public class SceneObjectController : MonoBehaviour, IGrabber
             _interaction.Attached -= OnContainersAttached;
             if (_indicatorInteraction != null)
                 _interaction.Attached -= _indicatorInteraction.OnContainersAttached;
+            if (_heatInteraction != null)
+                _interaction.Attached -= _heatInteraction.OnContainersAttached;
         }
 
         _input.Dispose();
@@ -171,16 +190,33 @@ public class SceneObjectController : MonoBehaviour, IGrabber
         _current = target;
         _dragOffset = offset;
 
-        if (TryGetChemContainer(target, out ChemContainer container)
-            && _substanceInfo != null
-            && _substanceInfo.TryBeginHold(container, ReadPointerScreen(), _holdPointerStartWorld))
+        if (TryGetChemContainer(target, out ChemContainer container))
         {
-            _phase = InteractionPhase.SubstanceHold;
-            _substanceInfo.Tick(ReadPointerScreen(), _holdPointerStartWorld);
-            return;
+            if (IsDraggableAlive(target)
+                && target.Receiver != null
+                && target.Receiver.Transform.TryGetComponent(out BurnerController _))
+            {
+                _phase = InteractionPhase.BurnerTapHold;
+                return;
+            }
+
+            if (_substanceInfo != null
+                && _substanceInfo.TryBeginHold(container, ReadPointerScreen(), _holdPointerStartWorld))
+            {
+                _phase = InteractionPhase.SubstanceHold;
+                _substanceInfo.Tick(ReadPointerScreen(), _holdPointerStartWorld);
+                return;
+            }
         }
 
         BeginDrag(target, offset);
+    }
+
+    private bool IsQuickTap()
+    {
+        float duration = Time.time - _holdStartTime;
+        float move = Vector3.Distance(ReadPointerWorld(), _holdPointerStartWorld);
+        return duration <= tapMaxDuration && move <= tapMaxMovement;
     }
 
     private void BeginDrag(IDraggable target, Vector3 offset)
@@ -200,6 +236,21 @@ public class SceneObjectController : MonoBehaviour, IGrabber
 
     private void OnHoldCanceled(InputAction.CallbackContext context)
     {
+        if (_phase == InteractionPhase.BurnerTapHold)
+        {
+            if (IsQuickTap()
+                && IsDraggableAlive(_current)
+                && _current.Receiver != null
+                && TryGetDraggableComponent(_current.Receiver, out BurnerController burnerOnStand))
+            {
+                burnerOnStand.ToggleFlame();
+            }
+
+            _current = null;
+            _phase = InteractionPhase.None;
+            return;
+        }
+
         if (_phase == InteractionPhase.SubstanceHold)
         {
             _substanceInfo?.OnHoldCanceled();
@@ -221,10 +272,17 @@ public class SceneObjectController : MonoBehaviour, IGrabber
 
         if (TryGetDraggableComponent(released, out IndicatorBoxController box))
         {
-            float duration = Time.time - _holdStartTime;
-            float move = Vector3.Distance(ReadPointerWorld(), _holdPointerStartWorld);
-            if (duration <= tapMaxDuration && move <= tapMaxMovement && box.TrySpawnStick(out _))
+            if (IsQuickTap() && box.TrySpawnStick(out _))
                 skipReleaseFall = true;
+        }
+
+        if (!skipReleaseFall && TryGetDraggableComponent(released, out BurnerController burner))
+        {
+            if (IsQuickTap())
+            {
+                burner.ToggleFlame();
+                skipReleaseFall = true;
+            }
         }
 
         if (!skipReleaseFall

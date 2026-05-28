@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3aebdf31dd78524db410b68d567bd3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.SceneObjectController.Draggable
-  _hoverSelection: {fileID: 0}
+  _hoverSelection: {fileID: 9176456749870558759}
   _enableFallToRest: 1
   _minFallHeight: 8
   <InteractPoint>k__BackingField: {fileID: 660000000000004}
@@ -101,6 +101,13 @@ MonoBehaviour:
   _stickPrefab: {fileID: 1902689432997680901, guid: 32c4487a7446ef142ae55c7a00bbca7f, type: 3}
   _spawnPoint: {fileID: 0}
   _returnPoint: {fileID: 660000000000004}
+  _returnMoveDuration: 0.5
+  _returnMoveEase: 10
+  _returnFadeDuration: 0.4
+  _returnFadeEase: 8
+  _returnRevealDuration: 0.4
+  _returnRevealEase: 9
+  _stowEndScale: 0.35
   _infiniteSupply: 0
   _decorativeStickRoots: []
   _supplyWhenNoDecoratives: 3
@@ -519,5 +526,10 @@ PrefabInstance:
 --- !u!4 &2600178589539103322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7791075896169730936, guid: 714e2b12257196b44a5685c3203da01b, type: 3}
+  m_PrefabInstance: {fileID: 5191179881857409314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9176456749870558759 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3986693178274533125, guid: 714e2b12257196b44a5685c3203da01b, type: 3}
   m_PrefabInstance: {fileID: 5191179881857409314}
   m_PrefabAsset: {fileID: 0}

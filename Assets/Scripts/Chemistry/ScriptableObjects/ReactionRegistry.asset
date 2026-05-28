@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChemSimDiploma.Chemistry.ScriptableObjects.ReactionRegistry
   Reactions:
   - {fileID: 11400000, guid: b2c3d4e5f6a7483910ab12cd34ef5602, type: 2}
+  - {fileID: 11400000, guid: bb3b67661a25a404c8cee459ee448664, type: 2}
+  - {fileID: 11400000, guid: 099bd27340e4a3d47b4c0722938a29e7, type: 2}

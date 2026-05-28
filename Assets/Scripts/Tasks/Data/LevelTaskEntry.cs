@@ -14,6 +14,7 @@ public class LevelTaskEntry
     [SerializeField] private MixAcidBaseTaskParams _mixAcidBase = MixAcidBaseTaskParams.Default;
     [SerializeField] private HasLiquidTaskParams _hasLiquid = HasLiquidTaskParams.Default;
     [SerializeField] private IndicatorPhTaskParams _indicatorPh = IndicatorPhTaskParams.Default;
+    [SerializeField] private HeatUntilSubstanceTaskParams _heatUntilSubstance = HeatUntilSubstanceTaskParams.Default;
 
     public string TaskId => _taskId;
     public string Description => _description;
@@ -27,6 +28,8 @@ public class LevelTaskEntry
             TaskSignalKind.ChemistryUpdated => _type is LevelTaskType.MixAcidAndBase or LevelTaskType.ContainerHasLiquid,
             TaskSignalKind.IndicatorDipped => _type == LevelTaskType.IndicatorPhInRange,
             TaskSignalKind.IndicatorStickSpawned => _type == LevelTaskType.TakeIndicatorFromBox,
+            TaskSignalKind.ContainerPlacedOnBurner => _type == LevelTaskType.PlaceContainerOnBurner,
+            TaskSignalKind.ContainerHeated => _type == LevelTaskType.HeatUntilSubstance,
             _ => false
         };
     }
@@ -39,6 +42,8 @@ public class LevelTaskEntry
             LevelTaskType.ContainerHasLiquid => EvaluateHasLiquid(ctx),
             LevelTaskType.IndicatorPhInRange => EvaluateIndicatorPh(ctx),
             LevelTaskType.TakeIndicatorFromBox => EvaluateTakeIndicatorFromBox(ctx),
+            LevelTaskType.PlaceContainerOnBurner => EvaluatePlaceContainerOnBurner(ctx),
+            LevelTaskType.HeatUntilSubstance => EvaluateHeatUntilSubstance(ctx),
             _ => false
         };
     }
@@ -77,5 +82,15 @@ public class LevelTaskEntry
 
     private static bool EvaluateTakeIndicatorFromBox(LevelTaskEvaluationContext ctx) =>
         ctx.SignalKind == TaskSignalKind.IndicatorStickSpawned;
+
+    private static bool EvaluatePlaceContainerOnBurner(LevelTaskEvaluationContext ctx) =>
+        ctx.SignalKind == TaskSignalKind.ContainerPlacedOnBurner && ctx.Container != null;
+
+    private bool EvaluateHeatUntilSubstance(LevelTaskEvaluationContext ctx)
+    {
+        if (ctx.SignalKind != TaskSignalKind.ContainerHeated) return false;
+        return ContainerContentsHelper.HasAllSubstances(ctx.Contents, _heatUntilSubstance.RequiredSubstances,
+            _heatUntilSubstance.MinMoles);
+    }
 }
 }

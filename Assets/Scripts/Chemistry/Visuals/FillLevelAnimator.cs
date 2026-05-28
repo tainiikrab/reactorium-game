@@ -16,6 +16,10 @@ public class FillLevelAnimator : MonoBehaviour
     [SerializeField] protected float _fillDuration = 0.4f;
     [SerializeField] protected Ease _ease;
 
+    [Header("Color")]
+    [SerializeField] private float _colorTransitionDuration = 0.45f;
+    [SerializeField] private Ease _colorEase = Ease.OutCubic;
+
     [Header("Scale Settings")] [SerializeField]
     private float _defaultXScale = 1f;
 
@@ -58,6 +62,8 @@ public class FillLevelAnimator : MonoBehaviour
 
     public SpriteRenderer LiquidRenderer { get; private set; }
 
+    private Tween _colorTween;
+
     private void OnEnable()
     {
         if (!BindContainer()) return;
@@ -76,6 +82,9 @@ public class FillLevelAnimator : MonoBehaviour
 
     private void OnDisable()
     {
+        if (_colorTween.isAlive)
+            _colorTween.Stop();
+
         UnsubscribeFromContainer();
     }
 
@@ -303,7 +312,19 @@ public class FillLevelAnimator : MonoBehaviour
         if (ChemContainer.Contents.CurrentFillLevel <= 0f)
             return;
 
-        LiquidRenderer.color = color;
+        if (_colorTransitionDuration <= 0f)
+        {
+            LiquidRenderer.color = color;
+            return;
+        }
+
+        if (_colorTween.isAlive)
+            _colorTween.Stop();
+
+        Color from = LiquidRenderer.color;
+        _colorTween = Tween.Custom(LiquidRenderer, 0f, 1f, _colorTransitionDuration,
+            (renderer, t) => renderer.color = Color.Lerp(from, color, t),
+            _colorEase);
     }
 
     public virtual void ApplyImmediateState()

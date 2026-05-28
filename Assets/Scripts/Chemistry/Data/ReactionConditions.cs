@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 
 namespace ChemSimDiploma.Chemistry.Data
 {
 [Serializable]
 public class ReactionConditions
 {
-    public float Temperature;
+    public float MinTemperature;
+    public float MaxTemperature;
 }
 }

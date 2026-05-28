@@ -114,6 +114,8 @@ public class LevelTaskEntryDrawer : PropertyDrawer
             LevelTaskType.ContainerHasLiquid => "Условие: раствор в колбе",
             LevelTaskType.IndicatorPhInRange => "Условие: pH индикатора",
             LevelTaskType.TakeIndicatorFromBox => "Условие: палочка из коробки",
+            LevelTaskType.PlaceContainerOnBurner => "Условие: поставить колбу на горелку",
+            LevelTaskType.HeatUntilSubstance => "Условие: нагреть до нужного состава",
             _ => "Условие"
         };
 
@@ -154,6 +156,13 @@ public class LevelTaskEntryDrawer : PropertyDrawer
                 "Выполняется при успешном IndicatorBoxController.TrySpawnStick (тап по коробке).",
                 EditorStyles.wordWrappedMiniLabel);
         }
+        else if (taskType == LevelTaskType.PlaceContainerOnBurner)
+        {
+            EditorGUI.LabelField(
+                fieldRect,
+                "Выполняется при успешном прикреплении ChemContainer к BurnerController.",
+                EditorStyles.wordWrappedMiniLabel);
+        }
         else if (conditionProp != null)
         {
             EditorGUI.PropertyField(fieldRect, conditionProp, GUIContent.none, true);
@@ -169,7 +178,9 @@ public class LevelTaskEntryDrawer : PropertyDrawer
             LevelTaskType.MixAcidAndBase => property.FindPropertyRelative("_mixAcidBase"),
             LevelTaskType.ContainerHasLiquid => property.FindPropertyRelative("_hasLiquid"),
             LevelTaskType.IndicatorPhInRange => property.FindPropertyRelative("_indicatorPh"),
+            LevelTaskType.HeatUntilSubstance => property.FindPropertyRelative("_heatUntilSubstance"),
             LevelTaskType.TakeIndicatorFromBox => null,
+            LevelTaskType.PlaceContainerOnBurner => null,
             _ => null
         };
     }

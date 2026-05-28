@@ -18,24 +18,24 @@ public static class TaskPanelSync
         if (taskSet == null || taskHolder == null)
             return false;
 
-        UITaskBar prefab = ResolvePrefab(taskBarPrefab);
-        if (prefab == null)
-        {
-            Debug.LogWarning("[TaskPanelSync] UITaskBar prefab is not assigned.", taskHolder);
-            return false;
-        }
-
         LevelTaskEntry[] tasks = taskSet.Tasks;
         int targetCount = tasks?.Length ?? 0;
 
         List<UITaskBar> bars = CollectDirectTaskBars(taskHolder);
+        UITaskBar prefab = ResolvePrefab(taskBarPrefab);
+
+        if (prefab == null && bars.Count < targetCount)
+        {
+            Debug.LogWarning("[TaskPanelSync] UITaskBar prefab is not assigned.", taskHolder);
+            return false;
+        }
 
         for (int i = bars.Count - 1; i >= targetCount; i--)
             DestroyTaskBar(bars[i], recordUndo);
 
         bars = CollectDirectTaskBars(taskHolder);
 
-        while (bars.Count < targetCount)
+        while (prefab != null && bars.Count < targetCount)
         {
             UITaskBar created = CreateTaskBar(prefab, taskHolder, recordUndo);
             if (created == null) break;
@@ -81,10 +81,10 @@ public static class TaskPanelSync
         if (assigned != null) return assigned;
 
 #if UNITY_EDITOR
-        if (!Application.isPlaying)
-            return UnityEditor.AssetDatabase.LoadAssetAtPath<UITaskBar>(DefaultTaskBarPrefabPath);
-#endif
+        return UnityEditor.AssetDatabase.LoadAssetAtPath<UITaskBar>(DefaultTaskBarPrefabPath);
+#else
         return null;
+#endif
     }
 
     private static UITaskBar CreateTaskBar(UITaskBar prefab, Transform holder, bool recordUndo)

@@ -40,11 +40,19 @@ public class TaskPanelInitializer : MonoBehaviour, IInitializable
         SyncPanel();
     }
 
+    private void Start()
+    {
+        if (Application.isPlaying)
+            SyncPanel();
+    }
+
     public LevelTaskSetSO ResolvedTaskSet => _injectedTaskSet != null ? _injectedTaskSet : _taskSetFallback;
 
     public bool UsesTaskSet(LevelTaskSetSO taskSet)
     {
-        return taskSet != null && ResolvedTaskSet == taskSet;
+        if (taskSet == null) return false;
+        if (_taskSetFallback == taskSet) return true;
+        return ResolvedTaskSet == taskSet;
     }
 
     public void SyncPanel()

@@ -10,6 +10,7 @@ public sealed class LevelTaskEvaluationContext
     public ChemContainer Container { get; private set; }
     public ContainerContents Contents { get; private set; }
     public float MeasuredPh { get; private set; }
+    public float Temperature { get; private set; }
 
     public static LevelTaskEvaluationContext FromLiquidPoured(LiquidPouredSignal signal)
     {
@@ -18,7 +19,8 @@ public sealed class LevelTaskEvaluationContext
             SignalKind = TaskSignalKind.LiquidPoured,
             Container = signal.Destination,
             Contents = signal.Destination != null ? signal.Destination.Contents : null,
-            MeasuredPh = signal.Destination != null ? signal.Destination.Contents.MixturePh : 7f
+            MeasuredPh = signal.Destination != null ? signal.Destination.Contents.MixturePh : 7f,
+            Temperature = signal.Destination != null ? signal.Destination.Contents.GetAverageLiquidTemperature() : 25f
         };
     }
 
@@ -29,7 +31,8 @@ public sealed class LevelTaskEvaluationContext
             SignalKind = TaskSignalKind.ChemistryUpdated,
             Container = signal.Container,
             Contents = signal.Contents,
-            MeasuredPh = signal.Contents != null ? signal.Contents.MixturePh : 7f
+            MeasuredPh = signal.Contents != null ? signal.Contents.MixturePh : 7f,
+            Temperature = signal.Contents != null ? signal.Contents.GetAverageLiquidTemperature() : 25f
         };
     }
 
@@ -40,7 +43,8 @@ public sealed class LevelTaskEvaluationContext
             SignalKind = TaskSignalKind.IndicatorDipped,
             Container = signal.Container,
             Contents = signal.Container != null ? signal.Container.Contents : null,
-            MeasuredPh = signal.MeasuredPh
+            MeasuredPh = signal.MeasuredPh,
+            Temperature = signal.Container != null ? signal.Container.Contents.GetAverageLiquidTemperature() : 25f
         };
     }
 
@@ -51,7 +55,32 @@ public sealed class LevelTaskEvaluationContext
             SignalKind = TaskSignalKind.IndicatorStickSpawned,
             Container = null,
             Contents = null,
-            MeasuredPh = 7f
+            MeasuredPh = 7f,
+            Temperature = 25f
+        };
+    }
+
+    public static LevelTaskEvaluationContext FromContainerPlacedOnBurner(ContainerPlacedOnBurnerSignal signal)
+    {
+        return new LevelTaskEvaluationContext
+        {
+            SignalKind = TaskSignalKind.ContainerPlacedOnBurner,
+            Container = signal.Container,
+            Contents = signal.Container != null ? signal.Container.Contents : null,
+            MeasuredPh = signal.Container != null ? signal.Container.Contents.MixturePh : 7f,
+            Temperature = signal.Container != null ? signal.Container.Contents.GetAverageLiquidTemperature() : 25f
+        };
+    }
+
+    public static LevelTaskEvaluationContext FromContainerHeated(ContainerHeatedSignal signal)
+    {
+        return new LevelTaskEvaluationContext
+        {
+            SignalKind = TaskSignalKind.ContainerHeated,
+            Container = signal.Container,
+            Contents = signal.Container != null ? signal.Container.Contents : null,
+            MeasuredPh = signal.Container != null ? signal.Container.Contents.MixturePh : 7f,
+            Temperature = signal.Temperature
         };
     }
 }

@@ -5,6 +5,8 @@ public enum TaskSignalKind
     LiquidPoured,
     ChemistryUpdated,
     IndicatorDipped,
-    IndicatorStickSpawned
+    IndicatorStickSpawned,
+    ContainerPlacedOnBurner,
+    ContainerHeated
 }
 }

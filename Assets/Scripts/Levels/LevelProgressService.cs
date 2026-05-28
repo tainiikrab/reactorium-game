@@ -10,6 +10,11 @@ public sealed class LevelProgressService : ILevelProgressService
 
     public LevelProgressService()
     {
+        ReloadFromStorage();
+    }
+
+    public void ReloadFromStorage()
+    {
         MaxUnlockedLevel = Mathf.Max(1, PlayerPrefs.GetInt(MaxUnlockedLevelKey, 1));
     }
 

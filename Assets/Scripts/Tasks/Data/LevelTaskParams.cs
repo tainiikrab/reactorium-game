@@ -45,4 +45,17 @@ public struct IndicatorPhTaskParams
 
     public static IndicatorPhTaskParams Default => new() { MinPh = 6f, MaxPh = 8f };
 }
+
+[Serializable]
+public struct HeatUntilSubstanceTaskParams
+{
+    public SubstanceSO[] RequiredSubstances;
+    public float MinMoles;
+
+    public static HeatUntilSubstanceTaskParams Default => new()
+    {
+        RequiredSubstances = Array.Empty<SubstanceSO>(),
+        MinMoles = 1e-4f
+    };
+}
 }

@@ -19,6 +19,7 @@ public class LevelsController : MonoBehaviour, ILevelsController
     {
         _sceneTransitions = sceneTransitions;
         _progressService = progressService;
+        _progressService.ReloadFromStorage();
         ApplyProgress();
     }
 

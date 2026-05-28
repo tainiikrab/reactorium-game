@@ -38,6 +38,8 @@ public class ReactionService
             foreach (ReactionSO reaction in _reactions)
             {
                 if (reaction == null) continue;
+                if (pass > 0 && ReactionSolver.IsTemperatureControlledReaction(reaction)) continue;
+
                 if (ReactionSolver.TryApply(contents, reaction, out _))
                     anyApplied = true;
             }
